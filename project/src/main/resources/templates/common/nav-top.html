@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header-head-fragment">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+            crossorigin="anonymous"
+    />
+    <script
+            src="https://kit.fontawesome.com/bf59e18ffc.js"
+            crossorigin="anonymous"
+    ></script>
+</head>
+
+<body>
+<div th:fragment="header-fragment">
+    <header class="px-3 py-2 bg-dark text-white">
+        <div class="container">
+            <div
+                    class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+            >
+                <!-- 로고 -->
+                <a
+                        href="#"
+                        class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none"
+                >
+                    <i class="fa-solid fa-school" style="font-size: 30px"></i>
+                </a>
+
+                <!-- 로그인, 회원가입, 로그아웃, 마이페이지 -->
+                <ul
+                        class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
+                >
+                    <!-- 로그인, 회원가입 -->
+                    <div class="d-flex flex-row">
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <i class="fa-solid fa-right-to-bracket"></i>
+                                로그인
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <i class="fa-solid fa-registered"></i>
+                                회원가입
+                            </a>
+                        </li>
+                    </div>
+
+                    <!-- 마이페이지, 로그아웃-->
+                    <div class="d-flex flex-row d-none">
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <i class="fa-solid fa-house-user"></i>
+                                마이페이지
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="nav-link text-white">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                로그아웃
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+            <div>
+                <ul
+                        class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
+                >
+                    <!-- 시간표 -->
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="fa-solid fa-table"></i>
+                            시간표
+                        </a>
+                    </li>
+
+                    <!-- 급식 -->
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="fa-solid fa-bowl-food"></i>
+                            급식
+                        </a>
+                    </li>
+
+                    <!-- 학사일정 -->
+                    <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="fa-regular fa-calendar-days"></i>
+                            학사일정
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+</div>
+
+</body>
+</html>
