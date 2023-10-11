@@ -1,4 +1,13 @@
-const makeCalendar = (date) => {
+const date = new Date();
+
+updateCalendar(date);
+
+function updateCalendar(date){
+    createCalendar(date)
+        .then(getSchedule());
+}
+
+async function createCalendar(date) {
     const currentYear = new Date(date).getFullYear();
     const currentMonth = new Date(date).getMonth() + 1;
 
@@ -14,16 +23,27 @@ const makeCalendar = (date) => {
         htmlDummy += `<div class="noColor"></div>`;
     }
 
+    const strMonth = (String(currentMonth).length == 1) ? ("0" + currentMonth) : String(currentMonth);
     for (let i = 1; i <= lastDay; i++) {
         const day = firstDay + i;
         const week = 7;
 
-        if(day % week == 0){
-            htmlDummy += `<div class="blueFont">${i}</div>`;
-        } else if(day % week == 1){
-            htmlDummy += `<div class="redFont">${i}</div>`;
-        } else{
-            htmlDummy += `<div>${i}</div>`;
+        const strDay = (String(i).length == 1) ? ("0" + i) : String(i);
+        const date = String(currentYear) + strMonth + strDay;
+
+        const saturday = 0;
+        const sunday = 1;
+
+        switch (day % week){
+            case saturday:
+                htmlDummy += `<div class="blueFont" data-date="${date}">${i}</div>`;
+                break;
+            case sunday:
+                htmlDummy += `<div class="redFont" data-date="${date}">${i}</div>`;
+                break;
+            default:
+                htmlDummy += `<div data-date="${date}">${i}</div>`;
+                break;
         }
     }
 
@@ -32,20 +52,18 @@ const makeCalendar = (date) => {
     }
 
     document.querySelector(`.dateBoard`).innerHTML = htmlDummy;
-    document.querySelector(`.dateTitle`).innerText = `${currentYear}년 ${currentMonth}월`;
+    const dateTitle = document.querySelector(`.dateTitle`);
+    dateTitle.innerText = `${currentYear}년 ${currentMonth}월`;
+    dateTitle.setAttribute("data-year",String(currentYear));
+    dateTitle.setAttribute("data-month",String(currentMonth));
 }
-
-
-const date = new Date();
-
-makeCalendar(date);
 
 // 이전달 이동
 document.querySelector(`.prevDay`).onclick = () => {
-    makeCalendar(new Date(date.setMonth(date.getMonth() - 1)));
+    updateCalendar(new Date(date.setMonth(date.getMonth() - 1)));
 }
 
 // 다음달 이동
 document.querySelector(`.nextDay`).onclick = () => {
-    makeCalendar(new Date(date.setMonth(date.getMonth() + 1)));
+    updateCalendar(new Date(date.setMonth(date.getMonth() + 1)));
 }
