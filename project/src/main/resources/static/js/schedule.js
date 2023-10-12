@@ -2,14 +2,12 @@ const url = "https://open.neis.go.kr/hub/SchoolSchedule";
 const key = "d3348e90712e42a0a67f03cad20d4336";
 const type = "json";
 
-// getSchedule();
-
 // 학사일정 요청
 function getSchedule(){
     const dataTitle = document.querySelector(`.dateTitle`);
 
     const year = dataTitle.dataset.year;
-    let month = dataTitle.dataset.month;
+    const month = dataTitle.dataset.month;
     const ATPT_OFCDC_SC_CODE = "B10";   // 시도교육청코드 (서울특별시교육청)
     const SD_SCHUL_CODE = "7031110";    // 행정표준코드 (경기초등학교)
 
@@ -20,7 +18,6 @@ function getSchedule(){
         .then(res => scheduleProcess(res))
         .catch(error => {
             displayScheduleException();
-            console.log("error", error)
         });
 
     // https://open.neis.go.kr/hub/SchoolSchedule?
@@ -86,6 +83,11 @@ function updateSchedule(res){
 
     for (let i = 0; i < row.length; i++) {
         const eventDateBoardElement = document.querySelector(`.dateBoard div[data-date="${row[i].AA_YMD}"]`);
+
+        const redColor = "#e31b20";
+        if(row[i].SBTR_DD_SC_NM != "해당없음"){
+            eventDateBoardElement.style.color = redColor;
+        }
 
         const html = `<div>${row[i].EVENT_NM}</div>`;
         eventDateBoardElement.insertAdjacentHTML("beforeend", html);

@@ -3,18 +3,22 @@ const date = new Date();
 updateCalendar(date);
 
 function updateCalendar(date){
-    createCalendar(date)
-        .then(getSchedule());
+    createCalendar(date);
+    getSchedule();
 }
 
-async function createCalendar(date) {
+function createCalendar(date) {
     const currentYear = new Date(date).getFullYear();
     const currentMonth = new Date(date).getMonth() + 1;
 
+    // 1일의 요일
     const firstDay = new Date(date.setDate(1)).getDay();
+    // 이달의 마지막 일
     const lastDay = new Date(currentYear, currentMonth, 0).getDate();
 
+    // 1일이 항상 일요일부터 시작하지 않기때문에
     const limitDay = firstDay + lastDay;
+    // 7일 단위로 달력을 만들기 위해 7의 곱단위로 일 계산
     const nextDay = Math.ceil(limitDay / 7) * 7;
 
     let htmlDummy = '';
@@ -25,7 +29,7 @@ async function createCalendar(date) {
 
     const strMonth = (String(currentMonth).length == 1) ? ("0" + currentMonth) : String(currentMonth);
     for (let i = 1; i <= lastDay; i++) {
-        const day = firstDay + i;
+        const loopDay = firstDay + i;
         const week = 7;
 
         const strDay = (String(i).length == 1) ? ("0" + i) : String(i);
@@ -34,7 +38,7 @@ async function createCalendar(date) {
         const saturday = 0;
         const sunday = 1;
 
-        switch (day % week){
+        switch (loopDay % week){
             case saturday:
                 htmlDummy += `<div class="blueFont" data-date="${date}">${i}</div>`;
                 break;
