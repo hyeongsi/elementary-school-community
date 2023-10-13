@@ -16,7 +16,7 @@ const key = "d3348e90712e42a0a67f03cad20d4336";
 const type = "json";
 
 // 시간표
-async function getTimeTable(day){
+function getTimeTable(day){
   
 	day = 0;
 	//ALL_TI_YMD = week(day);
@@ -27,50 +27,21 @@ async function getTimeTable(day){
     const SD_SCHUL_CODE = "9091055";    // 행정표준코드 (경기초등학교)
 
     var url = new Array();
-    url[0] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(0), GRADE, CLASS_NM);
-    url[1] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(1), GRADE, CLASS_NM);
-    url[2] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(2), GRADE, CLASS_NM);
-    url[3] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(3), GRADE, CLASS_NM);
-    url[4] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(4), GRADE, CLASS_NM);
     
-//    console.log(url[0]);
-//    console.log(url[1]);
-//    console.log(url[2]);
-//    console.log(url[3]);
-//    console.log(url[4]);
-    
-    fetch(url[0])
-    .then(response => response.json())
-    .then(res => scheduleProcess(res,0))
-    .catch(error => {
-        displayScheduleException();
-    });
-    fetch(url[1])
-    .then(response => response.json())
-    .then(res => scheduleProcess(res,1))
-    .catch(error => {
-        displayScheduleException();
-    });
-    fetch(url[2])
-    .then(response => response.json())
-    .then(res => scheduleProcess(res,2))
-    .catch(error => {
-        displayScheduleException();
-    });
-    fetch(url[3])
-    .then(response => response.json())
-    .then(res => scheduleProcess(res,3))
-    .catch(error => {
-        displayScheduleException();
-    });
-    fetch(url[4])
-    .then(response => response.json())
-    .then(res => scheduleProcess(res,4))
-    .catch(error => {
-        displayScheduleException();
-    });
-    
-//    console.log(url);
+    const urlCount = 5;
+    for(let i = 0; i < urlCount; i++){
+    	url[i] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(i), GRADE, CLASS_NM);
+    }
+   
+    const dayOfWeek = 5;
+    for(let i = 0; i < dayOfWeek; i++){
+    	fetch(url[i])
+    		.then(response => response.json())
+    		.then(res => scheduleProcess(res,i))
+    		.catch(error => {
+    			displayScheduleException();
+    		});
+    }
     
 
     // https://open.neis.go.kr/hub/elsTimetable?
@@ -80,12 +51,7 @@ async function getTimeTable(day){
     // &SD_SCHUL_CODE=7031110
     // &ALL_TI_YMD=20231012
 }
-//getSchedule(0);
-//getSchedule(1);
-//getSchedule(2);
-//getSchedule(3);
-//getSchedule(4);
-//elsTimetable
+
 
 // 요청 url 생성
 function getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE,ALL_TI_YMD,GRADE,CLASS_NM){
@@ -121,7 +87,7 @@ function filter(res){
     }
 }
 getTimeTable(20231013);
-// 학사일정 처리
+// 시간표 처리
 function scheduleProcess(res, num){
     const success = filter(res);
     if(success){
@@ -131,23 +97,17 @@ function scheduleProcess(res, num){
         displayScheduleException();
     }
 }
-// 달력 업데이트
+// 시간표 업데이트
 function updateSchedule(res,num){
     const row = res.elsTimetable[1].row;
-    const t_table = document.querySelector(`.time`);
-    var html = `<div style="display:table-cell">`;
     for (let i = 0; i < row.length; i++) {
-        
-    	
-    	// NM 반복문 한번 더 돌려야함
-    	html += `<div class="NM${num}">${row[i].ITRT_CNTNT}</div>`;
-    	
-//    	console.log(html);
-//    	console.log("성공");
+    var t_table = document.querySelector(`#NMT${num}_${i}`);
+        if(row[i].ITRT_CNTNT==null){
+        	
+        t_table.innerHTML= `<p style="color:red;">없음</p>`;	
+        }else
+    	t_table.innerHTML= `<p>${row[i].ITRT_CNTNT}</p>`;
     }
-    html += `</div>`;
-    console.log(html);
-    t_table.insertAdjacentHTML("beforeend", html);
 }
 
 // delete info

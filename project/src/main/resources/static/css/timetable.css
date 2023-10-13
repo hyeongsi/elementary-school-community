@@ -1,12 +1,12 @@
-#day {
-	border : 1px solid black;
+.day {
+	border : 1fr solid black;
+	border-width : 1fr;
 	width : 100px;
 	height : 100px;
 	display : inline;
 }
 .NM0 {
 	border : 1px solid black;
-	border-width : 10px
 	width : 1fr;
 	height : 1fr;
 }
