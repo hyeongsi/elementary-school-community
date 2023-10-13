@@ -1,26 +1,26 @@
 .rap{
-    --red:#e31b20;
-    --blue:#1b72e3;
-    --gray:#eee;
-    --white:#fff;
-    --dark:#222;
+    --rap-red:#e31b20;
+    --rap-blue:#1b72e3;
+    --rap-gray:#eee;
+    --rap-white:#fff;
+    --rap-dark:#222;
 }
 
 /* 달력 */
 .dateHead div {
-    background: var(--gray);
+    background: var(--rap-gray);
     text-align: center;
     border-radius: 5px;
 }
 
 .dateHead .date:first-child{
-    background: var(--red);
-    color: var(--white);
+    background: var(--rap-red);
+    color: var(--rap-white);
 }
 
 .dateHead .date:last-child{
-    background: var(--blue);
-    color: var(--white);
+    background: var(--rap-blue);
+    color: var(--rap-white);
 }
 
 .grid {
@@ -35,7 +35,7 @@
 }
 
 .dateBoard div {
-    color: var(--dark);
+    color: var(--rap-dark);
     font-weight: bold;
     min-height: 6rem;
     padding: .6rem .8rem;
@@ -51,25 +51,25 @@
 }
 
 .dateBoard .redFont{
-    color: var(--red);
+    color: var(--rap-red);
 }
 
 .dateBoard .blueFont{
-    color: var(--blue);
+    color: var(--rap-blue);
 }
 
 .noColor {
-    background: var(--gray);
+    background: var(--rap-gray);
 }
 
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 2rem;
+    padding: 0 2rem 1rem 2rem;
 }
 
 .infoText{
-    background: var(--gray);
+    background: var(--rap-gray);
     text-align: center;
     border-radius: 5px;
     padding: .6rem .8rem;
@@ -86,14 +86,6 @@
     cursor: pointer;
 }
 
-.prevDay {
-    transform: rotate(-135deg);
-}
-
-.nextDay {
-    transform: rotate(45deg);
-}
-
 /* ---- */
 
 * {
@@ -106,7 +98,8 @@
 .rap {
     max-width: 820px;
     padding: 0 1.4rem;
-    margin-top: 1.4rem;
+    margin: 1.4rem auto 2rem auto;
+
 }
 
 .dateHead {
