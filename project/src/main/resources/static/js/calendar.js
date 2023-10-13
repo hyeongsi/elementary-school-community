@@ -4,12 +4,12 @@ updateCalendar(date);
 
 function updateCalendar(date){
     createCalendar(date);
-    getSchedule();
+    updateSchedule(date);
 }
 
 function createCalendar(date) {
-    const currentYear = new Date(date).getFullYear();
-    const currentMonth = new Date(date).getMonth() + 1;
+    const currentYear = date.getFullYear();
+    const currentMonth = date.getMonth() + 1;
 
     // 1일의 요일
     const firstDay = new Date(date.setDate(1)).getDay();

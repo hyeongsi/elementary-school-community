@@ -2,16 +2,30 @@ const url = "https://open.neis.go.kr/hub/SchoolSchedule";
 const key = "d3348e90712e42a0a67f03cad20d4336";
 const type = "json";
 
-// 학사일정 요청
-function getSchedule(){
-    const dataTitle = document.querySelector(`.dateTitle`);
+function updateSchedule(date){
+    getSchoolInfo()
+        .then(schoolInfo => {
+            getSchedule(date, schoolInfo.officeOfEducationCode, schoolInfo.schoolCode)
+        });
+}
 
-    const year = dataTitle.dataset.year;
-    const month = dataTitle.dataset.month;
-    const ATPT_OFCDC_SC_CODE = "B10";   // 시도교육청코드 (서울특별시교육청)
-    const SD_SCHUL_CODE = "7031110";    // 행정표준코드 (경기초등학교)
+// 멤버의 학교정보 요청
+function getSchoolInfo(){
+    const url = "/app/member/schoolInfo";
 
-    const url = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, year, month);
+    return fetch(url)
+        .then(res => res.json());
+}
+
+// 학사일정 요청 [날짜, 시도교육청코드 (서울특별시교육청), 행정표준코드 (경기초등학교)]
+function getSchedule(date, officeOfEducationCode, schoolCode){
+    if(officeOfEducationCode == null || schoolCode == null){
+        return;
+    }
+
+    const year = date.getFullYear();
+    const month = date.getMonth()+1;
+    const url = getURL(officeOfEducationCode, schoolCode, year, month);
 
     fetch(url)
         .then(response => response.json())
@@ -31,7 +45,7 @@ function getSchedule(){
 
 // 요청 url 생성
 function getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, year, month){
-    if(month.length == 1){
+    if(String(month).length == 1){
         month = "0" + String(month);
     }
     const AA_YMD = String(year) + String(month);
@@ -71,14 +85,14 @@ function scheduleProcess(res){
     const success = filter(res);
     if(success){
         clearScheduleInfo();
-        updateSchedule(res);
+        updateCalendarWithSchedule(res);
     }else{
         displayScheduleException();
     }
 }
 
 // 달력 업데이트
-function updateSchedule(res){
+function updateCalendarWithSchedule(res){
     const row = res.SchoolSchedule[1].row;
 
     for (let i = 0; i < row.length; i++) {
