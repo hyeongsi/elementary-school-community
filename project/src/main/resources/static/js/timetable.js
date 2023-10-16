@@ -1,12 +1,28 @@
-let today = new Date();
-// 날짜 계산
-function week(num){
-	let sel_day = today.getDay()-1; // 현재 요일과 금주의 월요일간의 차
-	today.setDate(today.getDate() - sel_day + num);	// 금주의 월요일 날짜
+const today = new Date();
 
-	let year    = today.getFullYear();
-	let month   = ('0' + (today.getMonth() +  1 )).slice(-2);
-	let day     = ('0' + today.getDate()).slice(-2);
+// 스쿨인포 객체 받아오기
+function getSchoolInfo(today){
+    const url = "/app/member/schoolInfo";
+
+    return fetch(url)
+        .then(res => res.json());
+}
+
+function updateTimeTable(today){
+    getSchoolInfo()
+        .then(schoolInfo => {
+        	getTimeTable(today, schoolInfo.officeOfEducationCode, schoolInfo.schoolCode)
+        });
+}
+
+
+// 월~금요일 각각 날자를 계산하여 반환
+function week(num){
+	const sel_day = today.getDay()-1; // 현재 요일과 금주의 월요일간의 차
+	today.setDate(today.getDate() - sel_day + num);	// 금주의 월요일 날짜
+	const year    = today.getFullYear();
+	const month   = ('0' + (today.getMonth() +  1 )).slice(-2);
+	const day     = ('0' + today.getDate()).slice(-2);
 	const dt = year+month+day;
 	return dt;
 }
@@ -16,23 +32,26 @@ const key = "d3348e90712e42a0a67f03cad20d4336";
 const type = "json";
 
 // 시간표
-function getTimeTable(day){
-  
-	day = 0;
-	//ALL_TI_YMD = week(day);
+// officeOfEducationCode : 시도교육청코드 (서울특별시교육청)
+// schoolCode : 시도교육청코드 (서울특별시교육청)
+function getTimeTable(today, officeOfEducationCode, schoolCode){
+	
+	 if(officeOfEducationCode == null || schoolCode == null){
+	        return;
+	    }
 	const GRADE = "1";	// 학년
 	const CLASS_NM = "1";	// 반
 	
     const ATPT_OFCDC_SC_CODE = "S10";   // 시도교육청코드 (서울특별시교육청)
     const SD_SCHUL_CODE = "9091055";    // 행정표준코드 (경기초등학교)
 
-    var url = new Array();
-    
+    const url = new Array();
+   
     const urlCount = 5;
     for(let i = 0; i < urlCount; i++){
-    	url[i] = getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, week(i), GRADE, CLASS_NM);
+    	url[i] = getURL(officeOfEducationCode, schoolCode, week(i), GRADE, CLASS_NM);
+    	console.log(url[i]);
     }
-   
     const dayOfWeek = 5;
     for(let i = 0; i < dayOfWeek; i++){
     	fetch(url[i])
@@ -62,7 +81,6 @@ function getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE,ALL_TI_YMD,GRADE,CLASS_NM){
 function getResultCode(res){
     return res.elsTimetable[0].head[1].RESULT.CODE;
 }
-
 // 에러 여부 검사
 function filter(res){
     const result = getResultCode(res);
@@ -86,7 +104,6 @@ function filter(res){
             return false;
     }
 }
-getTimeTable(20231013);
 // 시간표 처리
 function scheduleProcess(res, num){
     const success = filter(res);
@@ -102,9 +119,9 @@ function updateSchedule(res,num){
     const row = res.elsTimetable[1].row;
     for (let i = 0; i < row.length; i++) {
     var t_table = document.querySelector(`#NMT${num}_${i}`);
-        if(row[i].ITRT_CNTNT==null){
+        if(row[i].ITRT_CNTNT==null||!isNaN(row[i].ITRT_CNTNT)){
         	
-        t_table.innerHTML= `<p style="color:red;">없음</p>`;	
+        t_table.innerHTML= `<p style="color:red;">x</p>`;	
         }else
     	t_table.innerHTML= `<p>${row[i].ITRT_CNTNT}</p>`;
     }
@@ -122,3 +139,16 @@ function displayScheduleException(){
     const html2 = `<div class="infoText">해당하는 데이터가 없습니다.</div>`;
     dataInfoWrap.innerHTML = html2;
 }
+
+document.querySelector(`.prevDay`).onclick = () => {
+	today.setDate(today.getDate() - 7);
+	console.log(today + "btn");
+	updateTimeTable(today);
+}
+document.querySelector(`.nextDay`).onclick = () => {
+	today.setDate(today.getDate() + 7);
+	console.log(today + "btn");
+	updateTimeTable(today);
+}
+
+updateTimeTable(new Date());
