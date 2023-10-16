@@ -4,7 +4,6 @@
     --rap-gray:#eee;
     --rap-white:#fff;
     --rap-dark:#222;
-    margin: 0 auto 2rem auto;
 }
 
 /* 달력 */
@@ -66,7 +65,7 @@
 .header {
     display: flex;
     justify-content: space-between;
-    padding: 0px 2rem 1rem 2rem;
+    padding: 0 2rem 1rem 2rem;
 }
 
 .infoText{
@@ -99,7 +98,8 @@
 .rap {
     max-width: 820px;
     padding: 0 1.4rem;
-    margin-top: 1.4rem;
+    margin: 1.4rem auto 2rem auto;
+
 }
 
 .dateHead {
