@@ -11,4 +11,6 @@ public class MemberApiController {
     public SchoolInfo schoolInfoDetails(){
         return new SchoolInfo("S10", 9091055);
     }
+    
+    
 }
