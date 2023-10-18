@@ -36,6 +36,7 @@ const type = "json";
 // schoolCode : 시도교육청코드 (서울특별시교육청)
 function getTimeTable(today, officeOfEducationCode, schoolCode){
 	
+	deleteSchedule();
 	 if(officeOfEducationCode == null || schoolCode == null){
 	        return;
 	    }
@@ -116,17 +117,33 @@ function scheduleProcess(res, num){
 }
 // 시간표 업데이트
 function updateSchedule(res,num){
+	
     const row = res.elsTimetable[1].row;
     for (let i = 0; i < row.length; i++) {
     var t_table = document.querySelector(`#NMT${num}_${i}`);
         if(row[i].ITRT_CNTNT==null||!isNaN(row[i].ITRT_CNTNT)){
         	
-        t_table.innerHTML= `<p style="color:red;">x</p>`;	
+        t_table.innerHTML= `<p CNTNT style="color:red;">x</p>`;	
         }else
-    	t_table.innerHTML= `<p>${row[i].ITRT_CNTNT}</p>`;
+    	t_table.innerHTML= `<p class="CNTNT">${row[i].ITRT_CNTNT}</p>`;
     }
 }
 
+function deleteSchedule(){
+	let IdNM;
+	for(let j = 0; j < 5; j++){
+		for(let i = 0; i < 6; i++){
+			let temp = IdNM= "NMT" +j+"_" +i;
+			IdNM = temp; 
+			console.log(IdNM);
+			console.log(i);
+			let tableInfo = document.getElementById(IdNM);
+			tableInfo.innerHTML='';
+			//console.log(tableInfo);
+		}
+	}
+	
+}
 // delete info
 function clearScheduleInfo(){
     const dataInfoWrap = document.querySelector(`.dataInfoWrap`);

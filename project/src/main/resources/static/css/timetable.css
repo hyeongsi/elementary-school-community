@@ -60,5 +60,13 @@
     border-radius: 5px;
     border: 1px solid #eee;
 }
+.period{
+	color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
 
 

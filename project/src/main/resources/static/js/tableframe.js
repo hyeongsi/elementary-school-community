@@ -2,9 +2,19 @@ function makeTable(){
 	const t_table = document.querySelector(`.time`);
 	
 	// 셀 테이블 생성
+	
+	let period = `<div style="display:table-cell">`
+				+`<div class="period">1</div>`
+				+`<div class="period">2</div>`
+				+`<div class="period">3</div>`
+				+`<div class="period">4</div>`
+				+`<div class="period">5</div>`
+				+`<div class="period">6</div>`
+				+`</div>`;
+	t_table.insertAdjacentHTML("beforeend", period);
 	const cell = 5;
 	for (let j = 0; j < cell; j++){
-	var html = `<div style="display:table-cell">`;
+	let html = `<div style="display:table-cell">`;
 	
 	// 태그별 id 부여
 	const NM_id = 6;
