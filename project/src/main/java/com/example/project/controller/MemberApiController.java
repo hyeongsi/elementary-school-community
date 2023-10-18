@@ -9,8 +9,6 @@ public class MemberApiController {
 
     @GetMapping("/member/schoolInfo")
     public SchoolInfo schoolInfoDetails(){
-        return new SchoolInfo("S10", 9091055);
+        return new SchoolInfo("B10", 7031110);
     }
-    
-    
 }
