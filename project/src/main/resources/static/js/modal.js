@@ -1,12 +1,9 @@
-const modal = document.querySelector('#modal');
-const openModal = document.querySelector('.open-button');
-const closeModal = document.querySelector('.close-button');
+$('#modalBtn').click(function(e){
+			e.preventDefault();
+			$('#schModal').modal("show");
+		});
 
-
-openModal.addEventListener('click',()=>{
-	modal.showModal();
-})
-
-closeModal.addEventListener('click',()=>{
-	modal.close();
-})
+$('#closeModal').click(function(e){
+	e.preventDefault();
+	$('#schModal').modal("hide");
+});

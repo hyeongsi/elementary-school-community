@@ -43,15 +43,15 @@ function getTimeTable(today, officeOfEducationCode, schoolCode){
 	const GRADE = "1";	// 학년
 	const CLASS_NM = "1";	// 반
 	
-    const ATPT_OFCDC_SC_CODE = "S10";   // 시도교육청코드 (서울특별시교육청)
-    const SD_SCHUL_CODE = "9091055";    // 행정표준코드 (경기초등학교)
+    // const ATPT_OFCDC_SC_CODE = "S10";   // 시도교육청코드 (서울특별시교육청)
+    // const SD_SCHUL_CODE = "9091055";    // 행정표준코드 (경기초등학교)
 
     const url = new Array();
    
     const urlCount = 5;
     for(let i = 0; i < urlCount; i++){
     	url[i] = getURL(officeOfEducationCode, schoolCode, week(i), GRADE, CLASS_NM);
-    	console.log(url[i]);
+    	// console.log(url[i]);
     }
     const dayOfWeek = 5;
     for(let i = 0; i < dayOfWeek; i++){
@@ -101,7 +101,6 @@ function filter(res){
         case "ERROR-500":   // 서버 오류입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
         case "ERROR-600":   // 데이터베이스 연결 오류입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
         case "ERROR-601":   // SQL 문장 오류 입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
-            console.log(result);
             return false;
     }
 }
@@ -117,7 +116,6 @@ function scheduleProcess(res, num){
 }
 // 시간표 업데이트
 function updateSchedule(res,num){
-	
     const row = res.elsTimetable[1].row;
     for (let i = 0; i < row.length; i++) {
     var t_table = document.querySelector(`#NMT${num}_${i}`);
@@ -135,11 +133,9 @@ function deleteSchedule(){
 		for(let i = 0; i < 6; i++){
 			let temp = IdNM= "NMT" +j+"_" +i;
 			IdNM = temp; 
-			console.log(IdNM);
-			console.log(i);
+	
 			let tableInfo = document.getElementById(IdNM);
 			tableInfo.innerHTML='';
-			//console.log(tableInfo);
 		}
 	}
 	
@@ -159,12 +155,10 @@ function displayScheduleException(){
 
 document.querySelector(`.prevDay`).onclick = () => {
 	today.setDate(today.getDate() - 7);
-	console.log(today + "btn");
 	updateTimeTable(today);
 }
 document.querySelector(`.nextDay`).onclick = () => {
 	today.setDate(today.getDate() + 7);
-	console.log(today + "btn");
 	updateTimeTable(today);
 }
 
