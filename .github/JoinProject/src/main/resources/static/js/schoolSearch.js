@@ -57,6 +57,15 @@ document.querySelector(`#sheet-search-button`).onclick = () => {
 	console.log(name);
 }
 
+//찾기 버튼 클릭시 검색화면을 초기화
+document.querySelector(`#modalBtn`).onclick = () => {
+   const table = document.querySelector(`#SCH_Name`);
+   console.log(table);
+   while(table.firstChild)  {
+       table.removeChild(table.firstChild);
+     }
+}
+
 function getValueSCHNM(SD_SCHUL_CODE,SCHUL_NM ,ATPT_OFCDC_SC_NM_SIGN,ATPT_OFCDC_SC_CODE_SIGN){
 
 //	var name = document.getElementById(SD_SCHUL_CODE).innerText;	
@@ -64,5 +73,5 @@ function getValueSCHNM(SD_SCHUL_CODE,SCHUL_NM ,ATPT_OFCDC_SC_NM_SIGN,ATPT_OFCDC_
 	document.getElementById("SCHUL_NM_SIGN").value = SCHUL_NM;  //학교이름
 	document.getElementById("ATPT_OFCDC_SC_NM_SIGN").value = ATPT_OFCDC_SC_NM_SIGN;
 	document.getElementById("ATPT_OFCDC_SC_CODE_SIGN").value = ATPT_OFCDC_SC_CODE_SIGN;
-	modal.close();
+	$("#schModal").modal("hide");
 }

@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-@MapperScan(basePackages= "com.test.project")
+//@MapperScan(basePackages= "com.test.project")
 public class JoinProjectApplication {
 
 	public static void main(String[] args) {
