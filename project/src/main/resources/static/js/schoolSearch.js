@@ -56,6 +56,14 @@ document.querySelector(`#sheet-search-button`).onclick = () => {
 	getSchoolName(name);
 	console.log(name);
 }
+// 찾기 버튼 클릭시 검색화면을 초기화
+document.querySelector(`#modalBtn`).onclick = () => {
+	const table = document.querySelector(`#SCH_Name`);
+	console.log(table);
+	while(table.firstChild)  {
+	    table.removeChild(table.firstChild);
+	  }
+}
 
 function getValueSCHNM(SD_SCHUL_CODE,SCHUL_NM ,ATPT_OFCDC_SC_NM_SIGN,ATPT_OFCDC_SC_CODE_SIGN){
 
