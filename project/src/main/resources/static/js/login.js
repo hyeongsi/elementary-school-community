@@ -1,4 +1,20 @@
-  $(document).ready(function(){
+  
+//#################### 템플릿 ############################
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+    		container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+    		container.classList.remove("right-panel-active");
+    });
+
+
+    // #################### 로그인 ############################
+$(document).ready(function(){
     	
     	$("#login").click(function(){ //로그인 버튼 누를시 실행되는 함수
     		
@@ -80,7 +96,8 @@
 						//alert('success')
 						if(data=="YES"){
 							alert('가입성공');
-							location.href="./login";
+							//location.href="./login";
+							container.classList.remove("right-panel-active");
 						}else{
 							alert('가입실패');
 						}
@@ -118,15 +135,3 @@
     	*/
     });
     
-  //#################### 템플릿 ############################
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('container');
-
-    signUpButton.addEventListener('click', () => {
-    		container.classList.add("right-panel-active");
-    });
-
-    signInButton.addEventListener('click', () => {
-    		container.classList.remove("right-panel-active");
-    });

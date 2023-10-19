@@ -59,11 +59,11 @@
       
       <span>or use your email for registration</span>
       
-      
-      	<input class="inptid" type="text" id="accountid" name="id" placeholder="아이디" />
-      	<span id="idcheck"></span>
-	  	<button class="idchkbutton" type="button" id="idcheckBtn">중복확인</button>
-	
+      	<div class="idbtn">
+      		<input class="inptid" type="text" id="accountid" name="id" placeholder="아이디" />
+	  		<button class="idchkbutton" type="button" id="idcheckBtn">CHECK</button>
+		</div>
+		<span id="idcheck"></span>
       <input type="password" id="accountpwd" name="pwd" placeholder="비밀번호" />
       
       <input type="email" id="accountemail" name="email" placeholder="Email" />
@@ -79,11 +79,11 @@
 						<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN" name="school_code" size="20" value="">
 						<!-- 학교 이름 -->
 						<input type="text" id="SCHUL_NM_SIGN" name="school" size="20" value="">
-						<button id="modalBtn" class="btn">모달 테스트</button>
+						<button id="modalBtn" class="btn">학교 선택</button>
 					
 
 
-						<button type="button" id="account">Sign Up</button>
+						<button class="signup_btn" type="button" id="account">Sign Up</button>
       
     </form>
   </div>
@@ -113,11 +113,10 @@
 									<option value="T10">제주특별자치도교육청</option>
 								</select>
 								<input type="text" id="SCHUL_NM" size="20">
-								<a id="sheet-search-button" href="#" class="btn_A">검색</a>
+								<button id="sheet-search-button" href="#" class="btn_A">검색</button>
 
 								<div class="SCH_NM" id="SCH_Name"></div>
 							</body>
-							<button class="button close-button">x</button>
 							</dialog>
 						</div>
 
@@ -143,7 +142,7 @@
      
       <a href="account.html">Forgot your password?</a>
       
-      <button type="button" id="login">Sign In</button>
+      <button class="signin_btn" type="button" id="login">Sign In</button>
       
       
     </form>
