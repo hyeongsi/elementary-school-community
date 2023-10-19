@@ -1,8 +1,11 @@
 package com.test.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.project.dto.MemberDTO;
@@ -37,12 +40,33 @@ public class MemberController {
 	return "NO";
 	}
 	
-	@RequestMapping(value="/login", method= {RequestMethod.GET, RequestMethod.POST})
+
+	// 로그인  
+	@RequestMapping(value="/login.html", method= {RequestMethod.GET, RequestMethod.POST})
 	public MemberDTO login(MemberDTO dto) {
 		System.out.println("MemberController login");	
 		
 		MemberDTO mem = service.login(dto);
 		return mem;
 	}
-
+	
+	
+	/*
+	@GetMapping("/login")
+	public String loginForm() {
+		
+		return "Login";
+	}*/
+	
 }
+
+
+
+
+
+
+
+
+
+
+
