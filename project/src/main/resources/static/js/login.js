@@ -54,7 +54,7 @@
     					$("#idcheck").html("이 아이디는 사용중입니다.");
     					$("#accountid").val("");//삭제
     					$("#accountid").focus(); //다시 입력하라고 커서가 뜬다.
-    				}
+    				}	
     			},
     			error:function(){
     				alert('error');
@@ -66,25 +66,37 @@
     	$("#account").on("click",function(){
     		
     		let params = $("#frm").serialize();
+    		let input = $("#accountemail").val();
+			let email_format = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
     		
     		$.ajax({
+    			
+    			
     			url:"http://localhost:8090/app/addmember",
     			type:"post",
     			//data:{id:$("#id").val(), pwd:$("#pwd").val(), name:$("name").val(), email:$("email").val() }, //id로 보낸것
     			data:params,//name으로 보낸것
-    			success:function(data){
-    				//alert('success')
-    				if(data=="YES"){
-    					alert('가입성공');
-    					location.href="./login";
-    				}else{
+    			success:function(data){			
+    				// 정규식을 이용한 이메일 형식 체크 로직
+    				if (email_format.test(input)) {
+    					//alert('success')
+    					if(data=="YES"){
+    						alert('가입성공');
+    						location.href="./login";
+    					}else{
+    						alert('가입실패');
+    					}
+    				} else {
+    					alert("잘못된 이메일 형식입니다");
     					alert('가입실패');
+    					$("#accountemail").val("");//삭제
+    					$("#accountemail").focus(); // 커서 포커싱
     				}
     			},
     			error:function(){
     				alert('error');
     			}
-    		
+
     		});
     		
     	});
