@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.test.project.model.mapper.TableMapper">
+ 
+    <select id="SelectAllList" resultType="hashmap">
+       SELECT * FROM testTable
+    </select>
+    
+    <insert id="saveUser" parameterType="com.test.project.dto.UserDTO">
+        INSERT INTO TB_USER
+        (member_id, userid, passwd, name, email, school_id_field)
+        VALUES(#{userId},#{userPw},#{userName},#{userAuth},#{appendDate},#{updateDate});
+    </insert>
+ 
+</mapper>

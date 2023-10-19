@@ -1,0 +1,5 @@
+package com.test.project.dao;
+
+public interface MemberDAO {
+
+}

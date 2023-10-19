@@ -1,0 +1,15 @@
+package com.test.project;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+@MapperScan(basePackages= "mul.camp.a")
+@SpringBootApplication
+public class JoinProjectApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(JoinProjectApplication.class, args);
+	}
+ 
+}

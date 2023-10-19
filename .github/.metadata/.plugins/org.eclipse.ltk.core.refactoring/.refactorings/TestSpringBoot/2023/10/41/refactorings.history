@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;com.example.spring.myapp.controller.TestConteroller.java&apos; to &apos;TestController.java&apos;&#x0D;&#x0A;- Original project: &apos;TestSpringBoot&apos;&#x0D;&#x0A;- Original element: &apos;com.example.spring.myapp.controller.TestConteroller.java&apos;&#x0D;&#x0A;- Renamed element: &apos;com.example.spring.myapp.controller.TestController.java&apos;" description="Rename compilation unit &apos;TestConteroller.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.spring.myapp.controller{TestConteroller.java" name="TestController.java" references="false" stamp="1697182433641" version="1.0"/>
+</session>

@@ -1,0 +1,13 @@
+package com.test.project.dto;
+
+import lombok.Data;
+
+@Data
+public class UserDTO{
+    private String member_id; // 식별자
+    private String userid;
+    private String passwd;
+    private String name;
+    private String email;
+    private String school_id_field;
+}

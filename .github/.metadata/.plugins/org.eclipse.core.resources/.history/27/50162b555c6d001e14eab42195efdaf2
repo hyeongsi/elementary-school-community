@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+  <mapper namespace="com.test.project.dao.MemberDAO">
+  
+  <!-- 
+  		<select id="allMember" resultType="com.test.project.dao.MemberDAO">
+   			SELECT * FROM MEMBER
+  		</select>		
+   -->
+   
+   		<select id="getId" parameterType="com.test.project.dto.MemberDTO" resultType="java.lang.Integer">
+  			SELECT NVL(COUNT(*),0)
+  			FROM JOINMEMBER
+  			WHERE id=#{id}
+  		</select>
+  
+  
+  		<insert id="addmember" parameterType="com.test.project.dto.MemberDTO">
+  			INSERT INTO JOINMEMBER(ID, PWD, NAME, EMAIL, AUTH)
+			VALUES(#{id}, #{pwd}, #{name}, #{email}, 3)
+  		</insert>
+  
+  		<!-- 로그인 쿼리문 -->
+  		<select id="login" parameterType="com.test.project.dto.MemberDTO" resultType="com.test.project.dto.MemberDTO">
+ 			SELECT ID,NAME,EMAIL,AUTH
+  			FROM JOINMEMBER
+  			WHERE ID=#{id} AND PWD=#{pwd}
+  		</select>
+  		
+  		
+  		
+   
+  </mapper>

@@ -1,0 +1,5 @@
+package com.test.project.model.mapper;
+
+public interface UserMapper {
+
+}

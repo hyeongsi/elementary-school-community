@@ -1,0 +1,28 @@
+package com.test.project.dao;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+import com.test.project.dto.MemberDTO;
+
+
+@Mapper
+@Repository
+public interface MemberDAO {
+	
+	//반드시 xml에 있는 변수명과 일치해야한다.
+	public List<MemberDTO> allMember(); 
+	
+	public int getId(MemberDTO dto);
+	
+	public int addmember(MemberDTO dto);
+	
+	public MemberDTO login(MemberDTO dto);
+	
+
+	
+}
+
+}

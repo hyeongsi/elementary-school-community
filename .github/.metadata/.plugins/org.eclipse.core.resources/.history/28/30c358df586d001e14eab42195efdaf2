@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+
+<script type="text/javascript">
+<!--바로 로그인 화면 login.html으로 이동시킨다.-->
+location.href ="login.html";
+</script>
+
+
+</body>
+
+
+</html>

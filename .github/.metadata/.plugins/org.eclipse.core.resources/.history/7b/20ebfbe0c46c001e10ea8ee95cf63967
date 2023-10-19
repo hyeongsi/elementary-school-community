@@ -1,0 +1,31 @@
+#http port
+server.port=8090
+ 
+#thymeleaf auto refresh
+spring.thymeleaf.prefix=file:src/main/resources/templates/
+#spring.thymeleaf.cache=false
+spring.thymeleaf.suffix=.html
+
+#db connection(Oracle)
+spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=teamproject
+spring.datasource.password=teamproject
+ 
+# Logging Setting
+logging.level.org.hibernate=info
+
+# ViewResolver Setting
+spring.mvc.view.prefix=/domain/Board/
+spring.mvc.view.suffix=/jsp
+
+
+ #JPA
+ 
+ spring.jpa.database-platform=org.hibernate.dialect.Oracle10gDialect
+ spring.jpa.hibernate.ddl-auto=create
+ spring.jpa.generate-ddl=false
+ spring.jpa.show-sql=true
+ spring.jpa.database=oracle
+ 
+ 

@@ -1,0 +1,14 @@
+package com.example.service;
+
+public class memberServiceImpl {
+
+    @Autowired
+    TestTableMapper testtableMapper;
+    
+    @Override
+    public List<Map<String, Object>> SelectAllList() throws Exception {
+        // TODO Auto-generated method stub
+        return testtableMapper.SelectAllList();
+    }
+ 
+}

@@ -1,0 +1,17 @@
+
+
+#http port
+server.port=8088
+
+# mybatis Mapper 와 dto 등록
+mybatis.mapper-locations=com/config/memberMapper.xml
+mybatis.type-aliases-package=com.example
+
+# DB연동 4가지 정보
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=teamproject
+spring.datasource.password=teamproject
+
+#thymeleaf auto refresh
+spring.thymeleaf.cache=false

@@ -1,0 +1,14 @@
+spring.mvc.view.prefix=src/main/resources/com/config/
+spring.mvc.view.suffix=.html
+server.port=8088
+server.servlet.context-path=/app
+
+# mybatis Mapper 와 dto 등록
+mybatis.mapper-locations=com/config/tempMapper.xml
+mybatis.type-aliases-package=com/example/project/dto
+
+# DB연동 4가지 정보
+spring.datasource.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
+spring.datasource.username=SCOTT
+spring.datasource.password=TIGER

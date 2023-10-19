@@ -1,0 +1,12 @@
+package com.test.project.dto;
+
+@Data
+public class UserDTO{
+    private int userNo;
+    private String userId;
+    private String userPw;
+    private String userName;
+    private String userAuth;
+    private String appendDate;
+    private String updateDate;
+}

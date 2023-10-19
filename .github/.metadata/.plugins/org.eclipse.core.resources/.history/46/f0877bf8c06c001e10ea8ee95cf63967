@@ -1,0 +1,10 @@
+package com.test.project.model.mapper;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.test.project.dto.UserDTO;
+
+@Mapper
+public interface UserMapper {
+	   void saveUser(UserDTO userdto);
+}
