@@ -1,0 +1,8 @@
+dialog{
+	max-height: 60%;
+	overflow-y:auto;
+}
+.modal_body{
+	max-height: 80%;
+	overflow-y:auto;
+}
