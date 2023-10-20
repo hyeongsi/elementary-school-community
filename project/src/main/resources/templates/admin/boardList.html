@@ -94,13 +94,12 @@
                                                 <td>B10</td>
                                                 <td>2011/04/25</td>
                                             </tr>
-                                            <tr th:each="boardDB : ${boardDBList}">
-                                                <td><input type="checkbox" data-no=""></td>
-                                                <td th:text="${boardDB.id}">1</td>
-                                                <td th:text="${boardDB.tableName}">seoul_board</td>
-                                                <td th:text="${boardDB.boardName}">서울</td>
-                                                <td th:text="${boardDB.officeOfEducationCode}">B10</td>
-                                                <td th:text="${boardDB.createDate}">2011/04/25</td>
+                                            <tr th:each="board : ${boardList}">
+                                                <td><input type="checkbox" data-no="${board.boardId}"></td>
+                                                <td th:text="${board.boardId}">1</td>
+                                                <td th:text="${board.boardName}">게시판명</td>
+                                                <td th:text="${board.boardCategory}">카테고리</td>
+                                                <td th:text="${board.parentBoardId}">부모ID</td>
                                             </tr>
                                             </tbody>
                                         </table>
