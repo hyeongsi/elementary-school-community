@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>초등 커뮤니티 - 로그인</title>
+    <script defer src="./js/modal.js"></script>
+    <script defer src="./js/schoolSearch.js"></script>
+    <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="./css/schSearch.css">
+    
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link  href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/LoginStyle.css" type="text/css">
+        
+    <script defer src="./js/login.js"></script>
+    
+
+</head>
+
+<body class="bg-gradient-primary">
+
+	 <!-- icon -->
+    <div th:replace="common/brandIcon:: brandIcon"></div>
+
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
+
+           
+
+                
+                <!-- 회원가입 폼 -->
+	
+<div class="container" id="container">
+  <div class="form-container sign-up-container" id="app">
+    <form id="frm">
+    
+      <h1>Create Account</h1>
+      <!-- 
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+       -->
+      
+      <span>or use your email for registration</span>
+      
+      	<div class="idbtn">
+      		<input class="inptid" type="text" id="accountid" name="id" placeholder="아이디" />
+	  		<button class="idchkbutton" type="button" id="idcheckBtn">중복확인</button>
+		</div>
+		<span id="idcheck"></span>
+		
+      <input type="password" id="accountpwd" name="pwd" placeholder="비밀번호" />
+      
+      <input type="email" id="accountemail" name="email" placeholder="Email" />
+      
+      <input type="text" id="accounname" name="name" placeholder="이름" />
+
+						<!-- 모달@ㅉㄴㅃ@@@@@@@@@@@@@@@@@ㅃ@ㅃ@ㅃㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃㅃ@@ㅃㅃ@@ㅃ@@@@ -->
+
+						<input class="d-none" type="text" id="ATPT_OFCDC_SC_CODE_SIGN" name="education_code" size="20" value="">
+						<!-- 시도교육청 이름 -->
+						<input type="text" id="ATPT_OFCDC_SC_NM_SIGN" name="education" placeholder="교육청" size="20" value="">
+						<!-- 학교 코드 -->
+						<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN" name="school_code" size="20" value="">
+						<!-- 학교 이름 -->
+						<input type="text" id="SCHUL_NM_SIGN" name="school" placeholder="학교" size="20" value="">
+						<button id="modalBtn" class="btn">학교선택</button>
+					
+
+
+						<button class="signup_btn" type="button" id="account">Sign Up</button>
+      
+    </form>
+  </div>
+  	<div class="modal-box">
+							<dialog class="modal" id="schModal">
+							<body class="modal_body">
+								<button style="float: right;" id="closeModal"
+									class="btn close-button">x</button>
+								<h2>학교 찾기</h2>
+								<select id="ATPT_OFCDC_SC_CODE">
+									<option value="B10">서울특별시교육청</option>
+									<option value="C10">부산광역시교육청</option>
+									<option value="D10">대구광역시교육청</option>
+									<option value="E10">인천광역시교육청</option>
+									<option value="F10">광주광역시교육청</option>
+									<option value="G10">대전광역시교육청</option>
+									<option value="H10">울산광역시교육청</option>
+									<option value="I10">세종특별시교육청</option>
+									<option value="J10">경기도교육청</option>
+									<option value="K10">강원특별자치도교육청</option>
+									<option value="M10">충청북도교육청</option>
+									<option value="N10">충청남도교육청</option>
+									<option value="P10">전라북도교육청</option>
+									<option value="Q10">전라남도교육청</option>
+									<option value="R10">경상북도교육청</option>
+									<option value="S10">경상남도교육청</option>
+									<option value="T10">제주특별자치도교육청</option>
+								</select>
+								<input type="text" id="SCHUL_NM" size="20">
+								<button id="sheet-search-button" href="#" class="btn_A">검색</button>
+
+								<div class="SCH_NM" id="SCH_Name"></div>
+							</body>
+							</dialog>
+						</div>
+
+							<!-- 모달@ㅉㄴㅃ@@@@@@@@@@@@@@@@@ㅃ@ㅃ@ㅃㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃㅃ@@ㅃㅃ@@ㅃ@@@@ -->
+  
+ 			<!-- 로그인 폼 -->
+  
+  <div class="form-container sign-in-container" id="app">
+    <form action="#">
+    
+    
+      <h1>Sign in</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      
+      
+      <span>use your account</span>
+      <input type="text" id="id" placeholder="아이디입력" />
+      <input type="password" id="pwd" placeholder="비밀번호 입력" />
+     
+      <a href="account.html">Forgot your password?</a>
+      
+      <button class="signin_btn" type="button" id="login">Sign In</button>
+      
+      
+    </form>
+  </div>
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>Welcome Back!</h1>
+        <p>To keep connected with us please login with your personal info</p>
+        <button class="ghost" id="signIn">Sign In</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>Hello, Friend!</h1>
+        <p>Enter your personal details and start journey with us</p>
+        <button class="ghost" id="signUp">Sign Up</button>
+      </div>
+    </div>
+  </div>
+</div>
+                
+
+           
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+    
+    
+
+</body>
+
+</html>

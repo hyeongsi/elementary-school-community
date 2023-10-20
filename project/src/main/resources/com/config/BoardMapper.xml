@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardMapper">
+
+    <select id="selectBoardList" resultType="BoardDto">
+        SELECT * FROM board
+    </select>
+    
+    <insert id="insertBoard" parameterType="BoardDto">
+        INSERT INTO board(board_id, board_name, board_category)
+        VALUES(seq_board.nextval, #{boardName}, #{boardCategory})
+    </insert>
+
+</mapper>

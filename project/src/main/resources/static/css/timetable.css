@@ -1,0 +1,72 @@
+.d_table {
+	border-radius: 5px;
+    border: 1px solid #eee;
+    text-align: center;
+    min-height: 6rem;
+    display : grid;
+	grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr 1fr;
+}
+.day{
+	border-radius: 5px;
+    border: 1px solid #eee;
+    text-align: center;
+    min-height: 6rem;
+    display : grid;
+	grid-template-columns: 0.3fr 1fr 1fr 1fr 1fr 1fr;
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2rem 1rem 2rem;
+}
+
+.NM0 {
+    color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+.NM1 {
+    color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+.NM2 {
+    color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+.NM3 {
+    color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+.NM4 {
+    color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+.period{
+	color: var(--rap-dark);
+    font-weight: bold;
+    min-height: 6rem;
+    padding: .6rem .8rem;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+
