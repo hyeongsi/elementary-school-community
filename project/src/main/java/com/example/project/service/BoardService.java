@@ -1,7 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.BoardDto;
-import com.example.project.repository.BoardRepository;
+import com.example.project.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,17 +9,17 @@ import java.util.List;
 @Service
 public class BoardService {
 
-    final BoardRepository boardRepository;
+    final BoardMapper boardMapper;
 
-    public BoardService(final BoardRepository boardRepository) {
-        this.boardRepository = boardRepository;
+    public BoardService(final BoardMapper boardMapper) {
+        this.boardMapper = boardMapper;
     }
 
     public List<BoardDto> selectBoardList() {
-        return boardRepository.selectBoardList();
+        return boardMapper.selectBoardList();
     }
 
     public int insertBoard(final BoardDto boardDto){
-        return boardRepository.insertBoard(boardDto);
+        return boardMapper.insertBoard(boardDto);
     }
 }
