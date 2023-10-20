@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>초등 커뮤니티 - 관리자 - 회원목록</title>
+
+    <!-- Custom fonts for this template -->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/common/admin_slidebar :: slideBar"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/common/admin_topBar::topBar"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">회원 목록</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="border border-3 py-4 px-5">
+                            <form>
+                                <div class="row">
+                                    <div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
+                                            <label for="no">No.</label>
+                                            <input class="form-control" type="text" name="no" id="no">
+                                    </div>
+                                    <div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
+                                        <label for="userId">아이디</label>
+                                        <input class="form-control" type="text" name="id" id="userId">
+                                    </div>
+                                    <div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
+                                        <label for="userName">이름</label>
+                                        <input class="form-control" type="text" name="name" id="userName">
+                                    </div>
+                                    <div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
+                                        <label for="school_name">학교명</label>
+                                        <input class="form-control" type="text" name="school_name" id="school_name">
+                                    </div>
+                                    <div class="flex-column flex-column col-12 col-md-6 col-xl-3 mt-2">
+                                        <label for="email">이메일</label>
+                                        <input class="form-control" type="text" name="email" id="email" placeholder="you@example.com">
+                                    </div>
+                                    <div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
+                                        <label for="officeOfEducation">교육청</label>
+                                        <select class="form-control form-control-sm" name="officeOfEducation" id="officeOfEducation" style="height: 38px">
+                                            <option value=""></option>
+                                            <option value="B10">서울특별시</option>
+                                            <option value="C10">부산광역시</option>
+                                            <option value="D10">대구광역시</option>
+                                            <option value="E10">인천광역시</option>
+                                            <option value="F10">광주광역시</option>
+                                            <option value="G10">대전광역시</option>
+                                            <option value="H10">울산광역시</option>
+                                            <option value="H10">울산광역시</option>
+                                            <option value="I10">세종특별자치도</option>
+                                            <option value="J10">경기도</option>
+                                            <option value="K10">강원특별자치도</option>
+                                            <option value="M10">충청북도</option>
+                                            <option value="N10">충청남도</option>
+                                            <option value="P10">전라북도</option>
+                                            <option value="Q10">전라남도</option>
+                                            <option value="R10">경상북도</option>
+                                            <option value="S10">경상남도</option>
+                                            <option value="T10">제주특별자치도</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end mt-4">
+                                    <button class="btn btn-sm btn-outline-primary mr-3" type="submit">검색</button>
+                                    <button class="btn btn-sm btn-outline-primary" type="reset">취소</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="dataTable_Wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                            <div class="row mt-3">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
+                                            name="dataTable_length" aria-controls="dataTable"
+                                            class="custom-select custom-select-sm form-control form-control-sm">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select> 단위</label></div>
+                                </div>
+                            </div>
+                            <!-- table -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%"
+                                               style="text-align: center">
+                                            <thead style="text-align: center">
+                                            <tr>
+                                                <th style="min-width: 15px"><input type="checkbox"></th>
+                                                <th style="min-width: 50px">No.</th>
+                                                <th style="min-width: 100px">아이디</th>
+                                                <th style="min-width: 75px">이름</th>
+                                                <th style="min-width: 140px">이메일</th>
+                                                <th style="min-width: 90px">학교명</th>
+                                                <th style="min-width: 58px">학년</th>
+                                                <th style="min-width: 15px">반</th>
+                                                <th style="min-width: 110px">등록일</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><input type="checkbox" data-no=""></td>
+                                                <td>1</td>
+                                                <td>Edinburgh</td>
+                                                <td>김철수</td>
+                                                <td>김철수@naver.com</td>
+                                                <td>경기초등학교</td>
+                                                <td>3</td>
+                                                <td>1</td>
+                                                <td>2011/04/25</td>
+                                            </tr>
+                                            <tr th:each="member : ${memberList}">
+                                                <td><input type="checkbox" data-no=""></td>
+                                                <td th:text="${member.member_id}">1</td>
+                                                <td th:text="${member.userid}">Edinburgh</td>
+                                                <td th:text="${member.name}">김철수</td>
+                                                <td th:text="${member.email}">김철수@naver.com</td>
+                                                <td th:text="${member.school_id}">경기초등학교</td>
+                                                <td th:text="${member.grade}">3</td>
+                                                <td th:text="${member.class}">1</td>
+                                                <td th:text="${member.join_date}">2011/04/25</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end table -->
+
+                            <!-- pagenation -->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+                                        Showing 1 to 10 of 57 entries
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous disabled"
+                                                id="dataTable_previous"><a href="#" aria-controls="dataTable"
+                                                                           data-dt-idx="0" tabindex="0"
+                                                                           class="page-link">Previous</a></li>
+                                            <li class="paginate_button page-item active"><a href="#"
+                                                                                            aria-controls="dataTable"
+                                                                                            data-dt-idx="1" tabindex="0"
+                                                                                            class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="2" tabindex="0"
+                                                                                      class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="3" tabindex="0"
+                                                                                      class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="4" tabindex="0"
+                                                                                      class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="5" tabindex="0"
+                                                                                      class="page-link">5</a></li>
+                                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
+                                                                                                              aria-controls="dataTable"
+                                                                                                              data-dt-idx="7"
+                                                                                                              tabindex="0"
+                                                                                                              class="page-link">Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- dataTable_Wrapper -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="common/topBar :: logoutModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+</body>
+
+</html>
