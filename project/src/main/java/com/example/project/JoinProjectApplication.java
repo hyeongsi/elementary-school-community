@@ -1,16 +1,16 @@
 package com.example.project;
 
-import org.springframework.boot.ApplicationRunner;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
-
 @SpringBootApplication
-public class ProjectApplication {
+@MapperScan(basePackages= "com.example.project")
+public class JoinProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProjectApplication.class, args);
+		SpringApplication.run(JoinProjectApplication.class, args);
 	}
-
+ 
 }
