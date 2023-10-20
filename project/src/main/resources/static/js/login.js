@@ -16,7 +16,7 @@ $(document).ready(function(){
     	$("#login").click(function(){ //로그인 버튼 누를시 실행되는 함수
     		
     		$.ajax({
-    			url:"http://localhost:8090/app/login.html",
+    			url:"http://localhost:8088/app/login.html",
     			type:"post",
     			data:{ id:$("#id").val(), pwd:$("#pwd").val() }, //id란과 pwd에 입력된 Data 서버로 전달
     			
@@ -54,7 +54,7 @@ $(document).ready(function(){
     	
     	$("#idcheckBtn").click(function() {
     		$.ajax({
-    			url:"http://localhost:8090/app/getId",
+    			url:"http://localhost:8088/app/getId",
     			type:"post",
     			data:{"id":$("#accountid").val() },
     			success:function( msg ){
@@ -85,7 +85,7 @@ $(document).ready(function(){
 			// 정규식을 이용한 이메일 형식 체크 로직
 			if (email_format.test(input)) {
 				$.ajax({
-					url:"http://localhost:8090/app/addmember",
+					url:"http://localhost:8088/app/addmember",
 					type:"post",
 					//data:{id:$("#id").val(), pwd:$("#pwd").val(), name:$("name").val(), email:$("email").val() }, //id로 보낸것
 					data:params,//name으로 보낸것

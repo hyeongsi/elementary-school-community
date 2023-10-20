@@ -11,20 +11,20 @@
   		</select>		
    -->
    
-   		<select id="getId" parameterType="com.example.project.dto.MemberDTO" resultType="java.lang.Integer">
+   		<select id="getId" parameterType="MemberDTO" resultType="java.lang.Integer">
   			SELECT NVL(COUNT(*),0)
   			FROM MEMBER_DATA
   			WHERE id=#{id}
   		</select>
   
   
-  		<insert id="addmember" parameterType="com.example.project.dto.MemberDTO">
+  		<insert id="addmember" parameterType="MemberDTO">
   			INSERT INTO MEMBER_DATA(ID, PWD, NAME, EMAIL, EDUCATION, SCHOOL, EDUCATION_CODE, SCHOOL_CODE, AUTH)
 					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{education_code}, #{school_code}, 3)
   		</insert>
   
   		<!-- 로그인 쿼리문 -->
-  		<select id="login" parameterType="com.example.project.dto.MemberDTO" resultType="com.example.project.dto.MemberDTO">
+  		<select id="login" parameterType="MemberDTO" resultType="MemberDTO">
  			SELECT ID,NAME,EMAIL,AUTH
   			FROM MEMBER_DATA
   			WHERE ID=#{id} AND PWD=#{pwd}

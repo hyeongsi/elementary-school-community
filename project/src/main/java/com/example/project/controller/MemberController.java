@@ -15,9 +15,11 @@ import com.example.project.service.MemberService;
 @RestController
 public class MemberController {
 
-	@Autowired
 	MemberService service;
-	
+
+	public MemberController(MemberService service) {
+		this.service = service;
+	}
 
 	@RequestMapping(value="/getId", method= {RequestMethod.GET, RequestMethod.POST})
 		public String getId(MemberDTO dto) {
