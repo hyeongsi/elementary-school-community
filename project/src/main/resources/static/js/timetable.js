@@ -17,6 +17,7 @@ function updateTimeTable(today){
 
 
 // 월~금요일 각각 날자를 계산하여 반환
+// num : 
 function week(num){
 	const sel_day = today.getDay()-1; // 현재 요일과 금주의 월요일간의 차
 	today.setDate(today.getDate() - sel_day + num);	// 금주의 월요일 날짜
@@ -40,8 +41,8 @@ function getTimeTable(today, officeOfEducationCode, schoolCode){
 	 if(officeOfEducationCode == null || schoolCode == null){
 	        return;
 	    }
-	const GRADE = "1";	// 학년
-	const CLASS_NM = "1";	// 반
+	const GRADE = 1;	// 학년
+	const CLASS_NM = 1;	// 반
 	
     // const ATPT_OFCDC_SC_CODE = "S10";   // 시도교육청코드 (서울특별시교육청)
     // const SD_SCHUL_CODE = "9091055";    // 행정표준코드 (경기초등학교)
@@ -108,7 +109,7 @@ function filter(res){
 function scheduleProcess(res, num){
     const success = filter(res);
     if(success){
-        clearScheduleInfo();
+//        clearScheduleInfo();
         updateSchedule(res, num);
     }else{
         displayScheduleException();
@@ -118,23 +119,21 @@ function scheduleProcess(res, num){
 function updateSchedule(res,num){
     const row = res.elsTimetable[1].row;
     for (let i = 0; i < row.length; i++) {
-    var t_table = document.querySelector(`#NMT${num}_${i}`);
-        if(row[i].ITRT_CNTNT==null||!isNaN(row[i].ITRT_CNTNT)){
-        	
-        t_table.innerHTML= `<p CNTNT style="color:red;">x</p>`;	
+    let tTable = document.querySelector(`#NMT${num}_${i}`);
+        if(row[i].ITRT_CNTNT==null){
+        	tTable.innerHTML= `<p CNTNT style="color:red;">x</p>`;	
         }else
-    	t_table.innerHTML= `<p class="CNTNT">${row[i].ITRT_CNTNT}</p>`;
+        	tTable.innerHTML= `<p class="CNTNT">${row[i].ITRT_CNTNT}</p>`;
     }
 }
 
 function deleteSchedule(){
-	let IdNM;
+	let idNM;
 	for(let j = 0; j < 5; j++){
 		for(let i = 0; i < 6; i++){
-			let temp = IdNM= "NMT" +j+"_" +i;
-			IdNM = temp; 
-	
-			let tableInfo = document.getElementById(IdNM);
+			idNM = "NMT" + j + "_" + i;
+			
+			let tableInfo = document.getElementById(idNM);
 			tableInfo.innerHTML='';
 		}
 	}

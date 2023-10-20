@@ -17,6 +17,8 @@ function makeTable(){
 	let html = `<div style="display:table-cell">`;
 	
 	// 태그별 id 부여
+	// NM : 클래스 열
+	// NMT : 클래스 열 * 행
 	const NM_id = 6;
 	for (let i = 0; i < 6; i++) {
 		
