@@ -5,16 +5,16 @@ import org.apache.ibatis.type.Alias;
 @Alias("BoardDto")
 public class BoardDto {
 
-    Long boardId;
-    String boardName;
-    String boardCategory;
-    Long parentBoardId;
+    private Long boardId;
+    private String boardName;
+    private String boardCategory;
+    private String categoryName;
 
-    public BoardDto(Long boardId, String boardName, String boardCategory, Long parentBoardId) {
+    public BoardDto(Long boardId, String boardName, String boardCategory, String categoryName) {
         this.boardId = boardId;
         this.boardName = boardName;
         this.boardCategory = boardCategory;
-        this.parentBoardId = parentBoardId;
+        this.categoryName = categoryName;
     }
 
     public Long getBoardId() {
@@ -29,8 +29,8 @@ public class BoardDto {
         return boardCategory;
     }
 
-    public Long getParentBoardId() {
-        return parentBoardId;
+    public String getCategoryName() {
+        return categoryName;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class BoardDto {
                 "boardId=" + boardId +
                 ", boardName='" + boardName + '\'' +
                 ", boardCategory='" + boardCategory + '\'' +
-                ", parentBoardId=" + parentBoardId +
+                ", parentBoardId=" + categoryName +
                 '}';
     }
 }

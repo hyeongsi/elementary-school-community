@@ -14,28 +14,28 @@ import java.util.List;
 @Controller
 public class AdminController {
 
-//    final BoardService boardService;
-//
-//    public AdminController(final BoardService boardService) {
-//        this.boardService = boardService;
-//    }
-//
-//    @GetMapping("admin/boardList")
-//    public String boardList(final Model model){
-//
-//        List<BoardDto> boardList = boardService.selectBoardList();
-//        model.addAttribute("boardList", boardList);
-//        System.out.println(boardList);
-//        return "admin/boardList";
-//    }
-//
-//    @ResponseBody
-//    @PostMapping ("admin/boardList")
-//    public int boardAdd(@RequestParam String boardName,@RequestParam String boardCategory){
-//
-//        BoardDto boardDto = new BoardDto(null, boardName, boardCategory, null);
-//        System.out.println(boardDto);
-//        return boardService.insertBoard(boardDto);
-//    }
+    final BoardService boardService;
+
+    public AdminController(final BoardService boardService) {
+        this.boardService = boardService;
+    }
+
+    @GetMapping("admin/boardList")
+    public String boardList(final Model model){
+
+        List<BoardDto> boardList = boardService.selectBoardList();
+        model.addAttribute("boardList", boardList);
+        System.out.println(boardList);
+        return "admin/boardList";
+    }
+
+    @ResponseBody
+    @PostMapping ("admin/boardList")
+    public int boardAdd(@RequestParam String boardName,@RequestParam String boardCategory){
+
+        BoardDto boardDto = new BoardDto(null, boardName, boardCategory, null);
+        System.out.println(boardDto);
+        return boardService.insertBoard(boardDto);
+    }
 
 }
