@@ -4,8 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-import com.example.project.dto.NoticeDto;
+
 import com.example.project.dto.SearchDto;
+import com.example.project.dto.notice.NoticeDto;
 
 @Mapper
 @Repository

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.example.project.dto.NoticeDto;
 import com.example.project.dto.SearchDto;
+import com.example.project.dto.notice.NoticeDto;
 import com.example.project.service.NoticeService;
 
 @Controller
@@ -28,11 +28,8 @@ public class UserNoticeController {
 	public String noticeList(final Model model) {
 		
 		List<NoticeDto> noticeList = noticeService.selectNoticieList();
-		System.out.println("notice테스트");
 		model.addAttribute("noticeList",noticeList);
-		System.out.println("notice테스트2");
 		System.out.println(noticeList);
-		System.out.println("notice테스트3");
 		return "notice/noticeList";
 	}
 	

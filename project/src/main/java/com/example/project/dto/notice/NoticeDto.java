@@ -1,5 +1,8 @@
-package com.example.project.dto;
+package com.example.project.dto.notice;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("NoticeDto")
 public class NoticeDto {
 
 	private Long postId;
