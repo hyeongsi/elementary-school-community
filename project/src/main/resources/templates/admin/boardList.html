@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+    <script defer src="/app/js/boardList.js"></script>
 
 </head>
 
@@ -64,8 +65,8 @@
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-primary mr-3" type="button">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" type="button">삭제</button>
+                                        <button class="btn btn-sm btn-outline-primary mr-3" type="button" onclick="createBoard()">생성</button>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeBoard()">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,16 +78,18 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allBoardCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">게시판 이름</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="boardDto : ${boardPageDto.boardDtoList}">
-                                                <td><input type="checkbox" data-no="${boardDto.boardId}"></td>
+                                                <td><input th:if="${boardDto.boardId} > 37" type="checkbox" name="boardCk" th:data-boardid="${boardDto.boardId}"></td>
                                                 <td th:text="${boardDto.boardId}">null</td>
-                                                <td th:text="${boardDto.boardName}" th:onclick="|location.href='@{/admin/category(boardId=${boardDto.boardId})}'|">null</td>
+                                                <td th:text="${boardDto.boardName}"
+                                                    th:onclick="|location.href='@{/admin/category(boardId=${boardDto.boardId})}'|"
+                                                    style="cursor:pointer">null</td>
                                             </tr>
                                             </tbody>
                                         </table>
