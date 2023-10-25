@@ -10,6 +10,18 @@
         ON c.board_id = b.board_id
     </select>
 
+    <select id="categoryTotalCnt" resultType="int">
+        SELECT count(*) FROM category
+    </select>
+
+    <select id="selectCategoryPage" resultType="CategoryDto" parameterType="PageDto">
+        SELECT category_id, category_name, board_name
+        FROM (SELECT rownum rm, c.category_id, c.category_name, b.board_name
+             FROM category c JOIN board b
+             ON c.board_id = b.board_id)
+        WHERE rm between #{start} AND #{end}
+    </select>
+
     <select id="selectCategoryListById" resultType="CategoryDto" parameterType="int">
         SELECT c.category_id, c.category_name, b.board_name
         FROM category c JOIN board b

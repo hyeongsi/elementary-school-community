@@ -1,8 +1,8 @@
 package com.example.project.service;
 
-import com.example.project.dto.Board.BoardDto;
-import com.example.project.dto.Board.BoardPageDto;
-import com.example.project.dto.Page.Page;
+import com.example.project.dto.board.BoardDto;
+import com.example.project.dto.board.BoardPageDto;
+import com.example.project.dto.page.Page;
 import com.example.project.dto.PageDto;
 import com.example.project.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
@@ -32,5 +32,13 @@ public class BoardService {
 
     public int insertBoard(final BoardDto boardDto){
         return boardMapper.insertBoard(boardDto);
+    }
+
+    public int deleteBoard(final BoardDto boardDto){
+        return boardMapper.deleteBoard(boardDto);
+    }
+
+    public int deleteBoardList(final List<BoardDto> boardDtoList){
+        return boardMapper.deleteBoardList(boardDtoList);
     }
 }
