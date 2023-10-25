@@ -64,6 +64,7 @@
 													<div>
 														<form name="edit-form" action="./edit" autocomplete="off"
 															method="post">
+															<input hidden="hidden" />
 															<input id="postId" name="postId"
 																th:value="${notice.postId}">
 													</div>
@@ -71,9 +72,9 @@
 														<input class="mt-4" type="text" id="title" maxlength='30'
 															name="title" th:value="${notice.title}"> 최대 30자 <br />
 														<div id="content_div">
-															<input class="form-control"
-																style="height: 100%; width: 100%;" maxlength='1000'
-																id="content" name="content" th:value="${notice.content}"></input>
+															<textarea class="form-control"
+																style="height: 30em; width: 100%;" maxlength='1000'
+																id="content" name="content" th:text="${notice.content}"></textarea>
 														</div>
 														<br /> <input type="submit" id="submiBtn"
 															class="btn btn-outline-primary mr-2" value="수정">

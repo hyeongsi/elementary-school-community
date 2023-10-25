@@ -7,8 +7,20 @@ public class PageDto {
 
     final int start;
     final int end;
+    
+    private String keyword;
+    private String searchType;
+    
+    
+    
+    public PageDto(int start, int end, String keyword, String searchType) {
+		this.start = start;
+		this.end = end;
+		this.keyword = keyword;
+		this.searchType = searchType;
+	}
 
-    public PageDto(int start, int end) {
+	public PageDto(int start, int end) {
         this.start = start;
         this.end = end;
     }
@@ -20,4 +32,14 @@ public class PageDto {
     public int getEnd() {
         return end;
     }
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public String getSearchType() {
+		return searchType;
+	}
+
+    
 }

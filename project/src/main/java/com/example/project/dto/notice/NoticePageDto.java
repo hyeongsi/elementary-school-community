@@ -12,6 +12,7 @@ public class NoticePageDto {
 	private Page page;
 	private List<NoticeDto> noticeDtoList;
 	
+	
 	public NoticePageDto(Page page, List<NoticeDto> noticeDtoList) {
 		this.page = page;
 		this.noticeDtoList = noticeDtoList;
@@ -24,7 +25,5 @@ public class NoticePageDto {
 	public List<NoticeDto> getNoticeDtoList() {
 		return noticeDtoList;
 	}
-	
-	
 	
 }

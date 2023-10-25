@@ -18,7 +18,7 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-
+	
 </head>
 
 <body id="page-top">
@@ -44,7 +44,8 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">게시판 목록</h6>
+                    <!-- 타이틀 제목 -->
+                        <h6 class="m-0 font-weight-bold text-primary"><div class="subject_inner_text" th:text="${notice.title}"></div></h6>
                     </div>
                     <div class="card-body">
 
@@ -54,10 +55,11 @@
 									
 										<div id="outter">
 											<table border="1">
-												<div class="subject_inner_text" th:text="${notice.title}"></div>
-												<div class="subject_inner_text" th:text="${notice.content}">
+												
+												<div class="subject_inner_text" th:text="${notice.content}"></div>
 													</span>
 											</table>
+											<a class="btn btn-outline-primary mr-2" id="delBtn" th:href="@{/notice/delete(postId=${notice.postId})}">삭제</a>
 											<a class="btn btn-outline-primary mr-2" th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
 </div>
 								</div>
@@ -84,38 +86,6 @@
                                 <div class="col-sm-12 col-md-5">
                                     <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
                                         Showing 1 to 10 of 57 entries
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-7">
-                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous disabled"
-                                                id="dataTable_previous"><a href="#" aria-controls="dataTable"
-                                                                           data-dt-idx="0" tabindex="0"
-                                                                           class="page-link">Previous</a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                                                            aria-controls="dataTable"
-                                                                                            data-dt-idx="1" tabindex="0"
-                                                                                            class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="2" tabindex="0"
-                                                                                      class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="3" tabindex="0"
-                                                                                      class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="4" tabindex="0"
-                                                                                      class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="5" tabindex="0"
-                                                                                      class="page-link">5</a></li>
-                                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
-                                                                                                              aria-controls="dataTable"
-                                                                                                              data-dt-idx="7"
-                                                                                                              tabindex="0"
-                                                                                                              class="page-link">Next</a>
-                                            </li>
-                                        </ul>
                                     </div>
                                 </div>
                             </div>

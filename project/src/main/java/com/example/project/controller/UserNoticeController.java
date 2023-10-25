@@ -5,13 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
-
-import com.example.project.dto.SearchDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.NoticeService;
@@ -28,14 +23,10 @@ public class UserNoticeController {
 	@GetMapping("/notice/list")
 	public String noticeList(final Model model,
             				@RequestParam(defaultValue = "10") int displayUnit,
-            				@RequestParam(defaultValue = "1") int curPage) {
+            				@RequestParam(defaultValue = "1") int curPage,@RequestParam(defaultValue="") String keyword,@RequestParam(defaultValue="title") String searchType) {
 		
-		
-		//List<NoticeDto> noticeList = noticeService.selectNoticieList();
-		//model.addAttribute("noticeList",noticeList);
-		final NoticePageDto noticePageDto = noticeService.selectNoticePage(displayUnit, curPage);
-		model.addAttribute("noticePageDto", noticePageDto);
-		System.out.println(noticePageDto);
+			final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType);
+			model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
 	
@@ -56,7 +47,7 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/notice/edit")
-	public String noticeEditForm(final Model model,  @RequestParam("postId") int postId) {
+	public String noticeEditForm(final Model model,  @RequestParam("postId") Long postId) {
 		// NoticeDto noticeDto = new NoticeDto(null, title, content,null,null,null);
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
 		return "notice/edit";
@@ -81,7 +72,9 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/notice/detail")
-	public String retrieve(final Model model, @RequestParam("postId") int postId) {
+	public String retrieve(final Model model, @RequestParam Long postId) {
+		
+		noticeService.updateViewCnt(postId);
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
 		return "notice/detail";
 	}
