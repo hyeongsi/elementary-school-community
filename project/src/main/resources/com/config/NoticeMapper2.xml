@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.project.mapper.NoticeMapper">
+<mapper namespace="com.example.project.mapper.NoticeMapper2">
 
     <select id="selectNoticeList" resultType="NoticeDto">
         SELECT post_Id, title, content , good, view_cnt, member_id 
@@ -10,26 +10,16 @@
         ORDER BY 1 DESC
     </select>
     
-    <select id="selectNoticePage" resultType="NoticeDto" parameterType="PageDTO">
-        SELECT post_Id, title, content , good, view_cnt, member_id 
-        FROM (SELECT rownum rm, post_id, title, content, good, view_cnt, member_id FROM post_test ORDER BY post_id DESC)
-        WHERE rm between #{start} AND #{end}
-    </select>
-    
-    <select id="noticeTotalCnt" resultType="int">
-        SELECT count(*) FROM post_test
-    </select>
-    
 	<insert id="insertNotice" parameterType="NoticeDto">
-		INSERT INTO post_test (post_id, title, write_time, category_id,content, member_id) 
-		VALUES(seq_post.nextval, #{title}, sysdate, 1, #{content}, 1234)
+		insert into post_test (post_id, title, write_time, category_id,content, member_id) 
+		values(seq_post.nextval, #{title}, sysdate, 1, #{content}, 1234)
 	</insert>
 	
 	<update id="updateNotice" parameterType="NoticeDto">
-		UPDATE post_test
-			SET title = #{title},
+		update post_test
+			set title = #{title},
     			content = #{content}
-		WHERE post_id = #{postId}
+		where post_id = #{postId}
 	</update>
 	
 	<delete id="deleteNotice" parameterType="long">
@@ -42,7 +32,6 @@
         FROM post_test
         WHERE post_Id = #{postId}
     </select>
-  
 	
 	
 </mapper>

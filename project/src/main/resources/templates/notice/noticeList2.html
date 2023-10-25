@@ -54,12 +54,12 @@
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/notice/list}?displayUnit=' + this.value|"
+                                            name="dataTable_length" aria-controls="dataTable"
                                             class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 100" value="100">100</option>
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
                                     </select> 단위</label></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
@@ -87,7 +87,9 @@
                                                 
                                             </tr>
                                             </thead>
-                                            <tr th:each="notice : ${noticePageDto.noticeDtoList}">
+                                            <tbody>
+                               
+                                            <tr th:each="notice : ${noticeList}">
                                                 <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
                                                 <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
@@ -117,19 +119,31 @@
                                         
                                         <ul class="pagination">
    
-                                            <li class="paginate_button page-item previous" id="dataTable_previous"
-                                                th:classappend="${noticePageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" class="page-link">Previous</a>
-                                            </li>
-                                            <th:block th:each="num : ${#numbers.sequence(noticePageDto.page.startPage,
-                                                                                        noticePageDto.page.endPage)}">
-                                                <li class="paginate_button page-item" th:classappend="${num == noticePageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/notice/list(displayUnit=${displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
-                                                </li>
-                                            </th:block>
-                                            <li class="paginate_button page-item next" id="dataTable_next"
-                                                th:classappend="${noticePageDto.page.curPage == noticePageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" class="page-link">Next</a>
+                                            <li class="paginate_button page-item previous disabled"
+                                                id="dataTable_previous"><a href="#" aria-controls="dataTable"
+                                                                           data-dt-idx="0" tabindex="0"
+                                                                           class="page-link">Previous</a></li>
+                                            <li class="paginate_button page-item active"><a href="#"
+                                                                                            aria-controls="dataTable"
+                                                                                            data-dt-idx="1" tabindex="0"
+                                                                                            class="page-link">1</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="2" tabindex="0"
+                                                                                      class="page-link">2</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="3" tabindex="0"
+                                                                                      class="page-link">3</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="4" tabindex="0"
+                                                                                      class="page-link">4</a></li>
+                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
+                                                                                      data-dt-idx="5" tabindex="0"
+                                                                                      class="page-link">5</a></li>
+                                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
+                                                                                                              aria-controls="dataTable"
+                                                                                                              data-dt-idx="7"
+                                                                                                              tabindex="0"
+                                                                                                              class="page-link">Next</a>
                                             </li>
                                         </ul>
                                     </div>

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.project.dto.SearchDto;
 import com.example.project.dto.notice.NoticeDto;
+import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.NoticeService;
 
 @Controller
@@ -25,11 +26,16 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/notice/list")
-	public String noticeList(final Model model) {
+	public String noticeList(final Model model,
+            				@RequestParam(defaultValue = "10") int displayUnit,
+            				@RequestParam(defaultValue = "1") int curPage) {
 		
-		List<NoticeDto> noticeList = noticeService.selectNoticieList();
-		model.addAttribute("noticeList",noticeList);
-		System.out.println(noticeList);
+		
+		//List<NoticeDto> noticeList = noticeService.selectNoticieList();
+		//model.addAttribute("noticeList",noticeList);
+		final NoticePageDto noticePageDto = noticeService.selectNoticePage(displayUnit, curPage);
+		model.addAttribute("noticePageDto", noticePageDto);
+		System.out.println(noticePageDto);
 		return "notice/noticeList";
 	}
 	
