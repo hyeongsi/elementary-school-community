@@ -8,12 +8,7 @@ public class CategoryDto {
     private Long categoryId;
     private String categoryName;
     private String boardName;
-
-    public CategoryDto(Long categoryId, String categoryName, String boardName) {
-        this.categoryId = categoryId;
-        this.categoryName = categoryName;
-        this.boardName = boardName;
-    }
+    private Long boardId;
 
     public Long getCategoryId() {
         return categoryId;
@@ -27,12 +22,7 @@ public class CategoryDto {
         return boardName;
     }
 
-    @Override
-    public String toString() {
-        return "CategoryDto{" +
-                "categoryId=" + categoryId +
-                ", categoryName='" + categoryName + '\'' +
-                ", boardName='" + boardName + '\'' +
-                '}';
+    public Long getBoardId() {
+        return boardId;
     }
 }

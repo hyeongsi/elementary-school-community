@@ -1,7 +1,7 @@
 package com.example.project.mapper;
 
 import com.example.project.dto.board.BoardDto;
-import com.example.project.dto.PageDto;
+import com.example.project.dto.page.PageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
