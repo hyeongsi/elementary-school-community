@@ -31,7 +31,7 @@
 <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul th:replace="/common/slideBar :: slideBar"></ul>
+    <ul th:replace="admin/common/admin_slidebar :: slideBar"></ul>
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -112,7 +112,8 @@
                                 
                                 <!-- 검색 -->
 										<div class="search_box">
-											<form id="searchForm" method="get" th:action="@{'/notice/list'}">
+											<form id="searchForm" onsubmit="return false;"
+												autocomplete="off">
 												<div class="sch_group fl">
 													<select id="searchType" name="searchType" title="검색 유형 선택">
 														<option value="all">전체 검색</option>
@@ -121,8 +122,7 @@
 														<option value="memberId">작성자</option>
 													</select> <input type="text" id="keyword" name="keyword"
 														placeholder="키워드를 입력해 주세요." title="키워드 입력" />
-													<input type="hidden" name="categoryId" th:value="${categoryId}" />
-													<button type="submit" class="bt_search"
+													<button type="button" class="bt_search"
 														onclick="movePage(1);">
 														<i class="fas fa-search"></i><span class="skip_info">검색</span>
 													</button>
@@ -148,7 +148,7 @@
                                             <th:block th:each="num : ${#numbers.sequence(noticePageDto.page.startPage,
                                                                                         noticePageDto.page.endPage)}">
                                                 <li class="paginate_button page-item" th:classappend="${num == noticePageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/notice/list(displayUnit=${displayUnit},curPage=${num}, categoryId=${categoryId},searchType=${searchType}, keyword=${keyword})}" class="page-link" th:text="${num}"></a>
+                                                    <a href="#" th:href="@{/notice/list(displayUnit=${displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
                                                 </li>
                                             </th:block>
                                             <li class="paginate_button page-item next" id="dataTable_next"

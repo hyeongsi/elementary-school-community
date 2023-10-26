@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.PageDto;
 import com.example.project.dto.notice.NoticeDto;
 
@@ -23,5 +24,6 @@ public interface NoticeMapper {
 	public NoticeDto selectByPostId(Long postId);
 	public int updateNotice(NoticeDto noticeDto);
 	public int updateViewCnt(Long postId);
+	public List<NoticeCategoryDto> selectNoticeCategoryList();
 	
 }

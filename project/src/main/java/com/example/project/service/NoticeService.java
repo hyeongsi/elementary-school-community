@@ -1,5 +1,6 @@
 package com.example.project.service;
 
+import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.PageDto;
 import com.example.project.dto.Board.BoardDto;
 import com.example.project.dto.Board.BoardPageDto;
@@ -37,16 +38,18 @@ public class NoticeService {
     }
     */
     
-    public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype) {
+    public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype,int categoryId) {
     	
+    	System.out.println(categoryId);
     	final Map<String, String> map = new HashMap<>();
     	map.put("searchType", searchtype);
     	map.put("keyword", keyword);
+    	map.put("categoryId", Integer.toString(categoryId));
     	final int totalCnt = noticeMapper.noticeTotalCnt(map);
     	System.out.println(totalCnt);
         final Page page = new Page(displayUnit, curPage, totalCnt);
 
-        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype);
+        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype, categoryId);
      
         final List<NoticeDto> noticeDtoList = noticeMapper.selectSearchNoticePage(pageDto);
   
@@ -79,4 +82,7 @@ public class NoticeService {
     	return noticeMapper.updateNotice(noticeDto);
     }
 
+    public List<NoticeCategoryDto> selectNoticeCategoryList() {
+    	return noticeMapper.selectNoticeCategoryList();
+    }
 }

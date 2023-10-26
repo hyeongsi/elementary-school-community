@@ -7,6 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.NoticeService;
@@ -23,10 +26,17 @@ public class UserNoticeController {
 	@GetMapping("/notice/list")
 	public String noticeList(final Model model,
             				@RequestParam(defaultValue = "10") int displayUnit,
-            				@RequestParam(defaultValue = "1") int curPage,@RequestParam(defaultValue="") String keyword,@RequestParam(defaultValue="title") String searchType) {
+            				@RequestParam(defaultValue = "1") int curPage,
+            				@RequestParam(defaultValue = "") String keyword,
+            				@RequestParam(defaultValue = "title") String searchType,
+            				@RequestParam(defaultValue = "1") int categoryId) {
 		
-			final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType);
-			model.addAttribute("noticePageDto", noticePageDto);
+		model.addAttribute("categoryId", categoryId);
+		model.addAttribute("searchType", searchType);
+		model.addAttribute("keyword", keyword);
+		System.out.println("카테고리:"+categoryId);
+		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId);
+		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
 	
@@ -40,7 +50,7 @@ public class UserNoticeController {
 	
 	@PostMapping("/notice/write")
 	public String noticeWrite(@RequestParam String title,@RequestParam String content){
-		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null);
+		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null,null);
 		System.out.println(noticeDto);
 		noticeService.insertNotice(noticeDto);
 		return "redirect:/notice/list";
@@ -57,7 +67,7 @@ public class UserNoticeController {
 	@PostMapping("/notice/edit")
 	public String noticeUpdate(@RequestParam(value="postId", required=false) Long postId, @RequestParam String title, @RequestParam String content) {
 		System.out.println(postId);
-		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null);
+		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
 		System.out.println(noticeDto.getPostId());
 		noticeService.updateNotice(noticeDto);
 		return "redirect:/notice/detail"+"?postId="+noticeDto.getPostId();
@@ -78,4 +88,12 @@ public class UserNoticeController {
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
 		return "notice/detail";
 	}
+	
+	@ResponseBody
+	@GetMapping("/getCategories")
+    public List<NoticeCategoryDto> getCategories() {
+        return noticeService.selectNoticeCategoryList();
+    }
+	
+	
 }

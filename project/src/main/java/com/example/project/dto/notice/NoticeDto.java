@@ -11,14 +11,16 @@ public class NoticeDto {
 	private Long good;
 	private Long viewCnt;
 	private Long memberId;
+	private Long categoryId;
 	
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, Long memberId) {
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, Long memberId, Long categoryId) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
 		this.good = good;
 		this.viewCnt = viewCnt;
 		this.memberId = memberId;
+		this.categoryId = categoryId;
 	}
 
 	public Long getPostId() {
@@ -69,12 +71,18 @@ public class NoticeDto {
 		this.memberId = memberId;
 	}
 
+	public Long getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Long categoryId) {
+		this.categoryId = categoryId;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeDto [postId=" + postId + ", title=" + title + ", content=" + content + ", good=" + good
-				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + "]";
+				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + "]";
 	}
-	
-	
-	
+
 }

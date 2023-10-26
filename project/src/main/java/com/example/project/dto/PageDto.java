@@ -10,14 +10,16 @@ public class PageDto {
     
     private String keyword;
     private String searchType;
+    private int categoryId;
     
     
     
-    public PageDto(int start, int end, String keyword, String searchType) {
+    public PageDto(int start, int end, String keyword, String searchType,int categoryId) {
 		this.start = start;
 		this.end = end;
 		this.keyword = keyword;
 		this.searchType = searchType;
+		this.categoryId = categoryId;
 	}
 
 	public PageDto(int start, int end) {
@@ -39,6 +41,10 @@ public class PageDto {
 
 	public String getSearchType() {
 		return searchType;
+	}
+
+	public int getCategoryId() {
+		return categoryId;
 	}
 
     
