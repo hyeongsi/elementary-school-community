@@ -1,12 +1,10 @@
 package com.example.project.service;
 
 import com.example.project.dto.NoticeCategoryDto;
-import com.example.project.dto.PageDto;
-import com.example.project.dto.Board.BoardDto;
-import com.example.project.dto.Board.BoardPageDto;
-import com.example.project.dto.Page.Page;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
+import com.example.project.dto.page.Page;
+import com.example.project.dto.page.PageDto;
 
 import org.springframework.stereotype.Service;
 import com.example.project.mapper.NoticeMapper;

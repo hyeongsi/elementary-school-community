@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 
-import com.example.project.dto.Page.Page;
+import com.example.project.dto.page.Page;
+
 
 @Alias("NoticePageDto")
 public class NoticePageDto {

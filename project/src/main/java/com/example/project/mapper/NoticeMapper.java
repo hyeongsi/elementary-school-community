@@ -7,8 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.project.dto.NoticeCategoryDto;
-import com.example.project.dto.PageDto;
 import com.example.project.dto.notice.NoticeDto;
+import com.example.project.dto.page.PageDto;
 
 @Mapper
 @Repository

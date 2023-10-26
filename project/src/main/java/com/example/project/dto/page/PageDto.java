@@ -1,4 +1,5 @@
-package com.example.project.dto;
+package com.example.project.dto.page;
+
 
 import org.apache.ibatis.type.Alias;
 
