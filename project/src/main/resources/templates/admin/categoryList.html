@@ -54,18 +54,16 @@
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" aria-controls="dataTable"
+                                            name="dataTable_length" th:onchange="|location.href='@{/admin/categoryList}?displayUnit=' + this.value|"
                                             class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="100">100</option>
+                                        <option th:selected="${categoryPageDto.page.displayUnit} == 10" value="10">10</option>
+                                        <option th:selected="${categoryPageDto.page.displayUnit} == 25" value="25">25</option>
+                                        <option th:selected="${categoryPageDto.page.displayUnit} == 50" value="50">50</option>
+                                        <option th:selected="${categoryPageDto.page.displayUnit} == 100" value="100">100</option>
                                     </select> 단위</label></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-primary mr-3" type="button">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" type="button">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,18 +75,16 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">카테고리 이름</th>
                                                 <th style="min-width: 150px">게시판 이름</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="category : ${categoryList}">
-                                                <td><input type="checkbox" data-no="${category.categoryId}"></td>
-                                                <td th:text="${category.categoryId}">null</td>
-                                                <td th:text="${category.categoryName}">null</td>
-                                                <td th:text="${category.boardName}">null</td>
+                                            <tr th:each="categoryDto : ${categoryPageDto.categoryDtoList}">
+                                                <td th:text="${categoryDto.categoryId}">null</td>
+                                                <td th:text="${categoryDto.categoryName}">null</td>
+                                                <td th:text="${categoryDto.boardName}">null</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -100,38 +96,26 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 57 entries
+                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
+                                         th:text="|Showing ${categoryPageDto.page.curPage} to ${categoryPageDto.page.maxPage} of ${categoryPageDto.page.totalCnt} entries|">
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                                         <ul class="pagination">
-                                            <li class="paginate_button page-item previous disabled"
-                                                id="dataTable_previous"><a href="#" aria-controls="dataTable"
-                                                                           data-dt-idx="0" tabindex="0"
-                                                                           class="page-link">Previous</a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                                                            aria-controls="dataTable"
-                                                                                            data-dt-idx="1" tabindex="0"
-                                                                                            class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="2" tabindex="0"
-                                                                                      class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="3" tabindex="0"
-                                                                                      class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="4" tabindex="0"
-                                                                                      class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="5" tabindex="0"
-                                                                                      class="page-link">5</a></li>
-                                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
-                                                                                                              aria-controls="dataTable"
-                                                                                                              data-dt-idx="7"
-                                                                                                              tabindex="0"
-                                                                                                              class="page-link">Next</a>
+                                            <li class="paginate_button page-item previous" id="dataTable_previous"
+                                                th:classappend="${categoryPageDto.page.curPage == 1} ? 'disabled' : '' ">
+                                                <a href="#" th:href="@{/admin/categoryList(displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage - 1})}" class="page-link">Previous</a>
+                                            </li>
+                                            <th:block th:each="num : ${#numbers.sequence(categoryPageDto.page.startPage,
+                                                                                        categoryPageDto.page.endPage)}">
+                                                <li class="paginate_button page-item" th:classappend="${num == categoryPageDto.page.curPage} ? 'active' : '' ">
+                                                    <a href="#" th:href="@{/admin/categoryList(displayUnit=${categoryPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
+                                                </li>
+                                            </th:block>
+                                            <li class="paginate_button page-item next" id="dataTable_next"
+                                                th:classappend="${categoryPageDto.page.curPage == categoryPageDto.page.endPage} ? 'disabled' : '' ">
+                                                <a href="#" th:href="@{/admin/categoryList(displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage + 1})}"  class="page-link">Next</a>
                                             </li>
                                         </ul>
                                     </div>

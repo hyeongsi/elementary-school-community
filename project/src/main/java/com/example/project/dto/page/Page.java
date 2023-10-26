@@ -1,4 +1,4 @@
-package com.example.project.dto.Page;
+package com.example.project.dto.page;
 
 public class Page {
 

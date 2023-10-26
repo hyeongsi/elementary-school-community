@@ -1,6 +1,6 @@
-package com.example.project.dto.Board;
+package com.example.project.dto.board;
 
-import com.example.project.dto.Page.Page;
+import com.example.project.dto.page.Page;
 import org.apache.ibatis.type.Alias;
 
 import java.util.List;
