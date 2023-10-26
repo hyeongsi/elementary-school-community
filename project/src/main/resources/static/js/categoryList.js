@@ -1,6 +1,6 @@
-function allBoardCk(ckBox){
+function allCategoryCk(ckBox){
     const isCk = ckBox.checked;
-    
+
     // 전체 체크박스 체크여부 토글 적용
     const query = "input[name='boardCk']";
     const ckBoxes = document.querySelectorAll(query);
@@ -9,19 +9,21 @@ function allBoardCk(ckBox){
     }
 }
 
-function createBoard(){
-    const input = prompt("생성할 게시판의 제목을 입력하세요.");
-    if(input == null || input == "")
+function createCategory(element){
+    const inputCategoryName = prompt("생성할 카테고리의 제목을 입력하세요.");
+    if(inputCategoryName == null || inputCategoryName == "")
         return;
 
-    const url = "http://localhost:8088/app/admin/boardList";
+    const boardId = element.dataset['boardid'];
+    const url = "http://localhost:8088/app/admin/categoryList";
     fetch(url, {
         method: "POST",
         headers:{
             "Content-Type":"application/json",
         },
         body: JSON.stringify({
-            boardName: input,
+            categoryName: inputCategoryName,
+            boardId: boardId,
         }),
     })
         .then(response => response.json())
@@ -37,8 +39,8 @@ function createBoard(){
         .catch(error => alert("생성에 실패했습니다."));
 }
 
-function removeBoard() {
-    const query = "input[name='boardCk']:checked";
+function removeCategory() {
+    const query = "input[name='categoryCk']:checked";
     const ckBoxes = document.querySelectorAll(query);
     if(ckBoxes.length == 0)
         return;
@@ -48,11 +50,11 @@ function removeBoard() {
         const arr = [];
         for (let i = 0; i < ckBoxes.length; i++) {
             let obj = {};
-            obj.boardId = ckBoxes[i].dataset['boardid'];
+            obj.categoryId = ckBoxes[i].dataset['categoryid'];
             arr.push(obj);
         }
 
-        const url =  "http://localhost:8088/app/admin/boardList";
+        const url =  "http://localhost:8088/app/admin/categoryList";
         fetch(url, {
             method: "DELETE",
             headers:{
@@ -68,6 +70,7 @@ function removeBoard() {
                     return;
                 }
                 alert("삭제에 실패했습니다.")
+                return;
             })
             .catch(error => alert("삭제에 실패했습니다."));
     }

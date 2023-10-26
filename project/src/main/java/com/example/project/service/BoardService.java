@@ -3,7 +3,7 @@ package com.example.project.service;
 import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.board.BoardPageDto;
 import com.example.project.dto.page.Page;
-import com.example.project.dto.PageDto;
+import com.example.project.dto.page.PageDto;
 import com.example.project.mapper.BoardMapper;
 import org.springframework.stereotype.Service;
 
