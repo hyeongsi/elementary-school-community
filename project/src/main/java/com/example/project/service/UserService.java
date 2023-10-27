@@ -14,10 +14,15 @@ public class UserService {
 	
 	// 로그인
 	public String login(String id, String pwd) {
+		
+		System.out.println("서비스");
+		
 		UserDTO userDTO = userDAO.getUserById(id);
-		if(userDTO.getPwd().equals(pwd))
+		
+		if(userDTO != null)
 			return userDTO.getId();
 		return null;	
+		
 	}
 	
 	// 아이디 중복체크
@@ -28,6 +33,11 @@ public class UserService {
 	}
 	
 	// 회원가입
+	public int signup(UserDTO userDTO) {
+		System.out.println("signup:"+userDTO);
+		return userDAO.insertUser(userDTO);
+	}
+	/*
 	public boolean signup(UserDTO userDTO) {
 		System.out.println("signup:"+userDTO);
 		
@@ -35,12 +45,8 @@ public class UserService {
 		
 		return n>0 ? true : false;
 	}
-	/*
-	public int signup(UserDTO userDTO) {
-		System.out.println("signup:"+userDTO);
-		return userDAO.insertUser(userDTO);
-	}
 	*/
+
 	
 	// 내정보
 	public UserDTO getUserById(String id) {

@@ -49,11 +49,13 @@ public class UserController {
 		
 		System.out.println("로그인 서비스 삽입");
 		if(userId == null) { // 로그인 실패
-			return "redirect:/login";
+			return "redirect:./login";
 		}
+		
 		System.out.println("세션저장");
 		session.setAttribute("userId", userId);
 		return "redirect:./mypage";
+		
 	} 
 	
 	
