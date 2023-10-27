@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.dto.page.Page;
@@ -82,5 +83,12 @@ public class NoticeService {
 
     public List<NoticeCategoryDto> selectNoticeCategoryList() {
     	return noticeMapper.selectNoticeCategoryList();
+    }
+    
+    public void addComment(CommentDto commnetDto) {
+    	noticeMapper.addComment(commnetDto);
+    }
+    public List<CommentDto> selectCommentList(Long postId){
+    	return noticeMapper.selectCommentList(postId);
     }
 }

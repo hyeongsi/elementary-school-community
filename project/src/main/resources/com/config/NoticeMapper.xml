@@ -11,7 +11,6 @@
 		FROM (
 		SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
 		FROM post
-        
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
          )WHERE rm between #{start} AND #{end}
@@ -58,7 +57,7 @@
     
 	<insert id="insertNotice" parameterType="NoticeDto">
 		INSERT INTO post (post_id, title, write_time, category_id,content, member_id) 
-		VALUES(seq_post.nextval, #{title}, sysdate, 1, #{content}, 9999)
+		VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, 9999)
 	</insert>
 	
 	<update id="updateNotice" parameterType="NoticeDto">
@@ -84,6 +83,15 @@
     	FROM category
     </select>
   
-	
+	<insert id="addComment" parameterType="CommentDto">
+    	INSERT INTO comments 
+    	VALUES(seq_comments.nextval, 1, 9999, #{postId}, #{commentContents})
+    </insert>
+    
+    <select id="selectCommentList" parameterType="long" resultType="CommentDto">
+    	SELECT member_id, comment_contents, post_id
+    	FROM comments
+    	WHERE post_id = #{postId}
+    </select>
 	
 </mapper>
