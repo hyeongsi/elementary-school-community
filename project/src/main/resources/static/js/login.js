@@ -11,6 +11,7 @@
     		container.classList.remove("right-panel-active");
     });
     
+    
 $(document).ready(function(){
     	
     	$("#login").click(function(){ //로그인 버튼 누를시 실행되는 함수
@@ -19,8 +20,7 @@ $(document).ready(function(){
     			url:"http://localhost:8088/app/login.html",
     			type:"post",
     			data:{ id:$("#id").val(), pwd:$("#pwd").val() }, //id란과 pwd에 입력된 Data 서버로 전달
-    			
-    			//백엔드에서 넘겨주는 데이터가 dto라는 객체이므로 json으로 받는다
+    			//백엔드에서 넘겨주는 데이터가 dto라는 객체이므로 json으로 받음
     			success:function(json){
     			//	alert('success');
     			//	alert(JSON.stringify(json));
@@ -29,7 +29,7 @@ $(document).ready(function(){
     					$("#id").val("");
     					$("#pwd").val("")
     				}else{
-    					sessionStorage.setItem("login",JSON.stringify(json));
+    					sessionStorage.setItem("login",JSON.stringify(json)); //JSON.stringify(json)
     					alert(json.name+"님 환영합니다.")
     					location.href="./"
     				}
@@ -113,6 +113,11 @@ $(document).ready(function(){
     	});
     	
     	
+    	
+    	
+    	
+    	
+    	
     	/*
     	
     	//#################### 정규식을 이용한 이메일 형식 체크 ############################
@@ -129,4 +134,34 @@ $(document).ready(function(){
     	}
     	
     	*/
+    
     });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
