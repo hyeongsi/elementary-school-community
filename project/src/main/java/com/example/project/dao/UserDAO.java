@@ -13,7 +13,7 @@ public interface UserDAO {
 	public UserDTO getUserById(String id);
 	
 	// 아이디 중복체크
-	public int getId(UserDTO dto);
+	public int getId(UserDTO userDTO);
 	
 	// 회원가입
 	public int insertUser(UserDTO userdto);

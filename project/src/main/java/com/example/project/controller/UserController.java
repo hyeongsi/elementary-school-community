@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.example.project.dto.MemberDTO;
 import com.example.project.dto.UserDTO;
 import com.example.project.service.UserService;
 
@@ -27,7 +25,7 @@ public class UserController {
 	
 	
 	
-	// 로그인상태 체크 로직
+	// 로그인상태 체크 로직 ==> 수정
 	@GetMapping("/login")
 	public String toLoginPage(HttpSession session) {
 		
@@ -59,13 +57,6 @@ public class UserController {
 	} 
 	
 	
-	// 회원가입 페이지로 이동
-	@GetMapping("/signup")
-	public String toSignupPage() { 
-		System.out.println("회원가입 페이지로 이동");
-		return "/signup"; 
-	}
-	
 	// 회원가입 - 아이디 중복 체크
 	@ResponseBody
 	@PostMapping("/getId")
@@ -73,6 +64,7 @@ public class UserController {
 		System.out.println("아이디 컨트롤러에 POST 전달");
 		
 		boolean b = userService.getId(userDTO);
+		System.out.println(b);
 		if(b) {
 			return "NO"; // 1이상이라는 말 => 이미 아이디가 존재한다는 말이라 사용 불가능
 		}
@@ -80,31 +72,22 @@ public class UserController {
 		return "OK";
 	}
 	
+	
 	// 회원가입 로직
-	@ResponseBody
 	@PostMapping("/signup")
 	public String signup(UserDTO userDTO) { // 화원가입
-		
-		System.out.println(userDTO.toString());
-		boolean b = userService.signup(userDTO);
-		if(b) {
-			System.out.println("yes");
-			return "YES";
-		}else {
-			try{
-				System.out.println("singup컨트롤러");
-				//userService.signup(userDTO);
-			} catch(DuplicateKeyException e) {
-				return "redirect:/login?error_code=-1";
-			} catch(Exception e) {
-				e.printStackTrace();
-				return "redirect:/login?error_code=-99";
-			}
+		try {
+			userService.signup(userDTO);
+		}catch(DuplicateKeyException e) {
+			return "redirect:/signup?error_code=-1";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "redirect:/signup?error_code=-99";
 		}
-		return "NO";
 		
-		//return "redirect:/login";
+		return "redirect:/login";
 	}
+	
 	
 	// 회원정보 수정
 	@GetMapping("/mypage/memberUpdate")// //mypage/member

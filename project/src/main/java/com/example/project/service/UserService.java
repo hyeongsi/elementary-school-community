@@ -23,6 +23,7 @@ public class UserService {
 	// 아이디 중복체크
 	public boolean getId(UserDTO userDTO) {
 		int n = userDAO.getId(userDTO);
+		System.out.println(n);
 		return n>0 ? true : false;
 	}
 	
