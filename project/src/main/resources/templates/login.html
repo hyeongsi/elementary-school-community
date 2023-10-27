@@ -23,8 +23,8 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/LoginStyle.css" type="text/css">
-     
-    <!-- <script defer src="./js/login.js"></script> -->
+        
+    <script defer src="./js/login.js"></script>
     
 
 </head>
@@ -46,7 +46,7 @@
 	
 <div class="container" id="container">
   <div class="form-container sign-up-container" id="app">
-    <form id="frm" action="./signup" method="post" >
+    <form id="frm">
     
       <h1>Create Account</h1>
       <!-- 
@@ -84,7 +84,7 @@
 					
 
 
-						<button class="signup_btn" type="submit" id="account">Sign Up</button>
+						<button class="signup_btn" type="button" id="account">Sign Up</button>
       
     </form>
   </div>
@@ -126,8 +126,7 @@
  			<!-- 로그인 폼 -->
   
   <div class="form-container sign-in-container" id="app">
-  
-    <form action="./login" method="post">
+    <form action="#">
     
     
       <h1>Sign in</h1>
@@ -139,12 +138,12 @@
       
       
       <span>use your account</span>
-      <input type="text" id="id" name="id" placeholder="아이디입력" />
-      <input type="password" id="pwd" name="pwd" placeholder="비밀번호 입력" />
+      <input type="text" id="id" placeholder="아이디입력" />
+      <input type="password" id="pwd" placeholder="비밀번호 입력" />
      
       <a href="account.html">Forgot your password?</a>
       
-      <button  class="signin_btn" type="submit" id="login">Sign In</button>
+      <button class="signin_btn" type="button" id="login">Sign In</button>
       
       
     </form>
@@ -181,21 +180,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-    
-    <script type="text/javascript">
-  //#################### 템플릿 ############################
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('container');
-
-    signUpButton.addEventListener('click', () => {
-    		container.classList.add("right-panel-active");
-    });
-
-    signInButton.addEventListener('click', () => {
-    		container.classList.remove("right-panel-active");
-    });
-    </script>
     
     
 
