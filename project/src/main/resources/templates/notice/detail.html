@@ -59,7 +59,7 @@
 												<div class="subject_inner_text" th:text="${notice.content}"></div>
 													</span>
 											</table>
-											<a class="btn btn-outline-primary mr-2" id="delBtn" th:href="@{/notice/delete(postId=${notice.postId})}">삭제</a>
+											<a class="btn btn-outline-primary mr-2" id="delBtn" th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a>
 											<a class="btn btn-outline-primary mr-2" th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
 </div>
 								</div>

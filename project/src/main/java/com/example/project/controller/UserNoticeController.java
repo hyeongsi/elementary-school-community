@@ -34,7 +34,6 @@ public class UserNoticeController {
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
-		System.out.println("카테고리:"+categoryId);
 		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId);
 		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
@@ -74,16 +73,19 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/notice/delete")
-	public String noticeDelete(Long postId) {
+	public String noticeDelete(Long postId,
+								@RequestParam(defaultValue = "1") int categoryId) {
 		System.out.println(postId);
 		noticeService.deleteNotice(postId);
-		
-		return "redirect:/notice/list";
+		System.out.println(categoryId);
+		return "redirect:/notice/list"+"?categoryId="+categoryId;
 	}
 	
 	@GetMapping("/notice/detail")
-	public String retrieve(final Model model, @RequestParam Long postId) {
+	public String retrieve(final Model model, @RequestParam Long postId,
+							@RequestParam(value="categoryId", defaultValue = "1") int categoryId) {
 		
+		System.out.println(categoryId);
 		noticeService.updateViewCnt(postId);
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
 		return "notice/detail";
