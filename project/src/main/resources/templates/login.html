@@ -23,8 +23,8 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./css/LoginStyle.css" type="text/css">
-        
-    <script defer src="./js/login.js"></script>
+     
+    <!-- <script defer src="./js/login.js"></script> -->
     
 
 </head>
@@ -46,7 +46,7 @@
 	
 <div class="container" id="container">
   <div class="form-container sign-up-container" id="app">
-    <form id="frm">
+    <form id="frm" action="./signup" method="post" >
     
       <h1>Create Account</h1>
       <!-- 
@@ -84,7 +84,7 @@
 					
 
 
-						<button class="signup_btn" type="button" id="account">Sign Up</button>
+						<button class="signup_btn" type="submit" id="account">Sign Up</button>
       
     </form>
   </div>
@@ -126,7 +126,8 @@
  			<!-- 로그인 폼 -->
   
   <div class="form-container sign-in-container" id="app">
-    <form action="#">
+  
+    <form action="./login" method="post">
     
     
       <h1>Sign in</h1>
@@ -138,12 +139,12 @@
       
       
       <span>use your account</span>
-      <input type="text" id="id" placeholder="아이디입력" />
-      <input type="password" id="pwd" placeholder="비밀번호 입력" />
+      <input type="text" id="id" name="id" placeholder="아이디입력" />
+      <input type="password" id="pwd" name="pwd" placeholder="비밀번호 입력" />
      
       <a href="account.html">Forgot your password?</a>
       
-      <button class="signin_btn" type="button" id="login">Sign In</button>
+      <button  class="signin_btn" type="submit" id="login">Sign In</button>
       
       
     </form>
@@ -180,6 +181,87 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+    
+    <script type="text/javascript">
+  //#################### 템플릿 ############################
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
+
+    signUpButton.addEventListener('click', () => {
+    		container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener('click', () => {
+    		container.classList.remove("right-panel-active");
+    });
+    
+    
+    
+    // #################### 회원가입 ############################
+
+    
+  $(document).ready(function() {
+    	
+    	$("#idcheckBtn").click(function() {
+    		$.ajax({
+    			url:"http://localhost:8088/app/getId",
+    			type:"post",
+    			data:{"id":$("#accountid").val() },
+    			success:function( msg ){
+    				//alert('success')
+    				//alert(msg);
+    				if(msg.trim()=='OK'){
+    					$("#idcheck").html("이 아이디는 사용 가능합니다.");
+    					$("#accountid").val( $("#accountid").val());
+    				}else{
+    					$("#idcheck").html("이 아이디는 사용중입니다.");
+    					$("#accountid").val("");//삭제
+    					$("#accountid").focus(); //다시 입력하라고 커서가 뜬다.
+    				}	
+    			},
+    			error:function(){
+    				alert('error');
+    			}
+    		});
+    		
+    	});
+    	
+$("#account").on("click",function(){
+    		
+    		let params = $("#frm").serialize();
+
+			// 정규식을 이용한 이메일 형식 체크 로직
+				$.ajax({
+					url:"http://localhost:8088/app/signup",
+					type:"post",
+					//data:{id:$("#id").val(), pwd:$("#pwd").val(), name:$("name").val(), email:$("email").val() }, //id로 보낸것
+					data:params,//name으로 보낸것
+					success:function(data){			
+						//alert('success')
+						if(data=="YES"){
+							alert('가입성공');
+							container.classList.remove("right-panel-active");
+						}else{
+							alert('가입실패');
+						}
+					},
+					error:function(){
+						alert('error');
+					}
+
+				});
+    	});
+    	
+  });
+    	
+    	
+    
+    
+    
+    
+    
+    </script>
     
     
 

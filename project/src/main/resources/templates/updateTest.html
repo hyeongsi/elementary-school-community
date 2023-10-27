@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>mypage</title>
+</head>
+<body>
+	<h2>회원정보 수정</h2>
+	<form action="./update" method="post">
+		<p>
+			Name<br>
+			<input type="text" name="name" th:value="${user.name}"/>
+		</p>
+		<p>
+			Email<br>
+			<input type="text" name="email" th:value="${user.email}"/>
+		</p>
+		<p>
+			Education<br>
+			<input type="text" name="education" th:value="${user.education}"/>
+		</p>
+		<p>
+			School<br>
+			<input type="text" name="school" th:value="${user.school}"/>
+		</p>
+		<p>
+			Education_code<br>
+			<input type="text" name="education_code" th:value="${user.education_code}"/>
+		</p>
+		<p>
+			School_code<br>
+			<input type="text" name="school_code" th:value="${user.school_code}"/>
+		</p>
+	
+		<button type="submit">저장하기</button>
+	</form>
+	
+</body>
+</html>
