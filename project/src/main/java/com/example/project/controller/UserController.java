@@ -54,7 +54,7 @@ public class UserController {
 		
 		System.out.println("세션저장");
 		session.setAttribute("userId", userId);
-		return "redirect:./mypage";
+		return "redirect:./";
 		
 	} 
 	
@@ -117,20 +117,19 @@ public class UserController {
 	public String logout(HttpSession session) { // 로그아웃
 		session.invalidate();
 		System.out.println("세션 로그아웃");
-		return "redirect:./login";
+		return "redirect:./";
 	}
-	/*
 	
-	// 회원정보 수정
-		@GetMapping("/mypage/memberDelete")
-		public String toDeletePage(HttpSession session, Model model) { // 회원정보 수정 페이지
-			System.out.println("회원정보 수정 페이지");
-			String id = (String) session.getAttribute("userId");
-			UserDTO userDTO = userService.getUserById(id);
-			model.addAttribute("user", userDTO);
-			return "mypage/memberDelete";
-		}
-		*/
+	
+	// 회원 정탈퇴 페이지
+	@GetMapping("/mypage/memberDelete")
+	public String toDeletePage(HttpSession session, Model model) { // 회원정보 수정 페이지
+		System.out.println("회원정보 수정 페이지");
+		String id = (String) session.getAttribute("userId");
+		UserDTO userDTO = userService.getUserById(id);
+		model.addAttribute("user", userDTO);
+		return "mypage/memberDelete";
+	}
 	
 	// 회원탈퇴
 	@PostMapping("/mypage/delete")

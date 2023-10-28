@@ -14,8 +14,8 @@
   		
   		<!-- 회원가입 -->
   		<insert id="insertUser" parameterType="UserDTO">
-  			INSERT INTO MEMBER_DATA(ID, PWD, NAME, EMAIL, EDUCATION, SCHOOL, EDUCATION_CODE, SCHOOL_CODE)
-					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{education_code}, #{school_code})
+  			INSERT INTO MEMBER_DATA(ID, PWD, NAME, EMAIL, EDUCATION, SCHOOL, EDUCATION_CODE, SCHOOL_CODE, USERGRADE, USERCLASS)
+					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{education_code}, #{school_code}, #{usergrade}, #{userclass})
   		</insert>
   		
   		<!-- 회원가입 -> 아이디 중복 체크 -->
@@ -35,7 +35,9 @@
   		 		EDUCATION = #{education},
   		 		SCHOOL = #{school},
   		 		EDUCATION_CODE = #{education_code},
-  		 		SCHOOL_CODE = #{school_code}
+  		 		SCHOOL_CODE = #{school_code},
+  		 		USERGRADE = #{usergrade},
+  		 		USERCLASS = #{userclass}
   		 	WHERE ID = #{id}
   		</insert>
   		
