@@ -27,9 +27,11 @@ public class UserController {
 	
 	// 로그인상태 체크 로직 ==> 수정
 	@GetMapping("/login")
-	public String toLoginPage(HttpSession session) {
+	public String toLoginPage(HttpSession session, Model model) {
 		
 		String id = (String) session.getAttribute("userId");
+		model.addAttribute("loginFail", "");
+		
 		System.out.println("로그인 페이지");
 		
 		if (id != null) { // 로그인된 상태
@@ -43,13 +45,16 @@ public class UserController {
 	
 	// 로그인 버튼 클랙시 산태변경 로직
 	@PostMapping("/login")
-	public String login(String id, String pwd, HttpSession session) { // 로그인
+	public String login(String id, String pwd, HttpSession session, Model model) { // 로그인
 		
 		String userId = userService.login(id, pwd);
-		
 		System.out.println("로그인 서비스 삽입");
+		
 		if(userId == null) { // 로그인 실패
-			return "redirect:./login";
+			System.out.println("로그인 실패");
+			model.addAttribute("loginFail", "아이디 혹은 비밀번호를 확인해주세요");
+			System.out.println(model.getAttribute("loginFail"));
+			return "./login";
 		}
 		
 		System.out.println("세션저장");
@@ -74,12 +79,28 @@ public class UserController {
 		return "OK";
 	}
 	
+	// 마이페이지 - 비밀번호 중복 체크
+		@ResponseBody
+		@PostMapping("/pwdChk")
+		public String getpwd(UserDTO userDTO) {
+			System.out.println("아이디 컨트롤러에 POST 전달");
+			
+			boolean b = userService.getpwd(userDTO);
+			System.out.println(b);
+			if(b) {
+				System.out.println("OK");
+				return "OK"; // 1이상이라는 말 => 비밀번호가 일치한다는 말
+			}
+			return "NO";
+		}
+	
 	
 	// 회원가입 로직
 	@PostMapping("/signup")
-	public String signup(UserDTO userDTO) { // 화원가입
+	public String signup(UserDTO userDTO, Model model) { // 화원가입
 		try {
 			userService.signup(userDTO);
+			
 		}catch(DuplicateKeyException e) {
 			return "redirect:/signup?error_code=-1";
 		}catch(Exception e) {
@@ -144,7 +165,6 @@ public class UserController {
 		System.out.println("세션삭제완료_login창 리턴");
 		return "redirect:/login";
 	}
-	
 	
 }
 

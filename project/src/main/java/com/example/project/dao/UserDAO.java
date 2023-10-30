@@ -15,6 +15,9 @@ public interface UserDAO {
 	// 아이디 중복체크
 	public int getId(UserDTO userDTO);
 	
+	// 비밀번호 중복체크
+	public int getpwd(UserDTO userDTO);
+	
 	// 회원가입
 	public int insertUser(UserDTO userdto);
 	
@@ -23,5 +26,14 @@ public interface UserDAO {
 	
 	//회원 탈퇴
 	public void deleteUser(String id);
+	
+	// 이메일로 아이디값 받아오기
+	public UserDTO findUserByUserId(String email);
+
+	// 매칭된 아이디의 비밀번호 변경
+	public void updateUserPassword(String id, String pwd);
+	
+	
+	
 
 }

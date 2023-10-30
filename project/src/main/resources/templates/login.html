@@ -18,6 +18,7 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <!-- Custom fonts for this template-->
 <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
@@ -44,7 +45,6 @@
 
 		<!-- Outer Row -->
 		<div class="row justify-content-center">
-
 
 
 
@@ -92,7 +92,6 @@
 							
 						<div class="profile">
 							<select class="selg" id="userGrade" name="usergrade">
-								<option value="" selected>학년 선택</option>
 								<option value="1">1학년</option>
 								<option value="2">2학년</option>
 								<option value="3">3학년</option>
@@ -175,6 +174,7 @@
 
 					<form action="./login" method="post">
 
+							<!--  #################### 로그인 ############################ -->
 
 						<h1>Sign in</h1>
 						<div class="social-container">
@@ -184,16 +184,18 @@
 						</div>
 
 
-						<span>use your account</span> <input type="text" id="id" name="id"
-							placeholder="아이디입력" /> <input type="password" id="pwd"
-							name="pwd" placeholder="비밀번호 입력" /> <a href="account.html">Forgot
-							your password?</a>
+						<span>use your account</span> 
+						<input type="text" id="id" name="id" placeholder="아이디입력" /> 
+						<input type="password" id="pwd" name="pwd" placeholder="비밀번호 입력" /> 
+						
+						
+						  <span th:text="${loginFail}" style="color: red"></span>
+						<a href="findPassword">Forgot your password?</a>
 
-						<button class="signin_btn" type="submit" id="login">Sign
-							In</button>
-
-
+						<button class="signin_btn" type="submit" id="login" onclick="alertLogin">Sign In</button>
+						
 					</form>
+					
 				</div>
 				<div class="overlay-container">
 					<div class="overlay">
@@ -211,10 +213,6 @@
 					</div>
 				</div>
 			</div>
-
-
-
-
 		</div>
 
 	</div>
@@ -244,9 +242,7 @@
     });
     
     // #################### 로그인 ############################
- 
-
-  
+      
     // #################### 회원가입 ############################
     
   $(document).ready(function() {
@@ -276,9 +272,6 @@
     	});
     	
   });
-    	
-
-    	
     	
     
     
