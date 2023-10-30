@@ -1,59 +1,42 @@
 package com.example.project.controller;
 
-import javax.servlet.http.HttpSession;
-
+import com.example.project.dto.UserDTO;
+import com.example.project.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import com.example.project.dto.UserDTO;
-import com.example.project.service.UserService;
+
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Controller
+@RequiredArgsConstructor
 public class UserController {
 
 	// @Autowire
 	final UserService userService;
+	final PasswordEncoder passwordEncoder;
 
-	public UserController(UserService userService) {
-		this.userService = userService;
-	}
+	// 로그인 성공
+	@GetMapping("/loginSuccess")
+	public String loginSuccess(Principal principal, HttpSession session, Model model) { // 로그인
 
-	// ################## Login ##################
+		UserDTO userDTO = userService.getUserById(principal.getName());
 
-	// 로그인상태 체크
-	@GetMapping("/login")
-	public String toLoginPage(HttpSession session, Model model) {
-		String id = (String) session.getAttribute("userId");
-		model.addAttribute("loginFail", "");
-		if (id != null) { // 로그인된 상태
-
-			return "redirect:./mypage/memberProfile";
-		}
-
-		return "login"; // 로그인 되지않은 상태
-
-	}
-
-	// 로그인 버튼 클랙시 산태변경
-	@PostMapping("/login")
-	public String login(String id, String pwd, HttpSession session, Model model) { // 로그인
-
-		String userId = userService.login(id, pwd);
-
-		if (userId == null) { // 로그인 실패
-
+		if (userDTO == null) { // 로그인 실패
 			model.addAttribute("loginFail", "아이디 혹은 비밀번호를 확인해주세요");
-
-			return "./login";
+			return "/login";
 		}
 
-		session.setAttribute("userId", userId);
-		return "redirect:./";
+		session.setAttribute("userId", principal.getName());
+		session.setAttribute("user", userDTO);
+		return "redirect:/";
 
 	}
 	
@@ -77,6 +60,8 @@ public class UserController {
 	@PostMapping("/signup")
 	public String signup(UserDTO userDTO, Model model) { // 화원가입
 		try {
+			// 암호화 진행
+			userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
 			userService.signup(userDTO);
 
 		} catch (DuplicateKeyException e) {
@@ -87,16 +72,6 @@ public class UserController {
 		}
 
 		return "redirect:/login";
-	}
-	
-	// ################## LogOut ##################
-
-	// 로그아웃
-	@PostMapping("/logout")
-	public String logout(HttpSession session) { // 로그아웃
-		session.invalidate();
-		System.out.println("세션 로그아웃");
-		return "redirect:./";
 	}
 
 }
