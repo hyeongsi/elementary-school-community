@@ -39,14 +39,12 @@ public class NoticeService {
     
     public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype,int categoryId) {
     	
-    	System.out.println(categoryId);
     	final Map<String, String> map = new HashMap<>();
     	map.put("searchType", searchtype);
     	map.put("keyword", keyword);
     	map.put("categoryId", Integer.toString(categoryId));
     	final int totalCnt = noticeMapper.noticeTotalCnt(map);
-    	System.out.println(totalCnt);
-        final Page page = new Page(displayUnit, curPage, totalCnt);
+    	final Page page = new Page(displayUnit, curPage, totalCnt);
 
         final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype, categoryId);
      

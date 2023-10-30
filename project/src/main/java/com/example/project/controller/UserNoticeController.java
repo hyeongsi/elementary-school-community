@@ -52,7 +52,6 @@ public class UserNoticeController {
 	@PostMapping("/notice/write")
 	public String noticeWrite(@RequestParam String title,@RequestParam String content, @RequestParam Long categoryId){
 		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null,null);
-		System.out.println(noticeDto);
 		noticeService.insertNotice(noticeDto);
 		return "redirect:/notice/list";
 	}
@@ -69,9 +68,7 @@ public class UserNoticeController {
 	public String noticeUpdate(@RequestParam(value="postId", required=false) Long postId, 
 							   @RequestParam String title, 
 							   @RequestParam String content) {
-		System.out.println(postId);
 		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
-		System.out.println(noticeDto.getPostId());
 		noticeService.updateNotice(noticeDto);
 		return "redirect:/notice/detail"+"?postId="+noticeDto.getPostId();
 	}
@@ -79,9 +76,7 @@ public class UserNoticeController {
 	@GetMapping("/notice/delete")
 	public String noticeDelete(Long postId,
 								@RequestParam(defaultValue = "1") int categoryId) {
-		System.out.println(postId);
 		noticeService.deleteNotice(postId);
-		System.out.println(categoryId);
 		return "redirect:/notice/list"+"?categoryId="+categoryId;
 	}
 	
@@ -90,29 +85,18 @@ public class UserNoticeController {
 							@RequestParam(value="categoryId", defaultValue = "1") int categoryId) {
 		
 		
-		System.out.println(categoryId);
 		noticeService.updateViewCnt(postId);
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
-		//model.addAttribute("comment", noticeService.selectCommentList(postId));
-		System.out.println(noticeService.selectCommentList(postId));
 		model.addAttribute("Comment",noticeService.selectCommentList(postId));
 		return "notice/detail";
 	}
 	
-//	@GetMapping("addComment")
-//	public String addCommentForm(@RequestParam int postId) {
-//		System.out.println("댓글작성GET");
-//		return "redirect:notice/detail?postId="+postId;
-//	}
-	
+
 	@PostMapping("/addComment")
 	public String addComment(@RequestParam Long postId,
 							 @RequestParam String comment) {
 		CommentDto commentDto = new CommentDto(new Long(9999), comment, postId);
-		System.out.println("댓글작성POST");
-		System.out.println(commentDto.toString());
 		noticeService.addComment(commentDto);
-		System.out.println("댓글작성POST완료");
 		
 		return "redirect:notice/detail?postId="+postId;
 	}
