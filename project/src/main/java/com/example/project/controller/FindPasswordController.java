@@ -21,32 +21,33 @@ public class FindPasswordController {
 	private final FindUserService fus;
 	SendEmailService ses;
 	
-	// 비밀번호찾기 화면단
+	// ################## FindPassword and Send Email ##################
+	
+	// 비밀번호 찾기 화면단
 	@GetMapping("/findPassword")
     public String findPassword() {
         return "findPassword";
     }
 	
 
-	//Email과 name의 일치여부를 check하는 컨트롤러
+	//입력받은 email과 id를 체크
     @GetMapping("/findPw")
     public @ResponseBody Map<String, Boolean> pwd_find(String email, String id){
+    	
     	Map<String,Boolean> json = new HashMap<>();
-    	System.out.println("GET");
         boolean pwFindCheck = fus.userEmailCheck(email,id);
-
-        System.out.println(pwFindCheck);
         json.put("check", pwFindCheck);
+        
         return json;
     }
     
-
-   //등록된 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경하는 컨트롤러
+ 
+   //사용자가 가입했던 이메일로 임시비밀번호를 발송하고 발송된 임시비밀번호로 사용자의 pw를 변경
    @PostMapping("/sendEmail")
    public @ResponseBody void sendEmail(String email, String id){
-	   System.out.println("POST받아옴");
+	   
 	   MailDTO mailDTO = ses.createMailAndChangePassword(email, id);
-	   System.out.println("POST받아옴");
 	   ses.mailSend(mailDTO);
+	   
     }     
 }

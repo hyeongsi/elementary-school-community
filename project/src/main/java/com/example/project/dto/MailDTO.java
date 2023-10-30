@@ -12,3 +12,4 @@ public class MailDTO {
     private String title;
     private String message;
 }
+ 
