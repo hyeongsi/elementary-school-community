@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>mypage</title>
+</head>
+<body>
+			<h2>이름</h2>
+			<p th:text="${user.name}"></p>
+			<h2>비밀번호</h2>
+			<p th:text="${user.pwd}"></p>
+			<h2>이메일</h2>
+			<p th:text="${user.email}"></p>
+			<h2>교육청</h2>
+			<p th:text="${user.education}"></p>
+			<h2>학교</h2>
+			<p th:text="${user.school}"></p>
+			<h2>교육청코드</h2>
+			<p th:text="${user.education_code}"></p>
+			<h2>학교코드</h2>
+			<p th:text="${user.school_code}"></p>
+
+	<button type="button" onclick="location.href='update'">수정하기</button>
+	
+	
+	<form action="./logout" method="post">
+		<button type="submit">로그아웃</button>
+	</form>
+	
+	<form action="./delete" method="post">
+		<button type="submit">탈퇴하기</button>
+	</form>
+	
+</body>
+</html>

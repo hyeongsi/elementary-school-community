@@ -7,7 +7,7 @@
 <body>
 
 <!-- Sidebar -->
-<ul th:fragment="slideBar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" >
+<ul th:fragment="member_slidebar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" >
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/app">
@@ -45,8 +45,9 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">내 정보 관리</h6>
-                <a class="collapse-item" th:href="@{/mypage/memberProfile}">내 정보 관리</a>
-                <a class="collapse-item" th:href="@{/mypage/memberDelete}">회원 탈퇴</a>
+                <a class="collapse-item" th:href="@{/mypage/memberProfile}">내 정보</a>
+                <a class="collapse-item" th:href="@{/mypage/memberUpdateCheck}">내 정보 수정</a>
+                <a class="collapse-item" th:href="@{/mypage/memberDeleteCheck}">회원 탈퇴</a>
             </div>
         </div>
     </li>
