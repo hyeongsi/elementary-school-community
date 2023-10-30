@@ -2,38 +2,49 @@ package com.example.project.dto.notice;
 
 import org.apache.ibatis.type.Alias;
 
+import lombok.Getter;
+
+@Getter
 @Alias("CommentDto")
 public class CommentDto {
 
-	private Long memberId;
+	private String memberId;
 	private String commentContents;
 	private Long postId;
+	private Long parentCommentId;
+	private Long commentId;
 	
 	
 
-	public CommentDto(Long memberId, String commentContents, Long postId) {
+	public CommentDto(String memberId, String commentContents, Long postId) {
 		this.memberId = memberId;
 		this.commentContents = commentContents;
 		this.postId = postId;
 	}
 
-	public Long getMemberId() {
-		return memberId;
+
+	public CommentDto(String memberId, String commentContents, Long postId, Long parentCommentId) {
+		this.memberId = memberId;
+		this.commentContents = commentContents;
+		this.postId = postId;
+		this.parentCommentId = parentCommentId;
 	}
 
-	public String getCommentContents() {
-		return commentContents;
+
+	
+	public CommentDto(String memberId, String commentContents, Long postId, Long parentCommentId, Long commentId) {
+		this.memberId = memberId;
+		this.commentContents = commentContents;
+		this.postId = postId;
+		this.parentCommentId = parentCommentId;
+		this.commentId = commentId;
 	}
 
-	public Long getPostId() {
-		return postId;
-	}
 
 	@Override
 	public String toString() {
-		return "CommentDto [memberId=" + memberId + ", postId=" + postId + ", commentContents=" + commentContents + "]";
+		return "CommentDto [memberId=" + memberId + ", commentContents=" + commentContents + ", postId=" + postId
+				+ ", parentCommentId=" + parentCommentId + ", commentId=" + commentId + "]";
 	}
-
-	
 	
 }

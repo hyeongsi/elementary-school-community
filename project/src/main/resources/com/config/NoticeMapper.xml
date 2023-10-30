@@ -57,7 +57,7 @@
     
 	<insert id="insertNotice" parameterType="NoticeDto">
 		INSERT INTO post (post_id, title, write_time, category_id,content, member_id) 
-		VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, 9999)
+		VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, 'xx')
 	</insert>
 	
 	<update id="updateNotice" parameterType="NoticeDto">
@@ -84,14 +84,27 @@
     </select>
   
 	<insert id="addComment" parameterType="CommentDto">
-    	INSERT INTO comments 
-    	VALUES(seq_comments.nextval, 1, 9999, #{postId}, #{commentContents})
-    </insert>
+    	<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="parentCommentId == null">
+				INSERT INTO comments 
+    			VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, 'xx')
+    
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				INSERT INTO comments 
+    			VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, 'xx')
+  			</otherwise>
+		</choose>
+    	 </insert>
     
     <select id="selectCommentList" parameterType="long" resultType="CommentDto">
-    	SELECT member_id, comment_contents, post_id
+    	SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id
     	FROM comments
     	WHERE post_id = #{postId}
+    	START WITH parent_comment_id IS NULL
+		CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
 	
 </mapper>

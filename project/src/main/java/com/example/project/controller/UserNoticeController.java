@@ -31,7 +31,6 @@ public class UserNoticeController {
             				@RequestParam(defaultValue = "") String keyword,
             				@RequestParam(defaultValue = "title") String searchType,
             				@RequestParam(defaultValue = "1") int categoryId) {
-		
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
@@ -42,8 +41,8 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/notice/write")
-	public String noticeWriteForm() {
-		
+	public String noticeWriteForm(final Model model, @RequestParam Long categoryId) {
+		model.addAttribute("categoryId", categoryId);
 		return "notice/noticeWrite";
 	}
 	
@@ -51,7 +50,8 @@ public class UserNoticeController {
 	
 	@PostMapping("/notice/write")
 	public String noticeWrite(@RequestParam String title,@RequestParam String content, @RequestParam Long categoryId){
-		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null,null);
+		
+		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null,categoryId);
 		noticeService.insertNotice(noticeDto);
 		return "redirect:/notice/list";
 	}
@@ -94,8 +94,12 @@ public class UserNoticeController {
 
 	@PostMapping("/addComment")
 	public String addComment(@RequestParam Long postId,
-							 @RequestParam String comment) {
-		CommentDto commentDto = new CommentDto(new Long(9999), comment, postId);
+							 @RequestParam String comment,
+							 @RequestParam(required = false) Long parentCommentId) {
+		System.out.println(parentCommentId);
+		System.out.println(comment);
+		System.out.println(postId);
+		CommentDto commentDto = new CommentDto("xx", comment, postId, parentCommentId);
 		noticeService.addComment(commentDto);
 		
 		return "redirect:notice/detail?postId="+postId;
