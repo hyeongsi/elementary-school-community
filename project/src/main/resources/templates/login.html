@@ -12,6 +12,7 @@
 <script defer src="./js/schoolSearch.js"></script>
 <link rel="stylesheet" href="./css/modal.css">
 <link rel="stylesheet" href="./css/schSearch.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 <script
@@ -70,10 +71,19 @@
 								placeholder="아이디" />
 							<button class="idchkbutton" type="button" id="idcheckBtn">중복확인</button>
 						</div>
-						<span id="idcheck"></span> <input type="password" id="accountpwd"
-							name="pwd" placeholder="비밀번호" /> <input type="email"
-							id="accountemail" name="email" placeholder="Email" /> <input
-							type="text" id="accounname" name="name" placeholder="이름" />
+						<span id="idcheck"></span> 
+						
+						<input type="password" id="accountpwd" name="pwd" placeholder="비밀번호" /> 
+							
+						<div class="emailbtn">
+      						<input class="inptemail" type="email" id="accountemail" name="email" placeholder="Email" />
+	  						<button class="SendMailBtn" type="button" id="checkEmail">인증번호받기</button>
+						</div>
+						<span id="emailcheck"></span> 
+						
+							<span id="Confirmcheck"></span>
+
+							<input pe="text" id="accounname" name="name" placeholder="이름" />
 
 
 						<!-- 모달@ㅉㄴㅃ@@@@@@@@@@@@@@@@@ㅃ@ㅃ@ㅃㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃㅃ@@ㅃㅃ@@ㅃ@@@@ -->
@@ -92,6 +102,7 @@
 							
 						<div class="profile">
 							<select class="selg" id="userGrade" name="usergrade">
+								<option value="" selected>학년 선택</option>
 								<option value="1">1학년</option>
 								<option value="2">2학년</option>
 								<option value="3">3학년</option>
@@ -273,7 +284,21 @@
     	
   });
     	
-    
+  $("#checkEmail").click(function () {
+      let email = $("#accountemail").val(); 
+      
+  swal("발송 완료!", "입력하신 이메일로 인증번호가 발송되었습니다.", "success").then((OK) => {
+      if(OK) {
+          $.ajax({
+              type: "POST",
+              url: "http://localhost:8088/app/ConfirmEmail",
+              data: { "email": email },
+          })
+      }
+  });
+  });
+  
+  
     
     
     

@@ -334,6 +334,40 @@ footer a {
 	��ư�� Ŀ���� �ø��� ������
 */
 
+
+
+.emailbtn{
+      width:428px;
+      height:47px;
+    }
+
+.inptemail[type="email"]{
+	margin:0;
+	
+	width:69.5%;
+    height:100%;
+    border:none;
+    padding-left: -6px;
+    display:inline;
+    
+    box-sizing: border-box;  
+}
+
+.SendMailBtn[type=button]{
+	margin:0;
+	
+	width: 28%;
+    height:90%;
+    border:none;
+    display:inline;
+    padding: 12px 15px;
+    margin-left: 6px;
+    box-sizing: border-box;    
+}
+
+/*
+	��ư�� Ŀ���� �ø��� ������
+
 .idchkbutton[type=button]:hover{
     background-color: lightgray;
 }
@@ -341,6 +375,11 @@ footer a {
 .signin_btn[type=button]{
 	border:none;
 }  
+
+.SendMailBtn[type=button]:hover{
+    background-color: lightgray;
+}
+
 .signin_btn[type=button]:hover{
 	background-color: lightgray;
 }
