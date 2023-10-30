@@ -2,6 +2,8 @@ package com.example.project.service;
 
 import lombok.AllArgsConstructor;
 
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,17 +20,22 @@ public class ConfirmEmailService {
 	
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "amos5105@naver.com";
+    private RedisService redisService;
 
     //인증번호 이메일 send
     public MailDTO createConfirmMail(String email){
     	
-        String str = getTempPassword(); // 해결중
+        String tempPassword = getTempPassword(); // 해결중
+        System.out.println(tempPassword);
         
-        System.out.println(str);
+        redisService.setWithExpiration("email", tempPassword, 120, TimeUnit.SECONDS);
+        String code = redisService.get("email");
+        
+        System.out.println(code);
         MailDTO mailDTO = new MailDTO();
         mailDTO.setAddress(email);
         mailDTO.setTitle("초등커뮤니티 인증번호 안내 이메일 입니다.");
-        mailDTO.setMessage("안녕하세요. 초등커뮤니티 인증번호 안내 관련 이메일 입니다." + "[" + email + "]" +"님의 임시 비밀번호는 " + "[" + str + "]" + " 입니다.");
+        mailDTO.setMessage("안녕하세요. 초등커뮤니티 인증번호 안내 관련 이메일 입니다." + "[" + email + "]" +"님의 임시 비밀번호는 " + code + " 입니다." + "인증번호의 유효시간은 2분 입니다.");
         
         return mailDTO;
     }
@@ -65,9 +72,9 @@ public class ConfirmEmailService {
   //입력받은 값과 인증번호 매칭
   	public boolean CheckConfirm(String InputNumber){
   		
-  		String str = getTempPassword(); // 해결중
+  		String code = redisService.get("email");
 
-          if(InputNumber!=null && InputNumber.equals(str)) {
+          if(InputNumber!=null && InputNumber.equals(code)) {
               return true;
           }
           else {

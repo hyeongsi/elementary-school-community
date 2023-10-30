@@ -79,9 +79,12 @@
       						<input class="inptemail" type="email" id="accountemail" name="email" placeholder="Email" />
 	  						<button class="SendMailBtn" type="button" id="checkEmail">인증번호받기</button>
 						</div>
-						<span id="emailcheck"></span> 
+						<div class="ConfirmNumberdiv">
+      						<input class="ConfirmNumber" type="text" id="InputNumber" placeholder="ConfirmNumber" />
+	  						<button class="ConfirmNumberlBtn" type="button" id="Confirm">인증하기</button>
+						</div>
 						
-							<span id="Confirmcheck"></span>
+							<span id="Confirmcheck" style="color: red"></span>
 
 							<input pe="text" id="accounname" name="name" placeholder="이름" />
 
@@ -293,10 +296,33 @@
               type: "POST",
               url: "http://localhost:8088/app/ConfirmEmail",
               data: { "email": email },
+              
+              // 자식창을 열어서 이메일 인증번호를 입력하고 인증번호가 입력값과 매칭 되면 span태그에 인증완료 반환
+              
           })
       }
   });
   });
+  
+  
+  
+  $("#Confirm").click(function () {
+      let InputNumber = $("#InputNumber").val();
+
+      $.ajax({
+          type: "GET",
+          url: "http://localhost:8088/app/ConfirmCheck",
+          data: { "InputNumber": InputNumber },
+          success: function (res) {
+              if (res['check']) {
+                  $('#Confirmcheck').html('<p style="color:gray">인증완료</p>');
+              } else {
+                  $('#Confirmcheck').html('<p style="color:red">인증번호가 일치하지 않습니다.</p>');
+                  
+              }
+          }
+      })
+  })
   
   
     

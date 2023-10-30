@@ -35,9 +35,12 @@ public class EmailConfirmController {
     @GetMapping("/ConfirmCheck")
     public @ResponseBody Map<String, Boolean> CheckConfirmNumber(String InputNumber){
     	
+    	System.out.println("Get");
     	Map<String,Boolean> json = new HashMap<>();
         boolean CheckNumber = ces.CheckConfirm(InputNumber);
         json.put("check", CheckNumber);
+        
+        System.out.println(json);
         
         return json;
     }
