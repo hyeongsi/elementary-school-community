@@ -34,6 +34,7 @@ public class UserController {
 			return "/login";
 		}
 
+		userDTO.setPwd(null);
 		session.setAttribute("userId", principal.getName());
 		session.setAttribute("user", userDTO);
 		return "redirect:/";
