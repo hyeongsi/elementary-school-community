@@ -2,6 +2,7 @@ package com.example.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.example.project.dao.UserDAO;
 import com.example.project.dto.UserDTO;
@@ -14,10 +15,17 @@ public class UserService {
 	
 	// 로그인
 	public String login(String id, String pwd) {
+		
+		System.out.println("서비스");
+		
 		UserDTO userDTO = userDAO.getUserById(id);
-		if(userDTO.getPwd().equals(pwd))
-			return userDTO.getId();
-		return null;	
+		if(userDTO != null) {
+			if(userDTO.getPwd().equals(pwd)) {
+				return userDTO.getId();
+			}
+		}
+		return null;
+		
 	}
 	
 	// 아이디 중복체크
@@ -27,7 +35,19 @@ public class UserService {
 		return n>0 ? true : false;
 	}
 	
+	// 비밀번호 중복체크
+		public boolean getpwd(UserDTO userDTO) {
+			int n = userDAO.getpwd(userDTO);
+			System.out.println(n);
+			return n>0 ? true : false;
+		}
+	
 	// 회원가입
+	public int signup(UserDTO userDTO) {
+		System.out.println("signup:"+userDTO);
+		return userDAO.insertUser(userDTO);
+	}
+	/*
 	public boolean signup(UserDTO userDTO) {
 		System.out.println("signup:"+userDTO);
 		
@@ -35,12 +55,8 @@ public class UserService {
 		
 		return n>0 ? true : false;
 	}
-	/*
-	public int signup(UserDTO userDTO) {
-		System.out.println("signup:"+userDTO);
-		return userDAO.insertUser(userDTO);
-	}
 	*/
+
 	
 	// 내정보
 	public UserDTO getUserById(String id) {
@@ -57,6 +73,17 @@ public class UserService {
 	public void withdraw(String id) {
 		userDAO.deleteUser(id);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 

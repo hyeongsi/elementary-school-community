@@ -14,8 +14,8 @@
   		
   		<!-- 회원가입 -->
   		<insert id="insertUser" parameterType="UserDTO">
-  			INSERT INTO MEMBER_DATA(ID, PWD, NAME, EMAIL, EDUCATION, SCHOOL, EDUCATION_CODE, SCHOOL_CODE)
-					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{education_code}, #{school_code})
+  			INSERT INTO MEMBER_DATA(ID, PWD, NAME, EMAIL, EDUCATION, SCHOOL, EDUCATION_CODE, SCHOOL_CODE, USERGRADE, USERCLASS)
+					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{education_code}, #{school_code}, #{usergrade}, #{userclass})
   		</insert>
   		
   		<!-- 회원가입 -> 아이디 중복 체크 -->
@@ -24,6 +24,14 @@
   			SELECT NVL(COUNT(*),0) 
   			FROM MEMBER_DATA
   			WHERE ID=#{id}
+  		</select>
+  		
+  		<!-- 마이페이지 -> 비밀번호 중복 체크 -->
+   		<select id="getpwd" parameterType="UserDTO" resultType="java.lang.Integer">
+   			<!-- NVL함수 NULL값 처리 -->
+  			SELECT NVL(COUNT(*),0) 
+  			FROM MEMBER_DATA
+  			WHERE PWD=#{pwd}
   		</select>
   		
   		
@@ -35,7 +43,9 @@
   		 		EDUCATION = #{education},
   		 		SCHOOL = #{school},
   		 		EDUCATION_CODE = #{education_code},
-  		 		SCHOOL_CODE = #{school_code}
+  		 		SCHOOL_CODE = #{school_code},
+  		 		USERGRADE = #{usergrade},
+  		 		USERCLASS = #{userclass}
   		 	WHERE ID = #{id}
   		</insert>
   		
@@ -47,6 +57,31 @@
   		</delete>
   		
   		
+  		<!-- 이메일로 id정봅 받아오기 -->
+   		<select id="findUserByUserId" parameterType="UserDTO" resultType="UserDTO">
+  			SELECT *
+  			FROM MEMBER_DATA
+  			WHERE EMAIL=#{email}
+  		</select>
+  		
+  		<!-- 매칭된 아이디로 비밀번호 수정 -->
+  		<insert id="updateUserPassword" parameterType="UserDTO">
+  		 	UPDATE MEMBER_DATA
+  		 	SET PWD = #{pwd}
+  		 	WHERE ID = #{id}
+  		</insert>
+  		
   		
    
   </mapper>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
