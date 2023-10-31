@@ -53,7 +53,9 @@
 
 			<div class="container" id="container">
 				<div class="form-container sign-up-container" id="app">
-					<form id="frm" action="./signup" method="post">
+				
+				
+					<form th:action="@{./signup}" method="post" modelAttribute="userDTO">
 
 						<h1>Create Account</h1>
 						<!-- 
@@ -67,16 +69,17 @@
 						<span>or use your email for registration</span>
 
 						<div class="idbtn">
-							<input class="inptid" type="text" id="accountid" name="id"
-								placeholder="아이디" />
+							<input class="inptid" type="text" id="accountid" name="id" th:value="${userDTO.id}" placeholder="아이디"  />
 							<button class="idchkbutton" type="button" id="idcheckBtn">중복확인</button>
 						</div>
 						<span id="idcheck"></span> 
+						<span th:text="${valid_id}"></span>
 						
 						<input type="password" id="accountpwd" name="pwd" placeholder="비밀번호" /> 
+						<span th:text="${valid_pwd}"></span>
 							
 						<div class="emailbtn">
-      						<input class="inptemail" type="email" id="accountemail" name="email" placeholder="Email" />
+      						<input class="inptemail" type="email" id="accountemail" name="email" th:value="${userDTO.email}" placeholder="Email"  />
 	  						<button class="SendMailBtn" type="button" id="checkEmail">인증번호받기</button>
 						</div>
 						<div class="ConfirmNumberdiv">
@@ -86,25 +89,25 @@
 						
 							<span id="Confirmcheck" style="color: red"></span>
 
-							<input pe="text" id="accounname" name="name" placeholder="이름" />
+							<input type="text" id="accounname" name="name" th:value="${userDTO.name}" placeholder="이름"  />
+							<span th:text="${valid_name}"></span>
 
 
 						<!-- 모달@ㅉㄴㅃ@@@@@@@@@@@@@@@@@ㅃ@ㅃ@ㅃㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃㅃ@@ㅃㅃ@@ㅃ@@@@ -->
-
-						<input class="d-none" type="text" id="ATPT_OFCDC_SC_CODE_SIGN"
-							name="education_code" size="20" value="">
+						<!-- 시도교육청 코드 -->
+						<input class="d-none" type="text" id="ATPT_OFCDC_SC_CODE_SIGN" name="education_code" size="20" value="" th:value="${userDTO.education_code}"  >
 						<!-- 시도교육청 이름 -->
-						<input type="text" id="ATPT_OFCDC_SC_NM_SIGN" name="education"
-							placeholder="교육청" size="20" value="" readonly>
+						<input type="text" id="ATPT_OFCDC_SC_NM_SIGN" name="education" placeholder="교육청" size="20" value="" th:value="${userDTO.education} " readonly >
+						 
 						<!-- 학교 코드 -->
-						<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN"
-							name="school_code" size="20" value="">
+						<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN" name="school_code" size="20" value="" th:value="${userDTO.school_code}" >
 						<!-- 학교 이름 -->
-						<input type="text" id="SCHUL_NM_SIGN" name="school"
-							placeholder="학교" size="20" value="" readonly>
+						<input type="text" id="SCHUL_NM_SIGN" name="school" placeholder="학교" size="20" value="" th:value="${userDTO.school}" readonly >
 							
+						<span th:text="${valid_education}"></span>
+						
 						<div class="profile">
-							<select class="selg" id="userGrade" name="usergrade">
+							<select class="selg" id="userGrade" name="usergrade" >
 								<option value="" selected>학년 선택</option>
 								<option value="1">1학년</option>
 								<option value="2">2학년</option>
@@ -113,7 +116,7 @@
 								<option value="5">5학년</option>
 								<option value="6">6학년</option>
 							</select>
-							<select class="selc" id="userClass" name="userclass">
+							<select class="selc" id="userClass" name="userclass" >
 								<option value="" selected>반 선택</option>
 								<option value="1">1반</option>
 								<option value="2">2반</option>
@@ -142,8 +145,7 @@
 
 
 
-						<button class="signup_btn" type="submit" id="account">Sign
-							Up</button>
+						<button class="signup_btn" type="submit" id="account">Sign Up</button>
 
 					</form>
 				</div>
@@ -296,7 +298,6 @@
               type: "POST",
               url: "http://localhost:8088/app/ConfirmEmail",
               data: { "email": email },
-              
               // 자식창을 열어서 이메일 인증번호를 입력하고 인증번호가 입력값과 매칭 되면 span태그에 인증완료 반환
               
           })
@@ -324,6 +325,13 @@
       })
   })
   
+  function new_window() {
+        window.open(
+          "Chiled",
+          "Chiled",
+          "width=500, height=200, top=50, left=50"
+        );
+      }
   
     
     

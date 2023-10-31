@@ -2,13 +2,20 @@ package com.example.project.service;
 
 import com.example.project.dao.UserDAO;
 import com.example.project.dto.UserDTO;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.AllArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
 @Service
+@AllArgsConstructor
 public class UserService {
 	
-	@Autowired
 	UserDAO userDAO;
 
 	// 로그인
@@ -45,6 +52,21 @@ public class UserService {
 		System.out.println("signup:"+userDTO);
 		return userDAO.insertUser(userDTO);
 	}
+	
+	
+	// 회원가입 시, 유효성 체크
+    public Map<String, String> validateHandling(Errors errors) {
+        Map<String, String> validatorResult = new HashMap<>();
+
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = String.format("valid_%s", error.getField());
+            validatorResult.put(validKeyName, error.getDefaultMessage());
+        }
+
+        return validatorResult;
+    }
+	
+	
 	
 	// 내정보
 	public UserDTO getUserById(String id) {
