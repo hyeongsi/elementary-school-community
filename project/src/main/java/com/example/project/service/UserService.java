@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 
@@ -83,6 +84,35 @@ public class UserService {
 	public void withdraw(String id) {
 		userDAO.deleteUser(id);
 	}
+	
+	/*
+	@Transactional(readOnly = true)
+	public void checkUsernameDuplication(UserDTO userDTO) {
+		boolean usernameDuplicate = userRepository.existsByUsername(dto.toEntity().getUsername());
+		if (usernameDuplicate) {
+			throw new IllegalStateException("이미 존재하는 아이디입니다.");
+		}
+	}
+	
+	@Transactional(readOnly = true)
+	public void checkNicknameDuplication(UserDTO userDTO) {
+		boolean nicknameDuplicate = userRepository.existsByNickname(dto.toEntity().getNickname());
+		if (nicknameDuplicate) {
+			throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+		}
+	}
+	
+	
+	
+	@Transactional(readOnly = true)
+	public void checkEmailDuplication(UserDTO userDTO) {
+		boolean emailDuplicate = userRepository.existsByEmail(dto.toEntity().getEmail());
+		if (emailDuplicate) {
+			throw new IllegalStateException("이미 존재하는 이메일입니다.");
+		}
+	}
+	*/
+	
 	
 	
 	

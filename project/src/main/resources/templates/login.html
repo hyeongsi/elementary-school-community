@@ -82,10 +82,13 @@
       						<input class="inptemail" type="email" id="accountemail" name="email" th:value="${userDTO.email}" placeholder="Email"  />
 	  						<button class="SendMailBtn" type="button" id="checkEmail">인증번호받기</button>
 						</div>
-						<div class="ConfirmNumberdiv">
-      						<input class="ConfirmNumber" type="text" id="InputNumber" placeholder="ConfirmNumber" />
+						
+						
+						<div id="ConfirmDiv" class="ConfirmNumberdiv">
+      						<input class="ConfirmNumber" type="text" id="InputNumber" placeholder="ConfirmNumber" required />
 	  						<button class="ConfirmNumberlBtn" type="button" id="Confirm">인증하기</button>
 						</div>
+						
 						
 							<span id="Confirmcheck" style="color: red"></span>
 
@@ -274,6 +277,7 @@
     				if(msg.trim()=='OK'){
     					$("#idcheck").html("이 아이디는 사용 가능합니다.");
     					$("#accountid").val( $("#accountid").val());
+    					document.getElementById('accountid').readOnly = true;
     				}else{
     					$("#idcheck").html("이 아이디는 사용중입니다.");
     					$("#accountid").val("");//삭제
@@ -317,8 +321,12 @@
           success: function (res) {
               if (res['check']) {
                   $('#Confirmcheck').html('<p style="color:gray">인증완료</p>');
+                  document.getElementById('accountemail').readOnly = true; //읽기전용
+                  document.getElementById('ConfirmDiv').style.display="none"; // 숨기기
+                  
               } else {
                   $('#Confirmcheck').html('<p style="color:red">인증번호가 일치하지 않습니다.</p>');
+                  $('#InputNumber').val("");
                   
               }
           }

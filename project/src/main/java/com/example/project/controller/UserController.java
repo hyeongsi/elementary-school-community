@@ -80,6 +80,13 @@ public class UserController {
             return "login"; // 유효성 검사 오류가 발생하면 다시 회원가입 폼으로 이동
 		}
 		
+		// 중복검사
+		/*
+		userService.checkUsernameDuplication(userDTO);
+		userService.checkNicknameDuplication(userDTO);
+		userService.checkEmailDuplication(userDTO);
+		*/
+		
 		userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
 		userService.signup(userDTO);
 		return "redirect:/login";
