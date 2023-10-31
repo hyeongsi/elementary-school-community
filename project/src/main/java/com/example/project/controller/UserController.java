@@ -3,26 +3,34 @@ package com.example.project.controller;
 import com.example.project.dto.UserDTO;
 import com.example.project.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
-import org.springframework.security.core.userdetails.User;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
 public class UserController {
 
-	// @Autowire
-	final UserService userService;
-	final PasswordEncoder passwordEncoder;
-
+	private final UserService userService;
+	private final PasswordEncoder passwordEncoder;
+	
+	@GetMapping("/login")
+    public String dispSignup(UserDTO userDTO) {
+        return "login";
+    }
+	
+	
 	// 로그인 성공
 	@GetMapping("/loginSuccess")
 	public String loginSuccess(Principal principal, HttpSession session, Model model) { // 로그인
@@ -56,23 +64,27 @@ public class UserController {
 
 		return "OK";
 	}
-
+	
 	// 회원가입
 	@PostMapping("/signup")
-	public String signup(UserDTO userDTO, Model model) { // 화원가입
-		try {
-			// 암호화 진행
-			userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
-			userService.signup(userDTO);
+	public String signup(@Valid UserDTO userDTO, Errors errors, Model model) {
+		if (errors.hasErrors()) {
+            // 회원가입 실패시, 입력 데이터를 유지
+            model.addAttribute("UserDTO", userDTO);
 
-		} catch (DuplicateKeyException e) {
-			return "redirect:/signup?error_code=-1";    
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "redirect:/signup?error_code=-99";
+            // 유효성 통과 못한 필드와 메시지를 핸들링
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+            return "login"; // 유효성 검사 오류가 발생하면 다시 회원가입 폼으로 이동
 		}
-
+		
+		userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
+		userService.signup(userDTO);
 		return "redirect:/login";
 	}
 
 }
+
+
