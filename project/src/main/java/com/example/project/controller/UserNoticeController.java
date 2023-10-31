@@ -34,6 +34,7 @@ public class UserNoticeController {
             				@RequestParam(defaultValue = "title") String searchType,
             				@RequestParam(defaultValue = "1") int categoryId) {
 		
+		
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
@@ -77,14 +78,14 @@ public class UserNoticeController {
 							   @RequestParam String content) {
 		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
 		noticeService.updateNotice(noticeDto);
-		return "redirect:/notice/detail"+"?postId="+noticeDto.getPostId();
+		return "redirect:/notice/detail?postId="+noticeDto.getPostId();
 	}
 	
 	@GetMapping("/notice/delete")
 	public String noticeDelete(Long postId,
 								@RequestParam(defaultValue = "1") int categoryId) {
 		noticeService.deleteNotice(postId);
-		return "redirect:/notice/list"+"?categoryId="+categoryId;
+		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
 	@GetMapping("/notice/detail")
@@ -93,7 +94,6 @@ public class UserNoticeController {
 		
 		noticeService.updateViewCnt(postId);
 		NoticeDto noticeDto = noticeService.selectByPostId(postId);
-		System.out.println(noticeDto);
 		model.addAttribute("notice", noticeDto);
 		model.addAttribute("Comment",noticeService.selectCommentList(postId));
 		
@@ -116,11 +116,7 @@ public class UserNoticeController {
 							 @RequestParam String comment,
 							 @RequestParam(required = false) Long parentCommentId) {
 		
-		System.out.println(parentCommentId);
-		System.out.println(comment);
-		System.out.println(postId);
-		CommentDto 
-		commentDto = new CommentDto(session.getAttribute("userId").toString(), comment, postId, parentCommentId);
+		CommentDto commentDto = new CommentDto(session.getAttribute("userId").toString(), comment, postId, parentCommentId);
 		noticeService.addComment(commentDto);
 		
 		return "redirect:notice/detail?postId="+postId;
@@ -131,7 +127,6 @@ public class UserNoticeController {
 			 				@RequestParam Long postId,
 			 				@RequestParam Long commentId,
 			 				@RequestParam String memberId) {
-		System.out.println("삭제");
 		if(session.getAttribute("userId").toString().equals(memberId)) {
 		noticeService.deleteComment(commentId);
 		}
@@ -145,8 +140,6 @@ public class UserNoticeController {
 							  @RequestParam String comment,
 							  @RequestParam String memberId) {
 		
-		System.out.println(session.getAttribute("userId"));
-		System.out.println(memberId+"멤버아이디");
 		if(session.getAttribute("userId").toString().equals(memberId)) {
 			CommentDto commentDto = new CommentDto(null, comment, null, null, commentId);
 			noticeService.editComment(commentDto);
