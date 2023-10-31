@@ -89,4 +89,11 @@ public class NoticeService {
     public List<CommentDto> selectCommentList(Long postId){
     	return noticeMapper.selectCommentList(postId);
     }
+    public void deleteComment(Long commentId) {
+    	noticeMapper.deleteComment(commentId);
+    }
+    
+    public void editComment(CommentDto commentDto) {
+    	noticeMapper.editComment(commentDto);
+    }
 }

@@ -28,4 +28,6 @@ public interface NoticeMapper {
 	public List<NoticeCategoryDto> selectNoticeCategoryList();
 	public void addComment(CommentDto commnetDto);
 	public List<CommentDto> selectCommentList(Long postId);
+	public void deleteComment(Long commentId);
+	public void editComment(CommentDto commentDto);
 }

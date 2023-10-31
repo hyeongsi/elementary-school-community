@@ -1,6 +1,7 @@
 const url = "https://open.neis.go.kr/hub/schoolInfo";
 const key = "d3348e90712e42a0a67f03cad20d4336";
 const type = "json";
+const kndName = "초등학교";
 
 
 // url 받기
@@ -21,7 +22,7 @@ function getSchoolName(name){
 
 function getURL(ATPT_OFCDC_SC_CODE,SCHUL_NM){
 	   
-    return `${url}?Key=${key}&Type=${type}&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SCHUL_NM=${SCHUL_NM}`;
+    return `${url}?Key=${key}&Type=${type}&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SCHUL_KND_SC_NM=${kndName}&SCHUL_NM=${SCHUL_NM}`;
 }
 
 // 검색 결과 쓰기
