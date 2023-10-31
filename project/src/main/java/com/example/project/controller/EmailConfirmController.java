@@ -21,6 +21,12 @@ public class EmailConfirmController {
 	
 	// ################## Confirm and Send Email ##################
 	
+	// 비밀번호 찾기 화면단
+	@GetMapping("/Chiled")
+	public String findPassword() {
+		return "Chiled";
+	}
+	
 	//인증번호 발송
 	   @PostMapping("/ConfirmEmail")
 	   public @ResponseBody void sendConfirmEmail(String email){
