@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.NoticeService;
@@ -30,28 +31,27 @@ public class UserNoticeController {
             				@RequestParam(defaultValue = "") String keyword,
             				@RequestParam(defaultValue = "title") String searchType,
             				@RequestParam(defaultValue = "1") int categoryId) {
-		
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
-		System.out.println("카테고리:"+categoryId);
 		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId);
+		
 		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
 	
 	@GetMapping("/notice/write")
-	public String noticeWriteForm() {
-		
+	public String noticeWriteForm(final Model model, @RequestParam Long categoryId) {
+		model.addAttribute("categoryId", categoryId);
 		return "notice/noticeWrite";
 	}
 	
 	
 	
 	@PostMapping("/notice/write")
-	public String noticeWrite(@RequestParam String title,@RequestParam String content){
-		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null,null);
-		System.out.println(noticeDto);
+	public String noticeWrite(@RequestParam String title,@RequestParam String content, @RequestParam Long categoryId){
+		
+		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null,null,categoryId);
 		noticeService.insertNotice(noticeDto);
 		return "redirect:/notice/list";
 	}
@@ -65,28 +65,44 @@ public class UserNoticeController {
 
 	
 	@PostMapping("/notice/edit")
-	public String noticeUpdate(@RequestParam(value="postId", required=false) Long postId, @RequestParam String title, @RequestParam String content) {
-		System.out.println(postId);
+	public String noticeUpdate(@RequestParam(value="postId", required=false) Long postId, 
+							   @RequestParam String title, 
+							   @RequestParam String content) {
 		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
-		System.out.println(noticeDto.getPostId());
 		noticeService.updateNotice(noticeDto);
 		return "redirect:/notice/detail"+"?postId="+noticeDto.getPostId();
 	}
 	
 	@GetMapping("/notice/delete")
-	public String noticeDelete(Long postId) {
-		System.out.println(postId);
+	public String noticeDelete(Long postId,
+								@RequestParam(defaultValue = "1") int categoryId) {
 		noticeService.deleteNotice(postId);
-		
-		return "redirect:/notice/list";
+		return "redirect:/notice/list"+"?categoryId="+categoryId;
 	}
 	
 	@GetMapping("/notice/detail")
-	public String retrieve(final Model model, @RequestParam Long postId) {
+	public String retrieve(final Model model, @RequestParam Long postId,
+							@RequestParam(value="categoryId", defaultValue = "1") int categoryId) {
+		
 		
 		noticeService.updateViewCnt(postId);
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
+		model.addAttribute("Comment",noticeService.selectCommentList(postId));
 		return "notice/detail";
+	}
+	
+
+	@PostMapping("/addComment")
+	public String addComment(@RequestParam Long postId,
+							 @RequestParam String comment,
+							 @RequestParam(required = false) Long parentCommentId) {
+		System.out.println(parentCommentId);
+		System.out.println(comment);
+		System.out.println(postId);
+		CommentDto commentDto = new CommentDto("xx", comment, postId, parentCommentId);
+		noticeService.addComment(commentDto);
+		
+		return "redirect:notice/detail?postId="+postId;
 	}
 	
 	@ResponseBody

@@ -54,13 +54,43 @@
 								<div>
 									
 										<div id="outter">
-											<table border="1">
+											<div style="padding-top:10px; padding-bottom:10px;">
 												
 												<div class="subject_inner_text" th:text="${notice.content}"></div>
-													</span>
-											</table>
-											<a class="btn btn-outline-primary mr-2" id="delBtn" th:href="@{/notice/delete(postId=${notice.postId})}">삭제</a>
+												
+											</div>
+											
+											<a class="btn btn-outline-primary mr-2" id="delBtn" th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a>
 											<a class="btn btn-outline-primary mr-2" th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
+											
+											<div id="cmt">
+											
+												<tr id="ct_id">
+													<td>댓글</td><br>
+												</tr>
+												
+												<script defer src="../js/reply.js"></script>
+												<tr th:each="comment : ${Comment}">
+												<div class="commnet_" th:attrappend="class=${comment.commentId}">
+												<td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+												<td th:text="${comment.memberId}">유저ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
+												<td th:text="${comment.commentId}">코멘트ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <td th:text="${comment.commentContents}">내용</td>&nbsp<button class="reply " th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="replyBtn">답글</button>
+                                                </div>
+                                                
+                                            </tr>
+
+												<div class="common_input_wrapper">
+												<script defer src="../js/comment.js"></script>
+												<form name="comment-input" action="../addComment" method="post">
+													<input type="hidden" class="postId-input" name="postId" id="postIdInput">
+													<textarea name="comment" rows="3" cols="100%" placeholder="댓글을 입력해주세요."></textarea>
+													<button type="submit" class="common_input_btn" tabindex="0" id="customButton">등록</button>
+													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
+												 -->
+												</form>
+													</div>
+											</div>
 </div>
 								</div>
 								<!-- table -->

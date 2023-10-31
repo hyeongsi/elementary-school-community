@@ -55,6 +55,8 @@
 									<form name="write-form" action="./write"
 										autocomplete="off" method="post">
 										<div>
+										
+											<input th:type="hidden" id="categoryId" name="categoryId" th:value="${categoryId}">
 											<input class="mt-4" type="text" id="title" maxlength='30'
 												name="title" placeholder="제목을 입력하세요"> 최대 30자 <br />
 											<div id="content_div">

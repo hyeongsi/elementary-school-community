@@ -10,8 +10,7 @@
 		SELECT post_Id, title, content, good, view_cnt, member_id, category_id
 		FROM (
 		SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
-		FROM post_test
-        
+		FROM post
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
          )WHERE rm between #{start} AND #{end}
@@ -20,7 +19,7 @@
 
 	<!-- 01_02. 게시글 레코드 갯수 -->
 	<select id="noticeTotalCnt" parameterType="map" resultType="int">
-		SELECT COUNT(*) FROM post_test
+		SELECT COUNT(*) FROM post
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
 	</select>
@@ -45,37 +44,37 @@
    
     
     <update id="updateViewCnt" parameterType="long">
-        update post_test
+        update post
         set view_cnt = view_cnt + 1
         where post_id = #{postId}
 </update>
     
     
     <select id="noticeSearchTotalCnt" resultType="int" parameterType="string">
-        SELECT count(*) FROM post_test
+        SELECT count(*) FROM post
         WHERE title LIKE '%'||#{keyword}||'%'
     </select>
     
 	<insert id="insertNotice" parameterType="NoticeDto">
-		INSERT INTO post_test (post_id, title, write_time, category_id,content, member_id) 
-		VALUES(seq_post.nextval, #{title}, sysdate, 1, #{content}, 1234)
+		INSERT INTO post (post_id, title, write_time, category_id,content, member_id) 
+		VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, 'xx')
 	</insert>
 	
 	<update id="updateNotice" parameterType="NoticeDto">
-		UPDATE post_test
+		UPDATE post
 			SET title = #{title},
     			content = #{content}
 		WHERE post_id = #{postId}
 	</update>
 	
 	<delete id="deleteNotice" parameterType="long">
-		delete  from post_test
+		delete  from post
 		where post_id = #{postId}
 	</delete>
 	
 	<select id="selectByPostId" resultType="NoticeDto" parameterType="long">
         SELECT post_Id, title, content , good, view_cnt, member_id , category_id
-        FROM post_test
+        FROM post
         WHERE post_Id = #{postId}
     </select>
     
@@ -84,6 +83,28 @@
     	FROM category
     </select>
   
-	
+	<insert id="addComment" parameterType="CommentDto">
+    	<choose>
+			<!-- 검색옵션이 전체 검색일 경우 -->
+			<when test="parentCommentId == null">
+				INSERT INTO comments 
+    			VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, 'xx')
+    
+			</when>
+			<!-- 전체 검색이 아닐 경우 -->
+			<otherwise>
+				INSERT INTO comments 
+    			VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, 'xx')
+  			</otherwise>
+		</choose>
+    	 </insert>
+    
+    <select id="selectCommentList" parameterType="long" resultType="CommentDto">
+    	SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id
+    	FROM comments
+    	WHERE post_id = #{postId}
+    	START WITH parent_comment_id IS NULL
+		CONNECT BY PRIOR comment_id = parent_comment_id
+    </select>
 	
 </mapper>

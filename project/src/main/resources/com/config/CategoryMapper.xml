@@ -54,5 +54,4 @@
         </foreach>
         )
     </delete>
-
 </mapper>
