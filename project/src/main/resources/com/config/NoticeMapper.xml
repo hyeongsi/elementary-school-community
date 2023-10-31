@@ -57,7 +57,7 @@
     
 	<insert id="insertNotice" parameterType="NoticeDto">
 		INSERT INTO post (post_id, title, write_time, category_id,content, member_id) 
-		VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, 'xx')
+		VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, #{memberId})
 	</insert>
 	
 	<update id="updateNotice" parameterType="NoticeDto">
@@ -88,16 +88,27 @@
 			<!-- 검색옵션이 전체 검색일 경우 -->
 			<when test="parentCommentId == null">
 				INSERT INTO comments 
-    			VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, 'xx')
+    			VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, #{memberId})
     
 			</when>
 			<!-- 전체 검색이 아닐 경우 -->
 			<otherwise>
 				INSERT INTO comments 
-    			VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, 'xx')
+    			VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, #{memberId})
   			</otherwise>
 		</choose>
     	 </insert>
+    
+    <delete id="deleteComment" parameterType="long">
+    	DELETE FROM comments
+		WHERE comment_id = #{commentId}
+    </delete>
+    
+    <update id="editComment" parameterType="CommentDto">
+    	UPDATE comments
+		SET comment_contents = #{commentContents}
+		WHERE comment_id = #{commentId}
+    </update>
     
     <select id="selectCommentList" parameterType="long" resultType="CommentDto">
     	SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id
