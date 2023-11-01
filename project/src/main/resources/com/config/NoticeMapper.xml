@@ -71,6 +71,15 @@
 		delete  from post
 		where post_id = #{postId}
 	</delete>
+
+	<delete id="deleteNoticeList" parameterType="List">
+		DELETE FROM post
+		WHERE post_id IN (
+		<foreach collection="noticeDtoList" item="item" separator=",">
+			#{item.postId}
+		</foreach>
+		)
+	</delete>
 	
 	<select id="selectByPostId" resultType="NoticeDto" parameterType="long">
         SELECT post_Id, title, content , good, view_cnt, member_id , category_id
@@ -117,5 +126,20 @@
     	START WITH parent_comment_id IS NULL
 		CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
+
+	<select id="noticeNoSearchTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM post
+	</select>
+
+	<select id="selectNoticePageWithName" resultType="NoticeBoardCategoryMemberNameDto" parameterType="PageDto">
+		SELECT post_id, title, content, view_cnt, board_name, category_name, name
+		FROM (SELECT rownum rm, post_id, title, content, view_cnt, b.board_name, c.category_name, m.name
+		FROM post p
+		JOIN category c on p.category_id = c.category_id
+		JOIN member_data m on p.member_id = m.id
+		JOIN board b on b.board_id = c.board_id
+		ORDER BY post_id DESC)
+		WHERE rm between #{start} AND #{end}
+	</select>
 	
 </mapper>

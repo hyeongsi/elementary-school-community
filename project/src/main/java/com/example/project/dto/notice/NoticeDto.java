@@ -17,7 +17,9 @@ public class NoticeDto {
 	private Long viewCnt;
 	private String memberId;
 	private Long categoryId;
-	
+
+	public NoticeDto(){}
+
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
 		this.postId = postId;
 		this.title = title;

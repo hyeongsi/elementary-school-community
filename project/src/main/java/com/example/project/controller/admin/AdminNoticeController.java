@@ -1,0 +1,39 @@
+package com.example.project.controller.admin;
+
+import com.example.project.dto.board.BoardPageDto;
+import com.example.project.dto.category.CategoryDto;
+import com.example.project.dto.category.CategoryPageDto;
+import com.example.project.dto.notice.AdminNoticePageDto;
+import com.example.project.dto.notice.NoticeDto;
+import com.example.project.dto.notice.NoticePageDto;
+import com.example.project.service.admin.NoticeAdminService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/admin")
+@RequiredArgsConstructor
+public class AdminNoticeController {
+
+    private final NoticeAdminService noticeAdminService;
+
+    @GetMapping("/noticeList")
+    public String noticeList(final Model model,
+                            @RequestParam(defaultValue = "10") int displayUnit,
+                            @RequestParam(defaultValue = "1") int curPage){
+
+        final AdminNoticePageDto noticePageDto = noticeAdminService.selectNoticePage(displayUnit, curPage);
+        model.addAttribute("noticePageDto", noticePageDto);
+        return "admin/noticeList";
+    }
+
+    @ResponseBody
+    @DeleteMapping("/noticeList")
+    public int noticeRemove(@RequestBody List<NoticeDto> noticeDtoList){
+        return noticeAdminService.deleteNoticeList(noticeDtoList);
+    }
+}
