@@ -3,6 +3,7 @@ package com.example.project.mapper;
 import java.util.List;
 import java.util.Map;
 
+import com.example.project.dto.notice.CommentAllJoinDto;
 import com.example.project.dto.notice.NoticeBoardCategoryMemberNameDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -30,7 +31,10 @@ public interface NoticeMapper {
 	public List<NoticeCategoryDto> selectNoticeCategoryList();
 	public void addComment(CommentDto commnetDto);
 	public List<CommentDto> selectCommentList(Long postId);
+	public List<CommentAllJoinDto> selectCommentListAll(PageDto pageDto);
+	public int commentTotalCnt();
 	public void deleteComment(Long commentId);
+	public int deleteCommentList(List<CommentDto> commentDtoList);
 	public void editComment(CommentDto commentDto);
 	public int noticeNoSearchTotalCnt();
 	public List<NoticeBoardCategoryMemberNameDto> selectNoticePageWithName(PageDto pageDto);

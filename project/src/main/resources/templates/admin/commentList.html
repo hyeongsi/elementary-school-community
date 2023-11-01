@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>초등 커뮤니티 - 관리자 - 댓글목록</title>
+
+    <!-- Custom fonts for this template -->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+    <script defer src="/app/js/adminCommentList.js"></script>
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="admin/common/admin_slidebar :: slideBar"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/common/admin_topBar::topBar"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">게시글 목록</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <div id="dataTable_Wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+                            <div class="row mt-3">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
+                                            name="dataTable_length" th:onchange="|location.href='@{/admin/commentList}?displayUnit=' + this.value|"
+                                            class="custom-select custom-select-sm form-control form-control-sm">
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 10" value="10">10</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 25" value="25">25</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 50" value="50">50</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 100" value="100">100</option>
+                                    </select> 단위</label></div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="d-flex justify-content-end">
+                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeComment()">삭제</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- table -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%"
+                                               style="text-align: center">
+                                            <thead style="text-align: center">
+                                            <tr>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allCommentCk(this)"></th>
+                                                <th style="min-width: 50px">번호</th>
+                                                <th style="min-width: 150px">내용</th>
+                                                <th style="min-width: 150px">게시판명</th>
+                                                <th style="min-width: 150px">카테고리명</th>
+                                                <th style="min-width: 150px">작성자명</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr th:each="commentDto : ${commentPageDto.commentDtoList}">
+                                                <td><input th:if="${commentDto.commentId} > 37" type="checkbox" name="commentCk" th:data-commentid="${commentDto.commentId}"></td>
+                                                <td th:text="${commentDto.commentId}">null</td>
+                                                <td th:text="${commentDto.commentContents}">null</td>
+                                                <td th:text="${commentDto.boardName}">null</td>
+                                                <td th:text="${commentDto.categoryName}">null</td>
+                                                <td th:text="${commentDto.name}">null</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end table -->
+
+                            <!-- pagenation -->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
+                                         th:text="|Showing ${commentPageDto.page.curPage} to ${commentPageDto.page.maxPage} of ${commentPageDto.page.totalCnt} entries|">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7">
+                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+                                        <ul class="pagination">
+                                            <li class="paginate_button page-item previous" id="dataTable_previous"
+                                                th:classappend="${commentPageDto.page.curPage == 1} ? 'disabled' : '' ">
+                                                <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${commentPageDto.page.curPage - 1})}" class="page-link">Previous</a>
+                                            </li>
+                                            <th:block th:each="num : ${#numbers.sequence(commentPageDto.page.startPage,
+                                                                                        commentPageDto.page.endPage)}">
+                                                <li class="paginate_button page-item" th:classappend="${num == commentPageDto.page.curPage} ? 'active' : '' ">
+                                                    <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
+                                                </li>
+                                            </th:block>
+                                            <li class="paginate_button page-item next" id="dataTable_next"
+                                                th:classappend="${commentPageDto.page.curPage == commentPageDto.page.endPage} ? 'disabled' : '' ">
+                                                <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${commentPageDto.page.curPage + 1})}"  class="page-link">Next</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- dataTable_Wrapper -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="common/topBar :: logoutModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+</body>
+
+</html>

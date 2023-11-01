@@ -112,6 +112,15 @@
     	DELETE FROM comments
 		WHERE comment_id = #{commentId}
     </delete>
+
+	<delete id="deleteCommentList" parameterType="List">
+		DELETE FROM comments
+		WHERE comment_id IN (
+		<foreach collection="commentDtoList" item="item" separator=",">
+			#{item.commentId}
+		</foreach>
+		)
+	</delete>
     
     <update id="editComment" parameterType="CommentDto">
     	UPDATE comments
@@ -126,6 +135,23 @@
     	START WITH parent_comment_id IS NULL
 		CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
+
+	<select id="selectCommentListAll" resultType="CommentAllJoinDto" parameterType="PageDto">
+		SELECT comment_id, member_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
+		FROM (SELECT rownum rm, comment_id, member_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
+		FROM (SELECT cmt.comment_id, cmt.member_id, cmt.post_id, cmt.COMMENT_CONTENTS, b.board_name, c.category_name, m.name
+		FROM comments cmt
+		JOIN member_data m on cmt.member_id = m.id
+		JOIN post p on cmt.post_id = p.post_id
+		JOIN category c on p.category_id = c.category_id
+		JOIN board b on  c.board_id = b.board_id
+		ORDER BY comment_id DESC))
+		WHERE rm between #{start} AND #{end}
+	</select>
+
+	<select id="commentTotalCnt" resultType="int">
+		SELECT COUNT(*) FROM comments
+	</select>
 
 	<select id="noticeNoSearchTotalCnt" resultType="int">
 		SELECT COUNT(*) FROM post
