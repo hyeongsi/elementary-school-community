@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 public class UserNoticeController {
 
 	final NoticeService noticeService;
-
+	
 	@GetMapping("/notice/list")
 	public String noticeList(final Model model,HttpSession session, Principal principal,
             				@RequestParam(defaultValue = "10") int displayUnit,
@@ -46,7 +46,9 @@ public class UserNoticeController {
 	
 	@GetMapping("/notice/write")
 	public String noticeWriteForm(final Model model,HttpSession session, @RequestParam Long categoryId) {
-		
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
 		model.addAttribute("categoryId", categoryId);
 		return "notice/noticeWrite";
 	}
@@ -58,14 +60,20 @@ public class UserNoticeController {
 							  @RequestParam String title,
 							  @RequestParam String content, 
 							  @RequestParam Long categoryId){
-		
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
 		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null, session.getAttribute("userId").toString(),categoryId);
 		noticeService.insertNotice(noticeDto);
 		return "redirect:/notice/list";
 	}
 	
 	@GetMapping("/notice/edit")
-	public String noticeEditForm(final Model model,  @RequestParam("postId") Long postId) {
+	public String noticeEditForm(HttpSession session,final Model model,
+								@RequestParam("postId") Long postId) {
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
 		// NoticeDto noticeDto = new NoticeDto(null, title, content,null,null,null);
 		model.addAttribute("notice", noticeService.selectByPostId(postId));
 		return "notice/edit";
@@ -73,9 +81,14 @@ public class UserNoticeController {
 
 	
 	@PostMapping("/notice/edit")
-	public String noticeUpdate(@RequestParam(value="postId", required=false) Long postId, 
+	public String noticeUpdate(HttpSession session,
+							   @RequestParam(value="postId", required=false) Long postId, 
 							   @RequestParam String title, 
 							   @RequestParam String content) {
+		
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
 		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
 		noticeService.updateNotice(noticeDto);
 		return "redirect:/notice/detail?postId="+noticeDto.getPostId();
@@ -91,20 +104,11 @@ public class UserNoticeController {
 	@GetMapping("/notice/detail")
 	public String retrieve(HttpSession session,final Model model, @RequestParam Long postId,
 							@RequestParam(value="categoryId", defaultValue = "1") int categoryId) {
-		
+		System.out.println(session.getAttribute("userId"));
 		noticeService.updateViewCnt(postId);
 		NoticeDto noticeDto = noticeService.selectByPostId(postId);
 		model.addAttribute("notice", noticeDto);
 		model.addAttribute("Comment",noticeService.selectCommentList(postId));
-		
-		final String compareId = noticeDto.getMemberId();
-		if(session.getAttribute("userId").toString().equals(compareId)){
-			session.setAttribute("eqId", 1);
-		} else {
-			session.setAttribute("eqId", 0);
-		}
-//		if(session.getAttribute("userId").toString().equals(model.getAttribute("notice.memberId"))){System.out.println("같음");
-//			}
 		
 		return "notice/detail";
 	}
@@ -115,9 +119,14 @@ public class UserNoticeController {
 							 @RequestParam Long postId,
 							 @RequestParam String comment,
 							 @RequestParam(required = false) Long parentCommentId) {
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
+		
 		
 		CommentDto commentDto = new CommentDto(session.getAttribute("userId").toString(), comment, postId, parentCommentId);
 		noticeService.addComment(commentDto);
+		
 		
 		return "redirect:notice/detail?postId="+postId;
 	}
@@ -127,6 +136,9 @@ public class UserNoticeController {
 			 				@RequestParam Long postId,
 			 				@RequestParam Long commentId,
 			 				@RequestParam String memberId) {
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
 		if(session.getAttribute("userId").toString().equals(memberId)) {
 		noticeService.deleteComment(commentId);
 		}
@@ -140,6 +152,9 @@ public class UserNoticeController {
 							  @RequestParam String comment,
 							  @RequestParam String memberId) {
 		
+		if(session.getAttribute("userId")==null) {
+			return "redirect:/login";
+		}
 		if(session.getAttribute("userId").toString().equals(memberId)) {
 			CommentDto commentDto = new CommentDto(null, comment, null, null, commentId);
 			noticeService.editComment(commentDto);

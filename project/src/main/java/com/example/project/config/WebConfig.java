@@ -21,11 +21,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/admin/memberList").setViewName("admin/memberList");
         
         //registry.addViewController("/mypage").setViewName("mypage/mypage");
-         
-<<<<<<< .merge_file_PO82HX
-=======
+        
         registry.addViewController("/Chiled").setViewName("Chiled");
->>>>>>> .merge_file_2kzqcU
         registry.addViewController("/findPassword").setViewName("findPassword");
         registry.addViewController("/findPasswordTest").setViewName("findPasswordTest");
         registry.addViewController("/mypage/memberProfile").setViewName("mypage/memberProfile");

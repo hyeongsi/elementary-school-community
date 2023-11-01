@@ -65,7 +65,7 @@
 											<div class="subject_inner_text" th:text="${notice.content}"></div>
 
 										</div>
-
+										<span th:if="${session.userId!=null}">
 										<div
 											th:if="${session.userId.toString().equals(notice.memberId)}">
 											<a class="btn btn-outline-primary mr-2" id="delBtn"
@@ -74,6 +74,7 @@
 												th:value="${notice.memberId}"
 												th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
 										</div>
+										</span>
 										<div id="cmt">
 
 											<tr id="ct_id">
@@ -92,7 +93,9 @@
 													<td th:text="${comment.commentContents}">내용</td>&nbsp
 													<button class="reply "
 														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
+													
 														id="replyBtn">답글</button>
+														<span th:if="${session.userId!=null}">
 													<a th:if="${session.userId.toString().equals(comment.memberId)}">
 												<button class="edit-comment "
 														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
@@ -100,6 +103,7 @@
 													 </a>
 													<a th:if="${session.userId.toString().equals(comment.memberId)}"
 													 class="del-comment" th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
+														</span>
 												</div>
 
 											</tr>
