@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.notice.CommentDto;
+import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.NoticeService;
@@ -109,6 +111,7 @@ public class UserNoticeController {
 		NoticeDto noticeDto = noticeService.selectByPostId(postId);
 		model.addAttribute("notice", noticeDto);
 		model.addAttribute("Comment",noticeService.selectCommentList(postId));
+		model.addAttribute("like", noticeService.likeCnt(postId));
 		
 		return "notice/detail";
 	}
@@ -161,6 +164,24 @@ public class UserNoticeController {
 			}
 		
 		return "redirect:notice/detail?postId="+postId;
+	}
+	
+	@GetMapping("/notice/like")
+	public String likeBtn(HttpSession session,
+						  @RequestParam(required = false) String memberId,
+					      @RequestParam(required = false) Long postId) {
+		memberId = session.getAttribute("userId").toString();
+		LikeDto likeDto = new LikeDto(memberId, postId, null);
+		if(noticeService.likeCheck(likeDto)==null||noticeService.likeCheck(likeDto).getGood()==false) {
+			if(noticeService.likeCheck(likeDto)==null) {
+				noticeService.addLike(likeDto);
+			} else {
+				noticeService.reLike(likeDto);
+			}
+		}else {
+			noticeService.cancelLike(likeDto);
+		}
+		return "redirect:/notice/detail?postId="+postId;
 	}
 	
 	@ResponseBody

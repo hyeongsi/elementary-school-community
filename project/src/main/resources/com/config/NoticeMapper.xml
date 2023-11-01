@@ -117,5 +117,32 @@
     	START WITH parent_comment_id IS NULL
 		CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
+    
+    <select id="likeCheck" parameterType="LikeDto" resultType="LikeDto">
+    	SELECT * FROM liketable
+    	WHERE member_id = #{memberId} AND post_id = #{postId}
+    </select>
+    
+    <insert id="addLike" parameterType="LikeDto">
+    	INSERT INTO liketable 
+    	VALUES (#{memberId}, #{postId}, 1)
+    </insert>
+    
+    <update id="cancelLike" parameterType="LikeDto">
+    	UPDATE liketable
+    	SET good = 0
+    	WHERE member_id = #{memberId} AND post_id = #{postId}
+    </update>
+    
+    <update id="reLike" parameterType="LikeDto">
+    	UPDATE liketable
+    	SET good = 1
+    	WHERE member_id = #{memberId} AND post_id = #{postId}
+    </update>
+    
+    <select id="likeCnt" parameterType="long" resultType="long">
+    	SELECT COUNT(*) FROM liketable
+		WHERE post_id = #{postId} AND good=1
+    </select>
 	
 </mapper>

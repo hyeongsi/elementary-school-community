@@ -8,11 +8,14 @@
 
 <title>초등 커뮤니티 - 관리자 - 게시판목록</title>
 
+<link th:href="@{../css/commentWrap.css}" rel="stylesheet">
+<script defer src="../js/commentWrap.js"></script>
+
 <!-- Custom fonts for this template -->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
 	rel="stylesheet" type="text/css">
 <link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	href="https://fonts.googleapis.com/css?family=Nunito|Material+Symbols+Outlined:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -75,6 +78,10 @@
 												th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
 										</div>
 										</span>
+										<button type="button" class="like-btn" th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
+										<span class="material-symbols-outlined">thumb_up</span>
+										<span th:text="${like}"></span>
+										</button>
 										<div id="cmt">
 
 											<tr id="ct_id">
@@ -114,10 +121,13 @@
 													method="post">
 													<input type="hidden" class="postId-input" name="postId"
 														id="postIdInput">
-													<textarea name="comment" rows="3" cols="100%"
-														placeholder="댓글을 입력해주세요."></textarea>
+													<div class="comment-wrap">
+													<table>
+													<textarea id="comment-resize" name="comment" placeholder="댓글을 입력해주세요."></textarea>
+													</table>
 													<button type="submit" class="common_input_btn" tabindex="0"
 														id="customButton">등록</button>
+													</div>
 													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
 												 -->
 												</form>
