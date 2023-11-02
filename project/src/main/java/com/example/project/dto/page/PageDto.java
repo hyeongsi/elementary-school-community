@@ -46,7 +46,5 @@ public class PageDto {
 
 	public int getCategoryId() {
 		return categoryId;
-	}
-
-    
+	}   
 }

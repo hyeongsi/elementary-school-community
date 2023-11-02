@@ -1,8 +1,6 @@
 package com.example.project.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.example.project.dao.UserDAO;

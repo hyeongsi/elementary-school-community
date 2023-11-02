@@ -15,7 +15,7 @@
   		<!-- 회원가입 -->
   		<insert id="insertUser" parameterType="UserDTO">
   			INSERT INTO MEMBER_DATA(ID, PWD, NAME, EMAIL, EDUCATION, SCHOOL, EDUCATION_CODE, SCHOOL_CODE, USERGRADE, USERCLASS)
-					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{education_code}, #{school_code}, #{usergrade}, #{userclass})
+					VALUES(#{id}, #{pwd}, #{name}, #{email}, #{education}, #{school}, #{educationCode}, #{schoolCode}, #{usergrade}, #{userclass})
   		</insert>
   		
   		<!-- 회원가입 -> 아이디 중복 체크 -->
@@ -70,6 +70,14 @@
   		 	SET PWD = #{pwd}
   		 	WHERE ID = #{id}
   		</insert>
+  		
+  		<!-- 암호화된 비밀번호 조회 -->
+   		<select id="getEncordpwd" parameterType="UserDTO" resultType="UserDTO">
+   			<!-- NVL함수 NULL값 처리 -->
+  			SELECT PWD
+  			FROM MEMBER_DATA
+  			WHERE ID=#{id}
+  		</select>
   		 
   		 <select id="userInfo" parameterType="string" resultType="SchoolInfo">
   		 	SELECT education_code as officeOfEducationCode, school_code, usergrade, userclass , education

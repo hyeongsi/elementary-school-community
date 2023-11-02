@@ -54,8 +54,8 @@
 			<div class="container" id="container">
 				<div class="form-container sign-up-container" id="app">
 				
-				
-					<form th:action="@{./signup}" method="post" modelAttribute="userDTO">
+					<!-- <form th:action="@{./signup}" method="post" modelAttribute="userDTO"> -->
+					<form id="frm" modelAttribute="userDTO">
 
 						<h1>Create Account</h1>
 						<!-- 
@@ -95,12 +95,12 @@
 
 						<!-- 모달@ㅉㄴㅃ@@@@@@@@@@@@@@@@@ㅃ@ㅃ@ㅃㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃㅃ@@ㅃㅃ@@ㅃ@@@@ -->
 						<!-- 시도교육청 코드 -->
-						<input class="d-none" type="text" id="ATPT_OFCDC_SC_CODE_SIGN" name="education_code" size="20" value="" th:value="${userDTO.education_code}"  >
+						<input class="d-none" type="text" id="ATPT_OFCDC_SC_CODE_SIGN" name="educationCode" size="20" value="" th:value="${userDTO.educationCode}"  >
 						<!-- 시도교육청 이름 -->
 						<input type="text" id="ATPT_OFCDC_SC_NM_SIGN" name="education" placeholder="교육청" size="20" value="" th:value="${userDTO.education} " readonly >
 						 
 						<!-- 학교 코드 -->
-						<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN" name="school_code" size="20" value="" th:value="${userDTO.school_code}" >
+						<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN" name="schoolCode" size="20" value="" th:value="${userDTO.schoolCode}" >
 						<!-- 학교 이름 -->
 						<input type="text" id="SCHUL_NM_SIGN" name="school" placeholder="학교" size="20" value="" th:value="${userDTO.school}" readonly >
 							
@@ -145,7 +145,8 @@
 
 
 
-						<button class="signup_btn" type="submit" id="account">Sign Up</button>
+						<button class="signup_btn" type="button" id="CrmsignUp">Sign Up</button>
+				
 
 					</form>
 				</div>
@@ -204,11 +205,9 @@
 						<input type="text" id="id" name="id" placeholder="아이디입력" /> 
 						<input type="password" id="pwd" name="pwd" placeholder="비밀번호 입력" /> 
 						
-						
-						  <span th:text="${loginFail}" style="color: red"></span>
 						<a href="findPassword">Forgot your password?</a>
 
-						<button class="signin_btn" type="submit" id="login" onclick="alertLogin">Sign In</button>
+						<button class="signin_btn" type="submit" id="login">Sign In</button>
 						
 					</form>
 					
@@ -242,6 +241,10 @@
 
 	<!-- Custom scripts for all pages-->
 	<script src="js/sb-admin-2.min.js"></script>
+	
+	<script th:inline="javascript">
+    
+	</script>
 
 	<script type="text/javascript">
   //#################### 템플릿 ############################
@@ -260,6 +263,34 @@
     // #################### 로그인 ############################
       
     // #################### 회원가입 ############################
+    
+    $("#CrmsignUp").on("click", function () {
+  		let formData = $("#frm").serialize(); // 폼 데이터 직렬화
+
+  		$.ajax({
+    		url: "http://localhost:8088/app/signup",
+    		type: "post",
+    		data: formData, // 직렬화한 폼 데이터를 전송
+
+    		success: function (data) {
+    			
+      		console.log(data);
+      		if (data.trim() === 'YES') {
+        		alert('가입성공');
+        		container.classList.remove("right-panel-active");
+        		// 여기에 추가적인 동작을 수행하실 수 있습니다.
+      		} else {
+        		alert('가입실패');
+      		}
+      		
+    		},
+    		error: function () {
+      		alert('에러 발생');
+    		}
+  		});
+	});
+    
+
     
   $(document).ready(function() {
     	
@@ -324,22 +355,12 @@
           }
       })
   })
+
   
-  function new_window() {
-        window.open(
-          "Chiled",
-          "Chiled",
-          "width=500, height=200, top=50, left=50"
-        );
-      }
   
-    
-    
-    
     
     </script>
-
-
+    
 
 </body>
 
