@@ -69,10 +69,21 @@
 											<div class="subject_inner_text" th:text="${notice.content}"></div>
 
 										</div>
-										<button type="button" class="like-btn btn btn-outline-primary"
-											th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
-											<span class="material-symbols-outlined">thumb_up</span> <span
-												th:text="${like}"></span>
+										
+										<script defer src="../js/noticeLike.js"></script>
+										<button type="button" class="btn btn-outline-primary">
+											<span th:if="${session.userId!=null}">
+											<a class="like-btn" th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
+											<span class="material-symbols-outlined">thumb_up</span> 
+											<span th:text="${like}"></span>
+											</a>
+											</span>
+											<span th:if="${session.userId==null}">
+											<a class="like-btn not-login">
+											<span class="material-symbols-outlined not-login">thumb_up</span> 
+											<span th:text="${like}"></span>
+											</a>
+											</span>
 										</button>
 										&nbsp <span th:if="${session.userId!=null}"> 
 												<span th:if="${session.userId.toString().equals(notice.memberId)}">
