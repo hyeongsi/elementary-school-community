@@ -2,6 +2,7 @@ package com.example.project.service;
 
 import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.notice.CommentDto;
+import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.dto.page.Page;
@@ -54,6 +55,7 @@ public class NoticeService {
         final NoticePageDto noticePageDto = new NoticePageDto(page, noticeDtoList);
         return noticePageDto;
     	
+        
     } 
     
     public List<NoticeDto> selectNoticieList() {
@@ -83,6 +85,10 @@ public class NoticeService {
     	return noticeMapper.selectNoticeCategoryList();
     }
     
+    public List<NoticeCategoryDto> selectUserNoticeCategoryList(int boardId) {
+    	return noticeMapper.selectUserNoticeCategoryList(boardId);
+    }
+    
     public void addComment(CommentDto commnetDto) {
     	noticeMapper.addComment(commnetDto);
     }
@@ -96,4 +102,24 @@ public class NoticeService {
     public void editComment(CommentDto commentDto) {
     	noticeMapper.editComment(commentDto);
     }
+    
+    public LikeDto likeCheck(LikeDto likeDto) {
+    	return noticeMapper.likeCheck(likeDto);
+    }
+    
+    public void addLike(LikeDto likeDto) {
+    	noticeMapper.addLike(likeDto);
+    }
+    
+    public void cancelLike(LikeDto likeDto) {
+    	noticeMapper.cancelLike(likeDto);
+    }
+    public void reLike(LikeDto likeDto) {
+    	noticeMapper.reLike(likeDto);
+    }
+    
+    public Long likeCnt(Long postId) {
+    	return noticeMapper.likeCnt(postId);
+    }
+    
 }
