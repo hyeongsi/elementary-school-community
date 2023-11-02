@@ -12,6 +12,7 @@ import org.apache.ibatis.type.Alias;
 public class NoticeBoardCategoryMemberNameDto {
 
     private Long postId;
+    private Long boardId;
     private String title;
     private String content;
     private Long viewCnt;

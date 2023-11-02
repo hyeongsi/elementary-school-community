@@ -137,9 +137,9 @@
     </select>
 
 	<select id="selectCommentListAll" resultType="CommentAllJoinDto" parameterType="PageDto">
-		SELECT comment_id, member_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
-		FROM (SELECT rownum rm, comment_id, member_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
-		FROM (SELECT cmt.comment_id, cmt.member_id, cmt.post_id, cmt.COMMENT_CONTENTS, b.board_name, c.category_name, m.name
+		SELECT comment_id, member_id, board_id, category_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
+		FROM (SELECT rownum rm, comment_id, board_id, category_id, member_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
+		FROM (SELECT cmt.comment_id, cmt.member_id, b.board_id, c.category_id, cmt.post_id, cmt.COMMENT_CONTENTS, b.board_name, c.category_name, m.name
 		FROM comments cmt
 		JOIN member_data m on cmt.member_id = m.id
 		JOIN post p on cmt.post_id = p.post_id
@@ -158,14 +158,36 @@
 	</select>
 
 	<select id="selectNoticePageWithName" resultType="NoticeBoardCategoryMemberNameDto" parameterType="PageDto">
-		SELECT post_id, title, content, view_cnt, board_name, category_name, name
-		FROM (SELECT rownum rm, post_id, title, content, view_cnt, b.board_name, c.category_name, m.name
+		SELECT post_id, board_id, title, content, view_cnt, board_name, category_name, name
+		FROM (SELECT rownum rm, post_id, b.board_id, title, content, view_cnt, b.board_name, c.category_name, m.name
 		FROM post p
 		JOIN category c on p.category_id = c.category_id
 		JOIN member_data m on p.member_id = m.id
 		JOIN board b on b.board_id = c.board_id
 		ORDER BY post_id DESC)
 		WHERE rm between #{start} AND #{end}
+	</select>
+
+	<select id ="noticeTotalCtnById" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM (SELECT rownum rm, post_id, title, content, view_cnt, b.board_name, c.category_name, m.name, c.category_id
+		FROM post p
+		JOIN category c on p.category_id = c.category_id
+		JOIN member_data m on p.member_id = m.id
+		JOIN board b on b.board_id = c.board_id)
+		WHERE category_id = #{categoryId}
+	</select>
+
+	<select id="selectNoticeListById" resultType="NoticeBoardCategoryMemberNameDto" parameterType="FindNoticeByCategoryIdPageDto">
+		SELECT post_id, board_id, title, content, view_cnt, board_name, category_name, name
+		FROM (SELECT rownum rm, post_id, b.board_id, title, content, view_cnt, b.board_name, c.category_name, m.name
+		FROM post p
+		JOIN category c on p.category_id = c.category_id
+		JOIN member_data m on p.member_id = m.id
+		JOIN board b on b.board_id = c.board_id
+		WHERE p.category_id = #{categoryId}
+		ORDER BY post_id DESC)
+		WHERE rm between #{pageDto.start} AND #{pageDto.end}
 	</select>
 	
 </mapper>

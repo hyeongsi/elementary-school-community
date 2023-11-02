@@ -3,14 +3,11 @@ package com.example.project.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.example.project.dto.notice.CommentAllJoinDto;
-import com.example.project.dto.notice.NoticeBoardCategoryMemberNameDto;
+import com.example.project.dto.notice.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.project.dto.NoticeCategoryDto;
-import com.example.project.dto.notice.CommentDto;
-import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.page.PageDto;
 
 @Mapper
@@ -38,4 +35,6 @@ public interface NoticeMapper {
 	public void editComment(CommentDto commentDto);
 	public int noticeNoSearchTotalCnt();
 	public List<NoticeBoardCategoryMemberNameDto> selectNoticePageWithName(PageDto pageDto);
+	public int noticeTotalCtnById(int categoryId);
+	public List<NoticeBoardCategoryMemberNameDto> selectNoticeListById(FindNoticeByCategoryIdPageDto findNoticeByCategoryIdPageDto);
 }

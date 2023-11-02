@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>초등 커뮤니티 - 관리자 - 카테고리목록</title>
+    <title>초등 커뮤니티 - 관리자 - 댓글목록</title>
 
     <!-- Custom fonts for this template -->
     <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
@@ -19,7 +19,8 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-    <script defer src="/app/js/categoryList.js"></script>
+    <script defer src="/app/js/adminCommentList.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -45,7 +46,7 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">카테고리 목록</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">게시글 목록</h6>
                     </div>
                     <div class="card-body">
 
@@ -54,18 +55,17 @@
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
                                     <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/admin/category}?displayUnit=' + this.value + '&boardId=${boardId}'|"
+                                            name="dataTable_length" th:onchange="|location.href='@{/admin/commentList}?displayUnit=' + this.value|"
                                             class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 100" value="100">100</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 10" value="10">10</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 25" value="25">25</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 50" value="50">50</option>
+                                        <option th:selected="${commentPageDto.page.displayUnit} == 100" value="100">100</option>
                                     </select> 단위</label></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-primary mr-3" onclick="createCategory(this)" th:data-boardId="${boardId}" type="button">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" onclick="removeCategory()" type="button">삭제</button>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeComment()">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,18 +77,28 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox" onclick="allCategoryCk(this)"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allCommentCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
-                                                <th style="min-width: 150px">카테고리 이름</th>
-                                                <th style="min-width: 150px">게시판 이름</th>
+                                                <th style="min-width: 150px">내용</th>
+                                                <th style="min-width: 150px">게시판명</th>
+                                                <th style="min-width: 150px">카테고리명</th>
+                                                <th style="min-width: 150px">작성자명</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="categoryDto : ${categoryPageDto.categoryDtoList}">
-                                                <td><input th:if="${categoryDto.categoryId > 17}" type="checkbox" name="categoryCk" th:data-categoryid="${categoryDto.categoryId}"></td>
-                                                <td th:text="${categoryDto.categoryId}">null</td>
-                                                <td th:text="${categoryDto.categoryName}">null</td>
-                                                <td th:text="${categoryDto.boardName}">null</td>
+                                            <tr th:each="commentDto : ${commentPageDto.commentDtoList}">
+                                                <td><input th:if="${commentDto.commentId} > 37" type="checkbox" name="commentCk" th:data-commentid="${commentDto.commentId}"></td>
+                                                <td th:text="${commentDto.commentId}">null</td>
+                                                <td th:text="${commentDto.commentContents}"
+                                                    th:onclick="|location.href='@{/notice/detail(postId=${commentDto.postId})}'|"
+                                                    style="cursor:pointer">null</td>
+                                                <td th:text="${commentDto.boardName}"
+                                                    th:onclick="|location.href='@{/admin/category(boardId=${commentDto.boardId})}'|"
+                                                    style="cursor:pointer">null</td>
+                                                <td th:text="${commentDto.categoryName}"
+                                                    th:onclick="|location.href='@{/admin/notice(categoryId=${commentDto.categoryId})}'|"
+                                                    style="cursor:pointer">null</td>
+                                                <td th:text="${commentDto.name}">null</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -101,25 +111,25 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
                                     <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${categoryPageDto.page.curPage} to ${categoryPageDto.page.maxPage} of ${categoryPageDto.page.totalCnt} entries|">
+                                         th:text="|Showing ${commentPageDto.page.curPage} to ${commentPageDto.page.maxPage} of ${commentPageDto.page.totalCnt} entries|">
                                     </div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                                         <ul class="pagination">
                                             <li class="paginate_button page-item previous" id="dataTable_previous"
-                                                th:classappend="${categoryPageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage - 1})}" class="page-link">Previous</a>
+                                                th:classappend="${commentPageDto.page.curPage == 1} ? 'disabled' : '' ">
+                                                <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${commentPageDto.page.curPage - 1})}" class="page-link">Previous</a>
                                             </li>
-                                            <th:block th:each="num : ${#numbers.sequence(categoryPageDto.page.startPage,
-                                                                                        categoryPageDto.page.endPage)}">
-                                                <li class="paginate_button page-item" th:classappend="${num == categoryPageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
+                                            <th:block th:each="num : ${#numbers.sequence(commentPageDto.page.startPage,
+                                                                                        commentPageDto.page.endPage)}">
+                                                <li class="paginate_button page-item" th:classappend="${num == commentPageDto.page.curPage} ? 'active' : '' ">
+                                                    <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
                                                 </li>
                                             </th:block>
                                             <li class="paginate_button page-item next" id="dataTable_next"
-                                                th:classappend="${categoryPageDto.page.curPage == categoryPageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage + 1})}"  class="page-link">Next</a>
+                                                th:classappend="${commentPageDto.page.curPage == commentPageDto.page.endPage} ? 'disabled' : '' ">
+                                                <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${commentPageDto.page.curPage + 1})}"  class="page-link">Next</a>
                                             </li>
                                         </ul>
                                     </div>

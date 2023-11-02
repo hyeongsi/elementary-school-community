@@ -83,7 +83,9 @@
                                             <tbody>
                                             <tr th:each="categoryDto : ${categoryPageDto.categoryDtoList}">
                                                 <td th:text="${categoryDto.categoryId}">null</td>
-                                                <td th:text="${categoryDto.categoryName}">null</td>
+                                                <td th:text="${categoryDto.categoryName}"
+                                                    th:onclick="|location.href='@{/admin/notice(categoryId=${categoryDto.categoryId})}'|"
+                                                    style="cursor:pointer">null</td>
                                                 <td th:text="${categoryDto.boardName}">null</td>
                                             </tr>
                                             </tbody>

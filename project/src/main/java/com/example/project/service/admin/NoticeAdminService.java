@@ -1,8 +1,9 @@
 package com.example.project.service.admin;
 
-import com.example.project.dto.notice.AdminNoticePageDto;
-import com.example.project.dto.notice.NoticeBoardCategoryMemberNameDto;
-import com.example.project.dto.notice.NoticeDto;
+import com.example.project.dto.category.CategoryDto;
+import com.example.project.dto.category.CategoryPageDto;
+import com.example.project.dto.category.FindCategoryByBoardIdPageDto;
+import com.example.project.dto.notice.*;
 import com.example.project.dto.page.Page;
 import com.example.project.dto.page.PageDto;
 import com.example.project.mapper.NoticeMapper;
@@ -33,4 +34,18 @@ public class NoticeAdminService {
         return noticeMapper.deleteNoticeList(noticeDtoList);
     }
 
+    public AdminNoticePageDto selectNoticePageById(int categoryId, int displayUnit, int curPage) {
+        final int totalCnt = noticeMapper.noticeTotalCtnById(categoryId);
+        final Page page = new Page(displayUnit, curPage, totalCnt);
+
+        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum());
+        final FindNoticeByCategoryIdPageDto findNoticeByCategoryIdPageDto =
+                new FindNoticeByCategoryIdPageDto(pageDto, categoryId);
+
+        final List<NoticeBoardCategoryMemberNameDto> noticeBoardCategoryMemberNameDtoList =
+                noticeMapper.selectNoticeListById(findNoticeByCategoryIdPageDto);
+
+        final AdminNoticePageDto noticePageDto = new AdminNoticePageDto(page, noticeBoardCategoryMemberNameDtoList);
+        return noticePageDto;
+    }
 }

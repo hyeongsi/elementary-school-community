@@ -1,6 +1,5 @@
 package com.example.project.controller.admin;
 
-import com.example.project.dto.category.CategoryDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.CommentPageDto;
 import com.example.project.service.admin.CommentAdminService;
@@ -25,7 +24,7 @@ public class AdminCommentController {
 
         final CommentPageDto commentPageDto = commentAdminService.selectCommentPage(displayUnit, curPage);
         model.addAttribute("commentPageDto", commentPageDto);
-        return "admin/commentList";
+        return "admin/comment/commentList";
     }
 
     @ResponseBody

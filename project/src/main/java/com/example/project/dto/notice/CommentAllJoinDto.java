@@ -13,6 +13,8 @@ public class CommentAllJoinDto {
 
     private Long commentId;
     private String memberId;
+    private Long boardId;
+    private Long categoryId;
     private Long postId;
     private String commentContents;
     private String boardName;
