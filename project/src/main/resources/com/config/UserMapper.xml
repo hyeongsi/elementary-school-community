@@ -71,6 +71,11 @@
   		 	WHERE ID = #{id}
   		</insert>
   		 
+  		 <select id="userInfo" parameterType="string" resultType="SchoolInfo">
+  		 	SELECT education_code as officeOfEducationCode, school_code, usergrade, userclass
+  		 	FROM member_data
+  		 	WHERE id = #{id}
+  		 </select>
   		
    
   </mapper>

@@ -15,16 +15,16 @@ import javax.servlet.http.HttpSession;
 public class MemberApiController {
 
     private final UserService userService;
-
+ 
     @GetMapping("/member/schoolInfo")
     public SchoolInfo schoolInfoDetails(HttpSession session){
-        UserDTO userDTO = (UserDTO)session.getAttribute("user");
+    	
+        session.getAttribute("userId");
 
-        System.out.println("userDTO = " + userDTO);
-
-        final String ecudationCode = userDTO.getEducation_code();
-        final String schoolCode = userDTO.getSchool_code();
-        return new SchoolInfo(ecudationCode, schoolCode);
+        System.out.println(session.getAttribute("userId"));
+        SchoolInfo schoolInfo = userService.userInfo(session.getAttribute("userId").toString());
+        System.out.println(schoolInfo.getOfficeOfEducationCode());
+        return schoolInfo;
     }
     
     

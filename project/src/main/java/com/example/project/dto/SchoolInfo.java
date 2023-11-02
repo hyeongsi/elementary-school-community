@@ -7,10 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class SchoolInfo {
 
     String officeOfEducationCode;   // 시도교육청코드
     String schoolCode; // 행정표준코드
+    String usergrade;
+    String userclass;
 
     public SchoolInfo() { }
 

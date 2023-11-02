@@ -3,6 +3,7 @@ package com.example.project.dao;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.example.project.dto.SchoolInfo;
 import com.example.project.dto.UserDTO;
 
 @Mapper
@@ -33,6 +34,8 @@ public interface UserDAO {
 	// 매칭된 아이디의 비밀번호 변경
 	public void updateUserPassword(String id, String pwd);
 	
+	//회원 학교 정보 얻기
+	public SchoolInfo userInfo(String id);
 	
 	
 

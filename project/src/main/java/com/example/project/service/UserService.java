@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dao.UserDAO;
+import com.example.project.dto.SchoolInfo;
 import com.example.project.dto.UserDTO;
 
 import lombok.AllArgsConstructor;
@@ -84,6 +85,10 @@ public class UserService {
 		userDAO.deleteUser(id);
 	}
 	
+	// 회원 학교 정보 얻기
+	public SchoolInfo userInfo(String id) {
+		return userDAO.userInfo(id);
+	}
 	
 	
 	
