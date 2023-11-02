@@ -84,7 +84,8 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
+            <span th:if="${session.userId!=null}" th:text="${session.userEO}">서울특별시교육청</span>
+            <span th:if="${session.userId==null}" th:text="서울특별시교육청"></span>
         </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded" id="categoryList">

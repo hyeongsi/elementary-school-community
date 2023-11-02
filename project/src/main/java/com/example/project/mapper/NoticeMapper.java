@@ -27,6 +27,7 @@ public interface NoticeMapper {
 	public int updateNotice(NoticeDto noticeDto);
 	public int updateViewCnt(Long postId);
 	public List<NoticeCategoryDto> selectNoticeCategoryList();
+	public List<NoticeCategoryDto> selectUserNoticeCategoryList(int boardId);
 	public void addComment(CommentDto commnetDto);
 	public List<CommentDto> selectCommentList(Long postId);
 	public void deleteComment(Long commentId);

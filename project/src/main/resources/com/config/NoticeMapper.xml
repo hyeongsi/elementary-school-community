@@ -83,6 +83,12 @@
     	FROM category
     </select>
   
+  	<select id="selectUserNoticeCategoryList" resultType="NoticeCategoryDto">
+    	SELECT category_id, category_name 
+    	FROM category
+    	WHERE board_id = #{boardId}
+    </select>
+  
 	<insert id="addComment" parameterType="CommentDto">
     	<choose>
 			<!-- 검색옵션이 전체 검색일 경우 -->

@@ -21,9 +21,7 @@ public class MemberApiController {
     	
         session.getAttribute("userId");
 
-        System.out.println(session.getAttribute("userId"));
         SchoolInfo schoolInfo = userService.userInfo(session.getAttribute("userId").toString());
-        System.out.println(schoolInfo.getOfficeOfEducationCode());
         return schoolInfo;
     }
     

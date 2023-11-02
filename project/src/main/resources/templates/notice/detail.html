@@ -69,19 +69,20 @@
 											<div class="subject_inner_text" th:text="${notice.content}"></div>
 
 										</div>
-										<button type="button" class="like-btn btn btn-outline-primary" th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
-										<span class="material-symbols-outlined">thumb_up</span>
-										<span th:text="${like}"></span>
-										</button>&nbsp
-										<span th:if="${session.userId!=null}">
-										<span
-											th:if="${session.userId.toString().equals(notice.memberId)}">
-											<a class="notice-edit-btn btn btn-outline-primary mr-2"
+										<button type="button" class="like-btn btn btn-outline-primary"
+											th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
+											<span class="material-symbols-outlined">thumb_up</span> <span
+												th:text="${like}"></span>
+										</button>
+										&nbsp <span th:if="${session.userId!=null}"> 
+												<span th:if="${session.userId.toString().equals(notice.memberId)}">
+												<a class="notice-edit-btn btn btn-outline-primary mr-2"
 												th:value="${notice.memberId}"
 												th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
-											<a class="btn btn-outline-danger mr-2" id="delBtn" style="color:red;"
+												<a class="btn btn-outline-danger mr-2" id="delBtn" 
+												style="color: red;"
 												th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a>
-										</span>
+												</span>
 										</span>
 										<div id="cmt">
 
@@ -95,26 +96,25 @@
 											<table border="1"></table>
 											<tr th:each="comment : ${Comment}">
 												<div class="comments comment_"
-													th:attrappend="class=${comment.commentId}" th:value="${comment.memberId}">
+													th:attrappend="class=${comment.commentId}"
+													th:value="${comment.memberId}">
 													<td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
 													<td th:text="${comment.memberId}">유저ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
 													<td th:text="${comment.commentId}">코멘트ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
 													<td th:text="${comment.commentContents}">내용</td>&nbsp
 													<button class="reply btn btn-outline-primary "
 														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-													
 														id="replyBtn">답글</button>
-														<span th:if="${session.userId!=null}">
-													<a th:if="${session.userId.toString().equals(comment.memberId)}">
-												<button class="edit-comment btn btn-outline-primary "
-														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-														id="edit-comment-btn">수정</button>
-													 </a>
-													 &nbsp
-														</span>
-													<a th:if="${session.userId.toString().equals(comment.memberId)}"
-													 class="del-comment" style="color:red;" 
-													 th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
+													<span th:if="${session.userId!=null}"> <a
+														th:if="${session.userId.toString().equals(comment.memberId)}">
+															<button class="edit-comment btn btn-outline-primary "
+																th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
+																id="edit-comment-btn">수정</button>
+													</a> &nbsp
+													</span> <a
+														th:if="${session.userId.toString().equals(comment.memberId)}"
+														class="del-comment" style="color: red;"
+														th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
 												</div>
 
 											</tr>
@@ -126,9 +126,11 @@
 													<input type="hidden" class="postId-input" name="postId"
 														id="postIdInput">
 													<div class="comment-wrap">
-													<textarea id="comment-resize" name="comment" rows="3" cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea>
-													<button type="submit" class="common_input_btn btn-outline-primary" tabindex="0"
-														id="customButton">등록</button>
+														<textarea id="comment-resize" name="comment" rows="3"
+															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea>
+														<button type="submit"
+															class="common_input_btn btn-outline-primary" tabindex="0"
+															id="customButton">등록</button>
 													</div>
 													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
 												 -->

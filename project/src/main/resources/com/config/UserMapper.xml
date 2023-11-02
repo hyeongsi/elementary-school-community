@@ -72,7 +72,7 @@
   		</insert>
   		 
   		 <select id="userInfo" parameterType="string" resultType="SchoolInfo">
-  		 	SELECT education_code as officeOfEducationCode, school_code, usergrade, userclass
+  		 	SELECT education_code as officeOfEducationCode, school_code, usergrade, userclass , education
   		 	FROM member_data
   		 	WHERE id = #{id}
   		 </select>

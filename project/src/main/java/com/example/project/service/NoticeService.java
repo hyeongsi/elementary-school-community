@@ -85,6 +85,10 @@ public class NoticeService {
     	return noticeMapper.selectNoticeCategoryList();
     }
     
+    public List<NoticeCategoryDto> selectUserNoticeCategoryList(int boardId) {
+    	return noticeMapper.selectUserNoticeCategoryList(boardId);
+    }
+    
     public void addComment(CommentDto commnetDto) {
     	noticeMapper.addComment(commnetDto);
     }

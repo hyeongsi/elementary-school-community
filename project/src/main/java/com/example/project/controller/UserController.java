@@ -36,7 +36,6 @@ public class UserController {
 	public String loginSuccess(Principal principal, HttpSession session, Model model) { // 로그인
 
 		UserDTO userDTO = userService.getUserById(principal.getName());
-
 		if (userDTO == null) { // 로그인 실패
 			model.addAttribute("loginFail", "아이디 혹은 비밀번호를 확인해주세요");
 			return "/login";
@@ -45,6 +44,8 @@ public class UserController {
 		userDTO.setPwd(null);
 		session.setAttribute("userId", principal.getName());
 		session.setAttribute("user", userDTO);
+		session.setAttribute("userEO", userService.userInfo(principal.getName()).getEducation());
+		
 		return "redirect:/";
 
 	}

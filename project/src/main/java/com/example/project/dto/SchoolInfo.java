@@ -14,6 +14,7 @@ public class SchoolInfo {
     String schoolCode; // 행정표준코드
     String usergrade;
     String userclass;
+    String education;
 
     public SchoolInfo() { }
 
