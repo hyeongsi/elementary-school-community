@@ -70,9 +70,30 @@
   		 	SET PWD = #{pwd}
   		 	WHERE ID = #{id}
   		</insert>
-  		 
-  		
-   
+
+	<!-- 회원 인원수 반환 -->
+	<select id="memberTotalCnt" resultType="int">
+		SELECT COUNT(*)
+		FROM MEMBER_DATA
+	</select>
+
+	<!-- 회원 페이징 후 반환 -->
+	<select id="selectMemberListPage" parameterType="PageDto" resultType="UserDTO">
+		SELECT *
+		FROM (SELECT rownum rm, id, name, email, education, school, education_code, school_code, usergrade, userclass
+			  FROM MEMBER_DATA)
+		WHERE rm between #{start} AND #{end}
+	</select>
+
+    <!-- 회원 리스트 삭제 -->
+	<delete id="deleteMemberList" parameterType="List">
+		DELETE FROM member_data
+		WHERE id IN (
+		<foreach collection="userDTOList" item="item" separator=",">
+			#{item.id}
+		</foreach>
+		)
+	</delete>
   </mapper>
   
   
