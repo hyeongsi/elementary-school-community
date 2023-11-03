@@ -1,17 +1,17 @@
-function allMemberCk(ckBox){
+const ckBoxQuery = "input[name='elementCk']";
+
+function allElementCk(ckBox){
     const isCk = ckBox.checked;
-    
+
     // 전체 체크박스 체크여부 토글 적용
-    const query = "input[name='memberCk']";
-    const ckBoxes = document.querySelectorAll(query);
+    const ckBoxes = document.querySelectorAll(ckBoxQuery);
     for (let i = 0; i < ckBoxes.length; i++) {
         ckBoxes[i].checked = isCk;
     }
 }
 
-function removeMember() {
-    const query = "input[name='memberCk']:checked";
-    const ckBoxes = document.querySelectorAll(query);
+function removeElement(key, url) {
+    const ckBoxes = document.querySelectorAll(ckBoxQuery + ":checked");
     if(ckBoxes.length == 0)
         return;
 
@@ -20,11 +20,10 @@ function removeMember() {
         const arr = [];
         for (let i = 0; i < ckBoxes.length; i++) {
             let obj = {};
-            obj.id = ckBoxes[i].dataset['memberid'];
+            obj[key] = ckBoxes[i].dataset['elementid'];
             arr.push(obj);
         }
 
-        const url =  "http://localhost:8088/app/admin/memberList";
         fetch(url, {
             method: "DELETE",
             headers:{

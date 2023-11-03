@@ -20,6 +20,7 @@
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
     <script defer src="/app/js/categoryList.js"></script>
+    <script defer src="/app/js/adminList.js"></script>
 </head>
 
 <body id="page-top">
@@ -53,19 +54,13 @@
 
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/admin/category}?displayUnit=' + this.value + '&boardId=${boardId}'|"
-                                            class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 100" value="100">100</option>
-                                    </select> 단위</label></div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/displayUnit::displayUnitBoardId ('/admin/category', ${categoryPageDto.page.displayUnit}, ${boardId})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-sm btn-outline-primary mr-3" onclick="createCategory(this)" th:data-boardId="${boardId}" type="button">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" onclick="removeCategory()" type="button">삭제</button>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="removeElement('categoryId', 'http://localhost:8088/app/admin/categoryList')" type="button">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +72,7 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox" onclick="allCategoryCk(this)"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allElementCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">카테고리 이름</th>
                                                 <th style="min-width: 150px">게시판 이름</th>
@@ -85,7 +80,7 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="categoryDto : ${categoryPageDto.categoryDtoList}">
-                                                <td><input th:if="${categoryDto.categoryId > 17}" type="checkbox" name="categoryCk" th:data-categoryid="${categoryDto.categoryId}"></td>
+                                                <td><input th:if="${categoryDto.categoryId > 17}" type="checkbox" name="elementCk" th:data-elementid="${categoryDto.categoryId}"></td>
                                                 <td th:text="${categoryDto.categoryId}">null</td>
                                                 <td th:text="${categoryDto.categoryName}"
                                                     th:onclick="|location.href='@{/admin/notice(categoryId=${categoryDto.categoryId})}'|"
@@ -102,9 +97,8 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${categoryPageDto.page.curPage} to ${categoryPageDto.page.maxPage} of ${categoryPageDto.page.totalCnt} entries|">
-                                    </div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/paginateText::paginateText (${categoryPageDto})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">

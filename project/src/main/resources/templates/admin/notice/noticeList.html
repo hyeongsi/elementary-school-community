@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-    <script defer src="/app/js/adminNoticeList.js"></script>
+    <script defer src="/app/js/adminList.js"></script>
 
 </head>
 
@@ -54,18 +54,12 @@
 
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/admin/noticeList}?displayUnit=' + this.value|"
-                                            class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 100" value="100">100</option>
-                                    </select> 단위</label></div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/displayUnit::displayUnit ('/admin/noticeList', ${noticePageDto.page.displayUnit})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeNotice()">삭제</button>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeElement('postId', 'http://localhost:8088/app/admin/noticeList')">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +71,7 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox" onclick="allNoticeCk(this)"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allElementCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">제목</th>
                                                 <th style="min-width: 150px">조회수</th>
@@ -88,7 +82,7 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="noticeDto : ${noticePageDto.noticeDtoList}">
-                                                <td><input th:if="${noticeDto.postId} > 37" type="checkbox" name="noticeCk" th:data-postid="${noticeDto.postId}"></td>
+                                                <td><input th:if="${noticeDto.postId} > 37" type="checkbox" name="elementCk" th:data-elementid="${noticeDto.postId}"></td>
                                                 <td th:text="${noticeDto.postId}">null</td>
                                                 <td th:text="${noticeDto.title}"
                                                     th:onclick="|location.href='@{/notice/detail(postId=${noticeDto.postId})}'|"
@@ -110,28 +104,13 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${noticePageDto.page.curPage} to ${noticePageDto.page.maxPage} of ${noticePageDto.page.totalCnt} entries|">
-                                    </div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/paginateText::paginateText (${noticePageDto})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous" id="dataTable_previous"
-                                                th:classappend="${noticePageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/noticeList(displayUnit=${noticePageDto.page.displayUnit},curPage=${noticePageDto.page.curPage - 1})}" class="page-link">Previous</a>
-                                            </li>
-                                            <th:block th:each="num : ${#numbers.sequence(noticePageDto.page.startPage,
-                                                                                        noticePageDto.page.endPage)}">
-                                                <li class="paginate_button page-item" th:classappend="${num == noticePageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/admin/noticeList(displayUnit=${noticePageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
-                                                </li>
-                                            </th:block>
-                                            <li class="paginate_button page-item next" id="dataTable_next"
-                                                th:classappend="${noticePageDto.page.curPage == noticePageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/noticeList(displayUnit=${noticePageDto.page.displayUnit},curPage=${noticePageDto.page.curPage + 1})}"  class="page-link">Next</a>
-                                            </li>
-                                        </ul>
+                                        <!-- 페이지 이동 버튼 -->
+                                        <ul th:replace="common/listPageModule/paginateBtn::paginateBtn (${noticePageDto}, '/admin/noticeList')"></ul>
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="dataTables_length" id="dataTable_length" th:fragment="displayUnit (href, displayUnit)">
+        <label>보기 <select name="dataTable_length" th:onchange="|location.href='@{${href}}?displayUnit=' + this.value|"
+                          class="custom-select custom-select-sm form-control form-control-sm">
+            <option th:selected="${displayUnit} == 10" value="10">10</option>
+            <option th:selected="${displayUnit} == 25" value="25">25</option>
+            <option th:selected="${displayUnit} == 50" value="50">50</option>
+            <option th:selected="${displayUnit} == 100" value="100">100</option>
+        </select> 단위</label>
+    </div>
+
+    <div class="dataTables_length" id="dataTable_length" th:fragment="displayUnitBoardId (href, displayUnit, boardId)">
+        <label>보기 <select name="dataTable_length" th:onchange="|location.href='@{${href}}?boardId=${boardId}&displayUnit=' + this.value|"
+                          class="custom-select custom-select-sm form-control form-control-sm">
+            <option th:selected="${displayUnit} == 10" value="10">10</option>
+            <option th:selected="${displayUnit} == 25" value="25">25</option>
+            <option th:selected="${displayUnit} == 50" value="50">50</option>
+            <option th:selected="${displayUnit} == 100" value="100">100</option>
+        </select> 단위</label>
+    </div>
+
+</body>
+</html>

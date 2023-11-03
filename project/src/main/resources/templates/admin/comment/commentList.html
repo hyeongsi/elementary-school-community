@@ -19,8 +19,7 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-    <script defer src="/app/js/adminCommentList.js"></script>
-
+    <script defer src="/app/js/adminList.js"></script>
 </head>
 
 <body id="page-top">
@@ -54,18 +53,12 @@
 
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/admin/commentList}?displayUnit=' + this.value|"
-                                            class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${commentPageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${commentPageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${commentPageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${commentPageDto.page.displayUnit} == 100" value="100">100</option>
-                                    </select> 단위</label></div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/displayUnit::displayUnit ('/admin/commentList', ${commentPageDto.page.displayUnit})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeComment()">삭제</button>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeElement('commentId', 'http://localhost:8088/app/admin/commentList')">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +70,7 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox" onclick="allCommentCk(this)"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allElementCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">내용</th>
                                                 <th style="min-width: 150px">게시판명</th>
@@ -87,7 +80,7 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="commentDto : ${commentPageDto.commentDtoList}">
-                                                <td><input th:if="${commentDto.commentId} > 37" type="checkbox" name="commentCk" th:data-commentid="${commentDto.commentId}"></td>
+                                                <td><input th:if="${commentDto.commentId} > 37" type="checkbox" name="elementCk" th:data-elementid="${commentDto.commentId}"></td>
                                                 <td th:text="${commentDto.commentId}">null</td>
                                                 <td th:text="${commentDto.commentContents}"
                                                     th:onclick="|location.href='@{/notice/detail(postId=${commentDto.postId})}'|"
@@ -110,28 +103,13 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${commentPageDto.page.curPage} to ${commentPageDto.page.maxPage} of ${commentPageDto.page.totalCnt} entries|">
-                                    </div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/paginateText::paginateText (${commentPageDto})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous" id="dataTable_previous"
-                                                th:classappend="${commentPageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${commentPageDto.page.curPage - 1})}" class="page-link">Previous</a>
-                                            </li>
-                                            <th:block th:each="num : ${#numbers.sequence(commentPageDto.page.startPage,
-                                                                                        commentPageDto.page.endPage)}">
-                                                <li class="paginate_button page-item" th:classappend="${num == commentPageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
-                                                </li>
-                                            </th:block>
-                                            <li class="paginate_button page-item next" id="dataTable_next"
-                                                th:classappend="${commentPageDto.page.curPage == commentPageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/commentList(displayUnit=${commentPageDto.page.displayUnit},curPage=${commentPageDto.page.curPage + 1})}"  class="page-link">Next</a>
-                                            </li>
-                                        </ul>
+                                        <!-- 페이지 이동 버튼 -->
+                                        <ul th:replace="common/listPageModule/paginateBtn::paginateBtn (${commentPageDto}, '/admin/commentList')"></ul>
                                     </div>
                                 </div>
                             </div>

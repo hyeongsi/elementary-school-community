@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
+         th:fragment="paginateText (pageDto)"
+         th:text="|Showing ${pageDto.page.curPage} to ${pageDto.page.maxPage} of ${pageDto.page.totalCnt} entries|">
+    </div>
+
+</body>
+</html>

@@ -19,7 +19,7 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-    <script defer src="/app/js/adminNoticeList.js"></script>
+    <script defer src="/app/js/adminList.js"></script>
 </head>
 
 <body id="page-top">
@@ -67,7 +67,7 @@
                                         <button class="btn btn-sm btn-outline-primary mr-3"
                                                 th:onclick="|location.href='@{/notice/write(categoryId=${categoryId})}'|"
                                                 style="cursor:pointer">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" onclick="removeNotice()" type="button">삭제</button>
+                                        <button class="btn btn-sm btn-outline-danger" onclick="removeElement('postId', 'http://localhost:8088/app/admin/noticeList')" type="button">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox" onclick="allNoticeCk(this)"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allElementCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">제목</th>
                                                 <th style="min-width: 150px">조회수</th>
@@ -90,7 +90,7 @@
                                             </thead>
                                             <tbody>
                                             <tr th:each="noticeDto : ${noticePageDto.noticeDtoList}">
-                                                <td><input th:if="${noticeDto.postId > 17}" type="checkbox" name="noticeCk" th:data-postid="${noticeDto.postId}"></td>
+                                                <td><input th:if="${noticeDto.postId > 17}" type="checkbox" name="elementCk" th:data-elementid="${noticeDto.postId}"></td>
                                                 <td th:text="${noticeDto.postId}">null</td>
                                                 <td th:text="${noticeDto.title}"
                                                     th:onclick="|location.href='@{/notice/detail(postId=${noticeDto.postId})}'|"
@@ -112,9 +112,8 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${noticePageDto.page.curPage} to ${noticePageDto.page.maxPage} of ${noticePageDto.page.totalCnt} entries|">
-                                    </div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/paginateText::paginateText (${noticePageDto})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">

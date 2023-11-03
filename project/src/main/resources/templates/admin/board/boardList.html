@@ -20,7 +20,7 @@
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
     <script defer src="/app/js/boardList.js"></script>
-
+    <script defer src="/app/js/adminList.js"></script>
 </head>
 
 <body id="page-top">
@@ -54,19 +54,13 @@
 
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/admin/boardList}?displayUnit=' + this.value|"
-                                            class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${boardPageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${boardPageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${boardPageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${boardPageDto.page.displayUnit} == 100" value="100">100</option>
-                                    </select> 단위</label></div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/displayUnit::displayUnit ('/admin/boardList', ${boardPageDto.page.displayUnit})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-sm btn-outline-primary mr-3" type="button" onclick="createBoard()">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeBoard()">삭제</button>
+                                        <button class="btn btn-sm btn-outline-danger" type="button" onclick="removeElement('boardId', 'http://localhost:8088/app/admin/boardList')">삭제</button>
                                     </div>
                                 </div>
                             </div>
@@ -78,14 +72,14 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 50px"><input type="checkbox" onclick="allBoardCk(this)"></th>
+                                                <th style="min-width: 50px"><input type="checkbox" onclick="allElementCk(this)"></th>
                                                 <th style="min-width: 50px">번호</th>
                                                 <th style="min-width: 150px">게시판 이름</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr th:each="boardDto : ${boardPageDto.boardDtoList}">
-                                                <td><input th:if="${boardDto.boardId} > 37" type="checkbox" name="boardCk" th:data-boardid="${boardDto.boardId}"></td>
+                                                <td><input th:if="${boardDto.boardId} > 37" type="checkbox" name="elementCk" th:data-elementid="${boardDto.boardId}"></td>
                                                 <td th:text="${boardDto.boardId}">null</td>
                                                 <td th:text="${boardDto.boardName}"
                                                     th:onclick="|location.href='@{/admin/category(boardId=${boardDto.boardId})}'|"
@@ -101,28 +95,13 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${boardPageDto.page.curPage} to ${boardPageDto.page.maxPage} of ${boardPageDto.page.totalCnt} entries|">
-                                    </div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/paginateText::paginateText (${boardPageDto})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous" id="dataTable_previous"
-                                                th:classappend="${boardPageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/boardList(displayUnit=${boardPageDto.page.displayUnit},curPage=${boardPageDto.page.curPage - 1})}" class="page-link">Previous</a>
-                                            </li>
-                                            <th:block th:each="num : ${#numbers.sequence(boardPageDto.page.startPage,
-                                                                                        boardPageDto.page.endPage)}">
-                                                <li class="paginate_button page-item" th:classappend="${num == boardPageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/admin/boardList(displayUnit=${boardPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
-                                                </li>
-                                            </th:block>
-                                            <li class="paginate_button page-item next" id="dataTable_next"
-                                                th:classappend="${boardPageDto.page.curPage == boardPageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/boardList(displayUnit=${boardPageDto.page.displayUnit},curPage=${boardPageDto.page.curPage + 1})}"  class="page-link">Next</a>
-                                            </li>
-                                        </ul>
+                                        <!-- 페이지 이동 버튼 -->
+                                        <ul th:replace="common/listPageModule/paginateBtn::paginateBtn (${boardPageDto}, '/admin/boardList')"></ul>
                                     </div>
                                 </div>
                             </div>
