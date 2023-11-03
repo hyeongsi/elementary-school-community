@@ -2,26 +2,19 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.project.mapper.NoticeMapper">
+<mapper namespace="com.example.project.mapper.NoticeMapper2">
 
 	<!-- 01_01. 게시글 전체목록 조회 및 검색 조회까지 -->
 	<select id="selectSearchNoticePage"
 		resultType="NoticeDto" parameterType="PageDTO">
-		SELECT p.post_Id, p.title, p.content, p.good, p.view_cnt, p.member_id, p.category_id,
-        NVL(comment_count, 0) AS comment_count
+		SELECT post_Id, title, content, good, view_cnt, member_id, category_id
 		FROM (
-    	SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
-    	FROM post
+		SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
+		FROM post
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
-         ) p
-		 LEFT JOIN (
-    	 SELECT post_id, COUNT(comment_id) AS comment_count
-    	 FROM comments
-   	 	 GROUP BY post_id
-		 ) c ON p.post_id = c.post_id
-		 WHERE rm BETWEEN #{start} AND #{end}
-		 ORDER BY post_Id DESC
+         )WHERE rm between #{start} AND #{end}
+         ORDER BY post_Id DESC
 	</select>
 
 	<!-- 01_02. 게시글 레코드 갯수 -->
@@ -78,15 +71,6 @@
 		delete  from post
 		where post_id = #{postId}
 	</delete>
-
-	<delete id="deleteNoticeList" parameterType="List">
-		DELETE FROM post
-		WHERE post_id IN (
-		<foreach collection="noticeDtoList" item="item" separator=",">
-			#{item.postId}
-		</foreach>
-		)
-	</delete>
 	
 	<select id="selectByPostId" resultType="NoticeDto" parameterType="long">
         SELECT post_Id, title, content , good, view_cnt, member_id , category_id
@@ -125,15 +109,6 @@
     	DELETE FROM comments
 		WHERE comment_id = #{commentId}
     </delete>
-
-	<delete id="deleteCommentList" parameterType="List">
-		DELETE FROM comments
-		WHERE comment_id IN (
-		<foreach collection="commentDtoList" item="item" separator=",">
-			#{item.commentId}
-		</foreach>
-		)
-	</delete>
     
     <update id="editComment" parameterType="CommentDto">
     	UPDATE comments
@@ -148,60 +123,6 @@
     	START WITH parent_comment_id IS NULL
 		CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
-
-	<select id="selectCommentListAll" resultType="CommentAllJoinDto" parameterType="PageDto">
-		SELECT comment_id, member_id, board_id, category_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
-		FROM (SELECT rownum rm, comment_id, board_id, category_id, member_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
-		FROM (SELECT cmt.comment_id, cmt.member_id, b.board_id, c.category_id, cmt.post_id, cmt.COMMENT_CONTENTS, b.board_name, c.category_name, m.name
-		FROM comments cmt
-		JOIN member_data m on cmt.member_id = m.id
-		JOIN post p on cmt.post_id = p.post_id
-		JOIN category c on p.category_id = c.category_id
-		JOIN board b on  c.board_id = b.board_id
-		ORDER BY comment_id DESC))
-		WHERE rm between #{start} AND #{end}
-	</select>
-
-	<select id="commentTotalCnt" resultType="int">
-		SELECT COUNT(*) FROM comments
-	</select>
-
-	<select id="noticeNoSearchTotalCnt" resultType="int">
-		SELECT COUNT(*) FROM post
-	</select>
-
-	<select id="selectNoticePageWithName" resultType="NoticeBoardCategoryMemberNameDto" parameterType="PageDto">
-		SELECT post_id, board_id, title, content, view_cnt, board_name, category_name, name
-		FROM (SELECT rownum rm, post_id, b.board_id, title, content, view_cnt, b.board_name, c.category_name, m.name
-		FROM post p
-		JOIN category c on p.category_id = c.category_id
-		JOIN member_data m on p.member_id = m.id
-		JOIN board b on b.board_id = c.board_id
-		ORDER BY post_id DESC)
-		WHERE rm between #{start} AND #{end}
-	</select>
-
-	<select id ="noticeTotalCtnById" parameterType="int" resultType="int">
-		SELECT COUNT(*)
-		FROM (SELECT rownum rm, post_id, title, content, view_cnt, b.board_name, c.category_name, m.name, c.category_id
-		FROM post p
-		JOIN category c on p.category_id = c.category_id
-		JOIN member_data m on p.member_id = m.id
-		JOIN board b on b.board_id = c.board_id)
-		WHERE category_id = #{categoryId}
-	</select>
-
-	<select id="selectNoticeListById" resultType="NoticeBoardCategoryMemberNameDto" parameterType="FindNoticeByCategoryIdPageDto">
-		SELECT post_id, board_id, title, content, view_cnt, board_name, category_name, name
-		FROM (SELECT rownum rm, post_id, b.board_id, title, content, view_cnt, b.board_name, c.category_name, m.name
-		FROM post p
-		JOIN category c on p.category_id = c.category_id
-		JOIN member_data m on p.member_id = m.id
-		JOIN board b on b.board_id = c.board_id
-		WHERE p.category_id = #{categoryId}
-		ORDER BY post_id DESC)
-		WHERE rm between #{pageDto.start} AND #{pageDto.end}
-	</select>
     
     <select id="commnetCntList" parameterType="long" resultType="list"> 
   		SELECT p.post_id, NVL(COUNT(c.comment_id), 0) AS comment_count
@@ -237,17 +158,5 @@
     	SELECT COUNT(*) FROM liketable
 		WHERE post_id = #{postId} AND good=1
     </select>
-
-	<select id="selectSearchNoticePageById" resultType="NoticeDto"
-		parameterType="MemberPageDto">
-		SELECT post_Id, title, content, good, view_cnt, member_id, category_id
-		FROM (
-		SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id,
-		category_id
-		FROM post
-		WHERE member_id = #{memberId} <!-- member_id를 사용한 검색 조건 추가 -->
-		) WHERE rm BETWEEN #{start} AND #{end}
-		ORDER BY post_Id DESC
-	</select>
 	
 </mapper>

@@ -30,8 +30,8 @@ public class UserDTO {
 	
 	private String education;
 	private String school;
-	private String education_code;
-	private String school_code;
+	private String educationCode;
+	private String schoolCode;
 	
 	@NotBlank(message = "학년을 선택하세요.")
 	private String usergrade;

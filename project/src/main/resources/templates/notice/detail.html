@@ -8,11 +8,15 @@
 
 <title>초등 커뮤니티 - 관리자 - 게시판목록</title>
 
+<link th:href="@{../css/commentWrap.css}" rel="stylesheet">
+<script defer src="../js/commentWrap.js"></script>
+<link th:href="@{../css/comments.css}" rel="stylesheet">
+
 <!-- Custom fonts for this template -->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
 	rel="stylesheet" type="text/css">
 <link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	href="https://fonts.googleapis.com/css?family=Nunito|Material+Symbols+Outlined:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -65,15 +69,32 @@
 											<div class="subject_inner_text" th:text="${notice.content}"></div>
 
 										</div>
-
-										<div
-											th:if="${session.userId.toString().equals(notice.memberId)}">
-											<a class="btn btn-outline-primary mr-2" id="delBtn"
-												th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a>
-											<a class="notice-edit-btn btn-outline-primary mr-2"
+										
+										<script defer src="../js/noticeLike.js"></script>
+										<button type="button" class="btn btn-outline-primary">
+											<span th:if="${session.userId!=null}">
+											<a class="like-btn" th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
+											<span class="material-symbols-outlined">thumb_up</span> 
+											<span th:text="${like}"></span>
+											</a>
+											</span>
+											<span th:if="${session.userId==null}">
+											<a class="like-btn not-login">
+											<span class="material-symbols-outlined not-login">thumb_up</span> 
+											<span th:text="${like}"></span>
+											</a>
+											</span>
+										</button>
+										&nbsp <span th:if="${session.userId!=null}"> 
+												<span th:if="${session.userId.toString().equals(notice.memberId)}">
+												<a class="notice-edit-btn btn btn-outline-primary mr-2"
 												th:value="${notice.memberId}"
 												th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
-										</div>
+												<a class="btn btn-outline-danger mr-2" id="delBtn" 
+												style="color: red;"
+												th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a>
+												</span>
+										</span>
 										<div id="cmt">
 
 											<tr id="ct_id">
@@ -83,23 +104,32 @@
 
 											<script defer src="../js/reply.js"></script>
 											<script defer src="../js/editComment.js"></script>
+											<table border="1"></table>
 											<tr th:each="comment : ${Comment}">
-												<div class="comment_"
-													th:attrappend="class=${comment.commentId}" th:value="${comment.memberId}">
+												<div class="comments comment_"
+													th:attrappend="class=${comment.commentId}"
+													th:value="${comment.memberId}">
+													<input id="cmt-" th:attrappend="id=${comment.commentId}" type="hidden" readonly th:value="${comment.commentContents}">
 													<td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
 													<td th:text="${comment.memberId}">유저ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
 													<td th:text="${comment.commentId}">코멘트ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
 													<td th:text="${comment.commentContents}">내용</td>&nbsp
-													<button class="reply "
+													<span th:if="${session.userId!=null}"> <a
+														th:if="${session.userId.toString().equals(comment.memberId)}">
+															<button class="edit-comment btn btn-outline-primary "
+																th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
+																id="edit-comment-btn">수정</button>
+													</span> 
+													<button class="reply btn btn-outline-primary "
 														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
 														id="replyBtn">답글</button>
-													<a th:if="${session.userId.toString().equals(comment.memberId)}">
-												<button class="edit-comment "
-														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-														id="edit-comment-btn">수정</button>
-													 </a>
-													<a th:if="${session.userId.toString().equals(comment.memberId)}"
-													 class="del-comment" th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
+													<span th:if="${session.userId!=null}">
+													</a> &nbsp
+													<a
+														th:if="${session.userId.toString().equals(comment.memberId)}"
+														class="del-comment" style="color: red;"
+														th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
+													</span> 
 												</div>
 
 											</tr>
@@ -110,10 +140,13 @@
 													method="post">
 													<input type="hidden" class="postId-input" name="postId"
 														id="postIdInput">
-													<textarea name="comment" rows="3" cols="100%"
-														placeholder="댓글을 입력해주세요."></textarea>
-													<button type="submit" class="common_input_btn" tabindex="0"
-														id="customButton">등록</button>
+													<div class="comment-wrap">
+														<textarea id="comment-resize" name="comment" rows="3"
+															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea>
+														<button type="submit"
+															class="common_input_btn btn-outline-primary" tabindex="0"
+															id="customButton">등록</button>
+													</div>
 													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
 												 -->
 												</form>

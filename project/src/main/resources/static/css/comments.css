@@ -1,0 +1,11 @@
+/* ·¹ÀÌ¾Æ¿ô - ´ñ±Û */
+.comments {
+  border-bottom: 1px solid #dbdbdb;
+}
+.comments .comment {
+  border-bottom: 1px solid #dbdbdb;
+  padding: 20px;
+}
+.comments .comment:last-child {
+  border-bottom: none;
+}

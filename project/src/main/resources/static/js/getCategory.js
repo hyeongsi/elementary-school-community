@@ -8,7 +8,7 @@ $(document).ready(function(){
         success: function(data) {
         str = '';
         	$.each(data, function(i){
-        		str += '<a class="collapse-item" href="/app/notice/list?categoryId='+data[i].categoryId + '">' + data[i].categoryName + '['+data[i].categoryId+']'+'</a>';
+        		str += '<a class="collapse-item" href="/app/notice/list?categoryId='+data[i].categoryId + '">' + data[i].categoryName +'</a>';
             	
             });
         $('#categoryList').append(str);

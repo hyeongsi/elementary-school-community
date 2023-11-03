@@ -4,14 +4,10 @@ import lombok.AllArgsConstructor;
 
 import java.util.concurrent.TimeUnit;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
-import com.example.project.dao.UserDAO;
 import com.example.project.dto.MailDTO;
-import com.example.project.dto.UserDTO;
 
 @Service
 @AllArgsConstructor

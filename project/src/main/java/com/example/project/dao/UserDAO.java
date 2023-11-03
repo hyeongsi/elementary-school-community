@@ -4,6 +4,7 @@ import com.example.project.dto.page.PageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import com.example.project.dto.SchoolInfo;
 import com.example.project.dto.UserDTO;
 
 import java.util.List;
@@ -41,6 +42,12 @@ public interface UserDAO {
 
 	// 회원 목록 페이징 반환
 	public List<UserDTO> selectMemberListPage(PageDto pageDto);
+
+	//회원 학교 정보 얻기
+	public SchoolInfo userInfo(String id);
+
+	// 암호화된 비밀번호 가져옴
+	public UserDTO getEncordpwd(String id);
 
 	// 회원 리스트 삭제
 	public int deleteMemberList(List<UserDTO> userDTOList);

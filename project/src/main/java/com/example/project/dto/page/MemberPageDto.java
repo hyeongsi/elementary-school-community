@@ -3,8 +3,8 @@ package com.example.project.dto.page;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("PageDto")
-public class PageDto {
+@Alias("MemberPageDto")
+public class MemberPageDto {
 
     final int start;
     final int end;
@@ -12,18 +12,20 @@ public class PageDto {
     private String keyword;
     private String searchType;
     private int categoryId;
+    private String memberId;
     
     
     
-    public PageDto(int start, int end, String keyword, String searchType,int categoryId) {
+    public MemberPageDto(int start, int end, String keyword, String searchType,int categoryId, String memberId) {
 		this.start = start;
 		this.end = end;
 		this.keyword = keyword;
 		this.searchType = searchType;
 		this.categoryId = categoryId;
+		this.memberId = memberId;
 	}
 
-	public PageDto(int start, int end) {
+	public MemberPageDto(int start, int end) {
         this.start = start;
         this.end = end;
     }
@@ -46,5 +48,13 @@ public class PageDto {
 
 	public int getCategoryId() {
 		return categoryId;
-	}   
+	}
+
+	public String getMemberId() {
+		return memberId;
+	}
+
+	
+	
+    
 }
