@@ -40,13 +40,16 @@ public class UserService {
 		System.out.println(n);
 		return n>0 ? true : false;
 	}
-	
-	// 비밀번호 중복체크
-		public boolean getpwd(UserDTO userDTO) {
-			int n = userDAO.getpwd(userDTO);
-			System.out.println(n);
-			return n>0 ? true : false;
-		}
+		
+	// 암호화된 비밀번호 가져옴
+	public String getEncordpwd(String id) {
+		
+		UserDTO userDTO = userDAO.getEncordpwd(id);
+		
+		String EncordPwd = userDTO.getPwd();
+		
+		return EncordPwd;
+	}
 	
 	// 회원가입
 	public int signup(UserDTO userDTO) {

@@ -7,9 +7,6 @@ import com.example.project.dto.category.CategoryPageDto;
 import com.example.project.dto.page.Page;
 import com.example.project.mapper.CategoryMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 

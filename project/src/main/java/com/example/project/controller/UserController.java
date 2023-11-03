@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dto.UserDTO;
+import com.example.project.dto.message.UpdateCheckMessageDTO;
 import com.example.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -42,10 +43,15 @@ public class UserController {
 		}
 
 		userDTO.setPwd(null);
-		session.setAttribute("userId", principal.getName());
+		session.setAttribute("userId", principal.getName());// 아이디 저장
 		session.setAttribute("user", userDTO);
+
 		session.setAttribute("userEO", userService.userInfo(principal.getName()).getEducation());
 		
+
+		
+		model.addAttribute("userName", userDTO.getName());
+
 		return "redirect:/";
 
 	}
@@ -67,8 +73,13 @@ public class UserController {
 	}
 	
 	// 회원가입
+	
 	@PostMapping("/signup")
+	@ResponseBody
 	public String signup(@Valid UserDTO userDTO, Errors errors, Model model) {
+		
+		System.out.println("컨트롤러 DTO단:"+userDTO);
+		
 		if (errors.hasErrors()) {
             // 회원가입 실패시, 입력 데이터를 유지
             model.addAttribute("UserDTO", userDTO);
@@ -76,15 +87,25 @@ public class UserController {
             // 유효성 통과 못한 필드와 메시지를 핸들링
             Map<String, String> validatorResult = userService.validateHandling(errors);
             for (String key : validatorResult.keySet()) {
+            	
+            	
                 model.addAttribute(key, validatorResult.get(key));
+                
             }
-            return "login"; // 유효성 검사 오류가 발생하면 다시 회원가입 폼으로 이동
+            System.out.println("NO");
+            return "NO"; // 유효성 검사 오류가 발생하면 다시 회원가입 폼으로 이동
+            
 		}
+		
 		
 		userDTO.setPwd(passwordEncoder.encode(userDTO.getPwd()));
 		userService.signup(userDTO);
-		return "redirect:/login";
+		System.out.println("YES");
+		
+		return "YES";
 	}
+	
+	
 
 }
 

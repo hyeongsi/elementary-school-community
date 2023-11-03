@@ -165,5 +165,21 @@
     	SELECT COUNT(*) FROM liketable
 		WHERE post_id = #{postId} AND good=1
     </select>
+
+
+
+	<select id="selectSearchNoticePageById" resultType="NoticeDto"
+		parameterType="MemberPageDto">
+		SELECT post_Id, title, content, good, view_cnt, member_id, category_id
+		FROM (
+		SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id,
+		category_id
+		FROM post
+		WHERE member_id = #{memberId} <!-- member_id를 사용한 검색 조건 추가 -->
+		) WHERE rm BETWEEN #{start} AND #{end}
+		ORDER BY post_Id DESC
+	</select>
+    
+    
 	
 </mapper>

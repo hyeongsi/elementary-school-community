@@ -10,6 +10,7 @@ import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
+import com.example.project.dto.page.MemberPageDto;
 import com.example.project.dto.page.PageDto;
 
 @Mapper
@@ -19,6 +20,10 @@ public interface NoticeMapper {
 	public List<NoticeDto> selectNoticeList();
 	//public List<NoticeDto> selectNoticePage(PageDto pageDto);
 	public List<NoticeDto> selectSearchNoticePage(PageDto pageDto);
+	
+	public List<NoticeDto> selectSearchNoticePageById(MemberPageDto memberPageDto);
+	
+	
 	public int noticeTotalCnt(Map<String, String> map);
 	public int noticeSearchTotalCnt();
 	public int insertNotice(NoticeDto noticeDto);

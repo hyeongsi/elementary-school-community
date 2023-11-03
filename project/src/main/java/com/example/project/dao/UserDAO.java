@@ -34,9 +34,13 @@ public interface UserDAO {
 	// 매칭된 아이디의 비밀번호 변경
 	public void updateUserPassword(String id, String pwd);
 	
+
 	//회원 학교 정보 얻기
 	public SchoolInfo userInfo(String id);
 	
-	
+
+	// 암호화된 비밀번호 가져옴
+	public UserDTO getEncordpwd(String id);
+
 
 }
