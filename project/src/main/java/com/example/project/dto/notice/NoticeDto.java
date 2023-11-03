@@ -20,16 +20,8 @@ public class NoticeDto {
 	private String memberId;
 	private Long categoryId;
 	private Long commentCount;
-	
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
-		this.postId = postId;
-		this.title = title;
-		this.content = content;
-		this.good = good;
-		this.viewCnt = viewCnt;
-		this.memberId = memberId;
-		this.categoryId = categoryId;
-	}
+  
+	public NoticeDto(){}
 
 	@Override
 	public String toString() {

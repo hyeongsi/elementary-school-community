@@ -1,5 +1,6 @@
-package com.example.project.dto.page;
+package com.example.project.dto.category;
 
+import com.example.project.dto.page.PageDto;
 import org.apache.ibatis.type.Alias;
 
 @Alias("FindCategoryByBoardIdPageDto")

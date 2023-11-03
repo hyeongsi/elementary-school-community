@@ -1,6 +1,6 @@
 package com.example.project.service;
 
-import com.example.project.dto.page.FindCategoryByBoardIdPageDto;
+import com.example.project.dto.category.FindCategoryByBoardIdPageDto;
 import com.example.project.dto.page.PageDto;
 import com.example.project.dto.category.CategoryDto;
 import com.example.project.dto.category.CategoryPageDto;

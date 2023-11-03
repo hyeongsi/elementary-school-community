@@ -53,14 +53,8 @@
 
                             <div class="row mt-3">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/admin/categoryList}?displayUnit=' + this.value|"
-                                            class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${categoryPageDto.page.displayUnit} == 100" value="100">100</option>
-                                    </select> 단위</label></div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/displayUnit::displayUnit ('/admin/categoryList', ${categoryPageDto.page.displayUnit})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
                                     <div class="d-flex justify-content-end">
@@ -83,7 +77,9 @@
                                             <tbody>
                                             <tr th:each="categoryDto : ${categoryPageDto.categoryDtoList}">
                                                 <td th:text="${categoryDto.categoryId}">null</td>
-                                                <td th:text="${categoryDto.categoryName}">null</td>
+                                                <td th:text="${categoryDto.categoryName}"
+                                                    th:onclick="|location.href='@{/admin/notice(categoryId=${categoryDto.categoryId})}'|"
+                                                    style="cursor:pointer">null</td>
                                                 <td th:text="${categoryDto.boardName}">null</td>
                                             </tr>
                                             </tbody>
@@ -96,28 +92,13 @@
                             <!-- pagenation -->
                             <div class="row">
                                 <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"
-                                         th:text="|Showing ${categoryPageDto.page.curPage} to ${categoryPageDto.page.maxPage} of ${categoryPageDto.page.totalCnt} entries|">
-                                    </div>
+                                    <!-- 출력 단위 -->
+                                    <div th:replace="common/listPageModule/paginateText::paginateText (${categoryPageDto})"></div>
                                 </div>
                                 <div class="col-sm-12 col-md-7">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous" id="dataTable_previous"
-                                                th:classappend="${categoryPageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/categoryList(displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage - 1})}" class="page-link">Previous</a>
-                                            </li>
-                                            <th:block th:each="num : ${#numbers.sequence(categoryPageDto.page.startPage,
-                                                                                        categoryPageDto.page.endPage)}">
-                                                <li class="paginate_button page-item" th:classappend="${num == categoryPageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/admin/categoryList(displayUnit=${categoryPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
-                                                </li>
-                                            </th:block>
-                                            <li class="paginate_button page-item next" id="dataTable_next"
-                                                th:classappend="${categoryPageDto.page.curPage == categoryPageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/admin/categoryList(displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage + 1})}"  class="page-link">Next</a>
-                                            </li>
-                                        </ul>
+                                        <!-- 페이지 이동 버튼 -->
+                                        <ul th:replace="common/listPageModule/paginateBtn::paginateBtn (${categoryPageDto}, '/admin/categoryList')"></ul>
                                     </div>
                                 </div>
                             </div>
