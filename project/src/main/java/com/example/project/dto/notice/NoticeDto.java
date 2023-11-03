@@ -23,6 +23,16 @@ public class NoticeDto {
   
 	public NoticeDto(){}
 
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
+		this.postId = postId;
+		this.title = title;
+		this.content = content;
+		this.good = good;
+		this.viewCnt = viewCnt;
+		this.memberId = memberId;
+		this.categoryId = categoryId;
+	}
+
 	@Override
 	public String toString() {
 		return "NoticeDto [postId=" + postId + ", title=" + title + ", content=" + content + ", good=" + good
