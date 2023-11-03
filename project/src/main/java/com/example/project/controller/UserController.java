@@ -1,7 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.dto.UserDTO;
-import com.example.project.dto.message.AlertMessageDTO;
+import com.example.project.dto.message.UpdateCheckMessageDTO;
 import com.example.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 
@@ -45,14 +45,13 @@ public class UserController {
 		userDTO.setPwd(null);
 		session.setAttribute("userId", principal.getName());// 아이디 저장
 		session.setAttribute("user", userDTO);
-<<<<<<< Updated upstream
+
 		session.setAttribute("userEO", userService.userInfo(principal.getName()).getEducation());
 		
-=======
+
 		
 		model.addAttribute("userName", userDTO.getName());
 
->>>>>>> Stashed changes
 		return "redirect:/";
 
 	}

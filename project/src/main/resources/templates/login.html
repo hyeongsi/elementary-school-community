@@ -73,6 +73,8 @@
 							<button class="idchkbutton" type="button" id="idcheckBtn">중복확인</button>
 						</div>
 						<span id="idcheck"></span> 
+						<span id="CheckValue" type="hidden"></span> 
+						
 						<span th:text="${valid_id}"></span>
 						
 						<input type="password" id="accountpwd" name="pwd" placeholder="비밀번호" /> 
@@ -87,7 +89,8 @@
 	  						<button class="ConfirmNumberlBtn" type="button" id="Confirm">인증하기</button>
 						</div>
 						
-							<span id="Confirmcheck" style="color: red"></span>
+							<span id ="Confirmcheck" style="color:red"></span>
+							<span id="CheckMailValue" type="hidden"></span>
 
 							<input type="text" id="accounname" name="name" th:value="${userDTO.name}" placeholder="이름"  />
 							<span th:text="${valid_name}"></span>
@@ -266,30 +269,44 @@
     
     $("#CrmsignUp").on("click", function () {
   		let formData = $("#frm").serialize(); // 폼 데이터 직렬화
-
+  		
+  		if($("#CheckValue").val() != 'true'){
+  			
+  			console.log("아이디 체크"+$("#CheckValue").val());
+  			alert("아이디를 다시 확인해주세요");
+  			
+  		}else if($("#CheckMailValue").val() != 'true'){
+  			
+  			console.log("이메일 체크"+$("#CheckMailValue").val());
+  			alert("인증번호가 일치 하지 않습니다.");
+  			
+  		}else{
+  			
   		$.ajax({
     		url: "http://localhost:8088/app/signup",
     		type: "post",
     		data: formData, // 직렬화한 폼 데이터를 전송
-
     		success: function (data) {
-    			
-      		console.log(data);
       		if (data.trim() === 'YES') {
-        		alert('가입성공');
-        		container.classList.remove("right-panel-active");
-        		// 여기에 추가적인 동작을 수행하실 수 있습니다.
+      			swal("가입 완료!", "초등 커뮤니티에 오신것을 환영합니다!", "success").then((OK) => {
+        		      if(OK) {
+          				container.classList.remove("right-panel-active");
+        		      }
+      			})
       		} else {
-        		alert('가입실패');
+      			swal("가입 실패!", "작성란을 다시한번 확인해주세요!", "failed").then((OK) => {
+      		      if(OK) {
+        				container.classList.remove("right-panel-active");
+      		      }
+    			})
       		}
-      		
     		},
     		error: function () {
       		alert('에러 발생');
     		}
   		});
+       }
 	});
-    
 
     
   $(document).ready(function() {
@@ -305,10 +322,14 @@
     				if(msg.trim()=='OK'){
     					$("#idcheck").html("이 아이디는 사용 가능합니다.");
     					$("#accountid").val( $("#accountid").val());
+    					$("#CheckValue").val("true");
+    					document.getElementById('accountid').readOnly = true;
+    					
     				}else{
     					$("#idcheck").html("이 아이디는 사용중입니다.");
     					$("#accountid").val("");//삭제
     					$("#accountid").focus(); //다시 입력하라고 커서가 뜬다.
+    					$("#CheckValue").val("false");
     				}	
     			},
     			error:function(){
@@ -336,21 +357,23 @@
   });
   });
   
-  
-  
   $("#Confirm").click(function () {
       let InputNumber = $("#InputNumber").val();
-
       $.ajax({
           type: "GET",
           url: "http://localhost:8088/app/ConfirmCheck",
           data: { "InputNumber": InputNumber },
           success: function (res) {
+        	  console.log(res)
               if (res['check']) {
                   $('#Confirmcheck').html('<p style="color:gray">인증완료</p>');
+                  $("#CheckMailValue").val("true");
+                  document.getElementById('accountemail').readOnly = true;
+                  document.getElementById('InputNumber').readOnly = true;
+
               } else {
                   $('#Confirmcheck').html('<p style="color:red">인증번호가 일치하지 않습니다.</p>');
-                  
+                  $("#CheckMailValue").val("false");
               }
           }
       })

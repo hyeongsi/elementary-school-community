@@ -52,13 +52,19 @@ public class MypageController {
 	// 회원정보 수정
 	@PostMapping("/mypage/memberUpdate")
 	public String modifyInfo(HttpSession session, UserDTO userDTO) { // 회원정보 수정
+		
 		System.out.println("업데이트" + userDTO);
+		
 		String id = (String) session.getAttribute("userId");
 		userDTO.setId(id);
+		
 		System.out.println("업데이트" + userDTO);
+		
 		userService.modifyInfo(userDTO);
+		
 		System.out.println("컨트롤러");
-		return "redirect:./memberProfile";
+		
+		return "YES";
 	}
 
 	// ################## MemberDelete ##################
@@ -92,7 +98,7 @@ public class MypageController {
 
 	// ################## Password Check ##################
 
-	// 회원수정시 비밀번호 체크
+	// 회원수정시 비밀번호 체크 화면단
 	@GetMapping("/mypage/memberUpdateCheck")
 	public String memberUpdateCheck(HttpSession session, Model model) {
 
@@ -103,7 +109,7 @@ public class MypageController {
 		return "redirect:./login";
 	}
 
-	// 회원 탈퇴시 비밀번호 체크
+	// 회원 탈퇴시 비밀번호 체크 화면단
 	@GetMapping("/mypage/memberDeleteCheck")
 	public String memberDeleteCheck(HttpSession session, Model model) {
 

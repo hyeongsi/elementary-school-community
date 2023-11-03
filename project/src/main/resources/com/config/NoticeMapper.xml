@@ -123,7 +123,6 @@
     	START WITH parent_comment_id IS NULL
 		CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
-<<<<<<< Updated upstream
     
     <select id="likeCheck" parameterType="LikeDto" resultType="LikeDto">
     	SELECT * FROM liketable
@@ -151,7 +150,7 @@
     	SELECT COUNT(*) FROM liketable
 		WHERE post_id = #{postId} AND good=1
     </select>
-=======
+
 
 
 	<select id="selectSearchNoticePageById" resultType="NoticeDto"
@@ -167,6 +166,5 @@
 	</select>
     
     
->>>>>>> Stashed changes
 	
 </mapper>
