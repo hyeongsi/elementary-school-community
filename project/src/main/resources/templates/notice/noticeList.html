@@ -66,11 +66,7 @@
                                     </select> 단위</label></div>
                                 </div>
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-primary mr-3" type="button">생성</button>
-                                        <button class="btn btn-sm btn-outline-danger" type="button">삭제</button>
-                                    </div>
-                                </div>
+                                   </div>
                             </div>
                             <!-- table -->
                             <div class="row">
@@ -93,7 +89,7 @@
                                             <tr th:each="notice : ${noticePageDto.noticeDtoList}">
                                                 <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
-                                                <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
+                                                <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}+[+${notice.commentCount}+]"></a></td>
                                                 <td th:text="${notice.content}">내용</td>
                                                 <td th:text="${notice.good}">0</td>
                                                 <td th:text="${notice.viewCnt}">0</td>

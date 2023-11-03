@@ -69,10 +69,21 @@
 											<div class="subject_inner_text" th:text="${notice.content}"></div>
 
 										</div>
-										<button type="button" class="like-btn btn btn-outline-primary"
-											th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
-											<span class="material-symbols-outlined">thumb_up</span> <span
-												th:text="${like}"></span>
+										
+										<script defer src="../js/noticeLike.js"></script>
+										<button type="button" class="btn btn-outline-primary">
+											<span th:if="${session.userId!=null}">
+											<a class="like-btn" th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
+											<span class="material-symbols-outlined">thumb_up</span> 
+											<span th:text="${like}"></span>
+											</a>
+											</span>
+											<span th:if="${session.userId==null}">
+											<a class="like-btn not-login">
+											<span class="material-symbols-outlined not-login">thumb_up</span> 
+											<span th:text="${like}"></span>
+											</a>
+											</span>
 										</button>
 										&nbsp <span th:if="${session.userId!=null}"> 
 												<span th:if="${session.userId.toString().equals(notice.memberId)}">
@@ -98,23 +109,27 @@
 												<div class="comments comment_"
 													th:attrappend="class=${comment.commentId}"
 													th:value="${comment.memberId}">
+													<input id="cmt-" th:attrappend="id=${comment.commentId}" type="hidden" readonly th:value="${comment.commentContents}">
 													<td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
 													<td th:text="${comment.memberId}">유저ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
 													<td th:text="${comment.commentId}">코멘트ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
 													<td th:text="${comment.commentContents}">내용</td>&nbsp
-													<button class="reply btn btn-outline-primary "
-														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-														id="replyBtn">답글</button>
 													<span th:if="${session.userId!=null}"> <a
 														th:if="${session.userId.toString().equals(comment.memberId)}">
 															<button class="edit-comment btn btn-outline-primary "
 																th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
 																id="edit-comment-btn">수정</button>
+													</span> 
+													<button class="reply btn btn-outline-primary "
+														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
+														id="replyBtn">답글</button>
+													<span th:if="${session.userId!=null}">
 													</a> &nbsp
-													</span> <a
+													<a
 														th:if="${session.userId.toString().equals(comment.memberId)}"
 														class="del-comment" style="color: red;"
 														th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
+													</span> 
 												</div>
 
 											</tr>
