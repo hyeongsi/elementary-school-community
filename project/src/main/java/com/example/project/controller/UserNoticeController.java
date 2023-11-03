@@ -43,7 +43,6 @@ public class UserNoticeController {
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
 		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId);
-		
 		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
