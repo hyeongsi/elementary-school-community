@@ -1,29 +1,24 @@
 package com.example.project.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
 public class SchoolInfo {
+
     String officeOfEducationCode;   // 시도교육청코드
-    int schoolCode; // 행정표준코드
+    String schoolCode; // 행정표준코드
+    String usergrade;
+    String userclass;
+    String education;
 
-    public SchoolInfo() {}
+    public SchoolInfo() { }
 
-    public SchoolInfo(String officeOfEducationCode, int schoolCode) {
+    public SchoolInfo(String officeOfEducationCode, String schoolCode) {
         this.officeOfEducationCode = officeOfEducationCode;
-        this.schoolCode = schoolCode;
-    }
-
-    public String getOfficeOfEducationCode() {
-        return officeOfEducationCode;
-    }
-
-    public void setOfficeOfEducationCode(String officeOfEducationCode) {
-        this.officeOfEducationCode = officeOfEducationCode;
-    }
-
-    public int getSchoolCode() {
-        return schoolCode;
-    }
-
-    public void setSchoolCode(int schoolCode) {
         this.schoolCode = schoolCode;
     }
 }

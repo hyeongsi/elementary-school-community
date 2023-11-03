@@ -11,7 +11,7 @@ function getSchoolInfo(today){
 function updateTimeTable(today){
     getSchoolInfo()
         .then(schoolInfo => {
-        	getTimeTable(today, schoolInfo.officeOfEducationCode, schoolInfo.schoolCode)
+        	getTimeTable(today, schoolInfo.officeOfEducationCode, schoolInfo.schoolCode, schoolInfo.usergrade, schoolInfo.userclass)
         });
 }
 
@@ -35,18 +35,23 @@ const type = "json";
 // 시간표
 // officeOfEducationCode : 시도교육청코드 (서울특별시교육청)
 // schoolCode : 시도교육청코드 (서울특별시교육청)
-function getTimeTable(today, officeOfEducationCode, schoolCode){
+function getTimeTable(today, officeOfEducationCode, schoolCode, usergrade, userclass){
 	
 	deleteSchedule();
 	 if(officeOfEducationCode == null || schoolCode == null){
 	        return;
 	    }
-	const GRADE = 1;	// 학년
-	const CLASS_NM = 1;	// 반
+	const GRADE = usergrade;	// 학년
+	const CLASS_NM = userclass;	// 반
+	if(GRADE == null || CLASS_NM == null){
+		const GRADE = 1;	
+		const CLASS_NM = 1;	
+	}
 	
     // const ATPT_OFCDC_SC_CODE = "S10";   // 시도교육청코드 (서울특별시교육청)
     // const SD_SCHUL_CODE = "9091055";    // 행정표준코드 (경기초등학교)
 
+	
     const url = new Array();
    
     const urlCount = 5;
@@ -54,6 +59,7 @@ function getTimeTable(today, officeOfEducationCode, schoolCode){
     	url[i] = getURL(officeOfEducationCode, schoolCode, week(i), GRADE, CLASS_NM);
     	// console.log(url[i]);
     }
+    console.log(url[0]);
     const dayOfWeek = 5;
     for(let i = 0; i < dayOfWeek; i++){
     	fetch(url[i])

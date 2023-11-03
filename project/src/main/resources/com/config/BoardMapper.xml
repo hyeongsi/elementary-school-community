@@ -2,15 +2,39 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="BoardMapper">
+<mapper namespace="com.example.project.mapper.BoardMapper">
 
     <select id="selectBoardList" resultType="BoardDto">
         SELECT * FROM board
     </select>
-    
+
+    <select id="boardTotalCnt" resultType="int">
+        SELECT count(*) FROM board
+    </select>
+
+    <select id="selectBoardPage" resultType="BoardDto" parameterType="PageDto">
+        SELECT board_id, board_name
+        FROM (SELECT rownum rm, board_id, board_name FROM board ORDER BY board_id DESC)
+        WHERE rm between #{start} AND #{end}
+    </select>
+
     <insert id="insertBoard" parameterType="BoardDto">
-        INSERT INTO board(board_id, board_name, board_category)
-        VALUES(seq_board.nextval, #{boardName}, #{boardCategory})
+        INSERT INTO board(board_id, board_name)
+        VALUES(seq_board.nextval, #{boardName})
     </insert>
+
+    <delete id="deleteBoard" parameterType="BoardDto">
+        DELETE FROM board
+        WHERE board_id = #{boardId}
+    </delete>
+
+    <delete id="deleteBoardList" parameterType="List">
+        DELETE FROM board
+        WHERE board_id IN (
+            <foreach collection="boardDtoList" item="item" separator=",">
+                #{item.boardId}
+            </foreach>
+        )
+    </delete>
 
 </mapper>

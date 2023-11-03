@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>초등 커뮤니티 - 관리자 - 게시판목록</title>
+
+    <!-- Custom fonts for this template -->
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
+    <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Sidebar -->
+    <ul th:replace="/common/slideBar :: slideBar"></ul>
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+            <!-- Topbar -->
+            <nav th:replace="admin/common/admin_topBar::topBar"></nav>
+
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">게시판 목록</h6>
+                    </div>
+                    <div class="card-body">
+
+                        <div id="dataTable_Wrapper" class="dataTables_wrapper dt-bootstrap4">
+
+								
+								<!-- table -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="table-responsive">
+											<table class="table table-bordered" id="dataTable"
+												width="100%" style="text-align: center">
+												<thead style="text-align: center">
+
+												</thead>
+												<tbody>
+													<div>
+														<form name="edit-form" action="./edit" autocomplete="off"
+															method="post">
+															<input hidden="hidden" />
+															<input id="postId" name="postId"
+																th:value="${notice.postId}">
+													</div>
+													<div>
+														<input class="mt-4" type="text" id="title" maxlength='30'
+															name="title" th:value="${notice.title}"> 최대 30자 <br />
+														<div id="content_div">
+															<textarea class="form-control"
+																style="height: 30em; width: 100%;" maxlength='1000'
+																id="content" name="content" th:text="${notice.content}"></textarea>
+														</div>
+														<br /> <input type="submit" id="submiBtn"
+															class="btn btn-outline-primary mr-2" value="수정">
+													</div>
+													</form>
+													</div>
+												</tbody>
+											</table>
+										</div>
+                                </div>
+                            </div>
+                            <!-- end table -->
+
+                            <!-- pagenation -->
+                            <div class="row">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
+                                        Showing 1 to 10 of 57 entries
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- dataTable_Wrapper -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+            <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; Your Website 2020</span>
+                </div>
+            </div>
+        </footer>
+        <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div th:replace="common/topBar :: logoutModal"></div>
+
+<!-- Bootstrap core JavaScript-->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+<!-- Core plugin JavaScript-->
+<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+<!-- Custom scripts for all pages-->
+<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+<!-- Page level plugins -->
+<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+</body>
+
+</html>
