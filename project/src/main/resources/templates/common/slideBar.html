@@ -77,7 +77,7 @@
         Addons
     </div>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - 교육청별 게시판 -->
   
     <li class="nav-item">
     	<script defer src="/app/js/getCategory.js"></script>
@@ -94,17 +94,12 @@
     </li>
     
     <!-- Nav Item - 유저게시판 -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-           aria-expanded="false" aria-controls="collapsePages">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>유저게시판</span>
-        </a>
-        <div id="collapsePages2" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded" id="categoryList">
-            </div>
-        </div>
-    </li>
+    
+    <script defer src="/app/js/getBoard.js"></script>
+    <script defer src="/app/js/getCustomCategory.js"></script>
+    
+
+    <span id="user-board"></span>
 
     <!-- Nav Item - 급식표 -->
     <li class="nav-item">

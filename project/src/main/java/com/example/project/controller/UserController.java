@@ -1,7 +1,6 @@
 package com.example.project.controller;
 
 import com.example.project.dto.UserDTO;
-import com.example.project.dto.message.UpdateCheckMessageDTO;
 import com.example.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 

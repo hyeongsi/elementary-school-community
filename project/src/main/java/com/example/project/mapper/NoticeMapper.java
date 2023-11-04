@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
@@ -42,4 +43,5 @@ public interface NoticeMapper {
 	public void cancelLike(LikeDto likeDto);
 	public void reLike(LikeDto likeDto);
 	public Long likeCnt(Long postId);
+	public List<BoardDto> selectBoardList();
 }

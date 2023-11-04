@@ -7,7 +7,7 @@
 	<!-- 01_01. 게시글 전체목록 조회 및 검색 조회까지 -->
 	<select id="selectSearchNoticePage"
 		resultType="NoticeDto" parameterType="PageDTO">
-		SELECT p.post_Id, p.title, p.content, p.good, p.view_cnt, p.member_id, p.category_id,
+		SELECT p.post_Id, p.title, p.content, (SELECT COUNT(*) FROM liketable WHERE post_id = p.post_Id AND good = 1) AS good_count, p.view_cnt, p.member_id, p.category_id,
         NVL(comment_count, 0) AS comment_count
 		FROM (
     	SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
@@ -31,7 +31,6 @@
 		<include refid="search"></include>
 	</select>
 	<!-- sql code 조각 -->
-	<!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘수 있다. -->
 	<sql id="search">
 		<choose>
 			<!-- 검색옵션이 전체 검색일 경우 -->
@@ -86,14 +85,20 @@
     </select>
     
     <select id="selectNoticeCategoryList" resultType="NoticeCategoryDto">
-    	SELECT category_id, category_name 
+    	SELECT category_id, category_name , board_id
     	FROM category
+        WHERE board_id > 37
     </select>
-  
+    
   	<select id="selectUserNoticeCategoryList" resultType="NoticeCategoryDto">
     	SELECT category_id, category_name 
     	FROM category
     	WHERE board_id = #{boardId}
+    </select>
+    
+    <select id="selectBoardList" resultType="BoardDto">
+    	SELECT * FROM board
+    	WHERE board_id >=60
     </select>
   
 	<insert id="addComment" parameterType="CommentDto">

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
@@ -234,6 +235,20 @@ public class UserNoticeController {
 		}
 		System.out.println(boardId);
         return noticeService.selectUserNoticeCategoryList(boardId);
+    }
+	
+	@ResponseBody
+	@GetMapping("/getCustomCategories")
+    public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
+		
+        return noticeService.selectNoticeCategoryList();
+    }
+	
+	@ResponseBody
+	@GetMapping("/getBoard")
+    public List<BoardDto> getBoard() {
+		
+        return noticeService.selectBoardList();
     }
 	
 	
