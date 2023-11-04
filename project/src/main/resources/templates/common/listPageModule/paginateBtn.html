@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <ul class="pagination" th:fragment="paginateBtn (pageDto, href)">
+        <li class="paginate_button page-item previous" id="dataTable_previous"
+            th:classappend="${pageDto.page.curPage == 1} ? 'disabled' : '' ">
+            <a href="#" th:href="@{${href}(displayUnit=${pageDto.page.displayUnit},curPage=${pageDto.page.curPage - 1})}" class="page-link">Previous</a>
+        </li>
+
+        <th:block th:each="num : ${#numbers.sequence(pageDto.page.startPage, pageDto.page.endPage)}">
+            <li class="paginate_button page-item" th:classappend="${num == pageDto.page.curPage} ? 'active' : '' ">
+                <a href="#" th:href="@{${href}(displayUnit=${pageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
+            </li>
+        </th:block>
+        <li class="paginate_button page-item next" id="dataTable_next"
+            th:classappend="${pageDto.page.curPage == pageDto.page.endPage} ? 'disabled' : '' ">
+            <a href="#" th:href="@{${href}(displayUnit=${pageDto.page.displayUnit},curPage=${pageDto.page.curPage + 1})}"  class="page-link">Next</a>
+        </li>
+    </ul>
+
+</body>
+</html>
