@@ -2,13 +2,11 @@ package com.example.project.dto.notice;
 
 import org.apache.ibatis.type.Alias;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @Alias("NoticeDto")
 public class NoticeDto {
 
@@ -19,10 +17,7 @@ public class NoticeDto {
 	private Long viewCnt;
 	private String memberId;
 	private Long categoryId;
-	private Long commentCount;
-  
-	public NoticeDto(){}
-
+	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
 		this.postId = postId;
 		this.title = title;

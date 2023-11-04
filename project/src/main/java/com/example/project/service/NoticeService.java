@@ -73,9 +73,6 @@ public class NoticeService {
     public int deleteNotice(Long postId) {
     	return noticeMapper.deleteNotice(postId);
     }
-    public int deleteNoticeList(List<NoticeDto> noticeDtoList) {
-        return noticeMapper.deleteNoticeList(noticeDtoList);
-    }
     
     public NoticeDto selectByPostId(Long postId) {
     	return noticeMapper.selectByPostId(postId);

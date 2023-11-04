@@ -3,7 +3,6 @@ package com.example.project.mapper;
 import java.util.List;
 import java.util.Map;
 
-import com.example.project.dto.notice.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -29,7 +28,6 @@ public interface NoticeMapper {
 	public int noticeSearchTotalCnt();
 	public int insertNotice(NoticeDto noticeDto);
 	public int deleteNotice(Long postId);
-	public int deleteNoticeList(List<NoticeDto> noticeDtoList);
 	public NoticeDto selectByPostId(Long postId);
 	public int updateNotice(NoticeDto noticeDto);
 	public int updateViewCnt(Long postId);
@@ -37,15 +35,8 @@ public interface NoticeMapper {
 	public List<NoticeCategoryDto> selectUserNoticeCategoryList(int boardId);
 	public void addComment(CommentDto commnetDto);
 	public List<CommentDto> selectCommentList(Long postId);
-	public List<CommentAllJoinDto> selectCommentListAll(PageDto pageDto);
-	public int commentTotalCnt();
 	public void deleteComment(Long commentId);
-	public int deleteCommentList(List<CommentDto> commentDtoList);
 	public void editComment(CommentDto commentDto);
-	public int noticeNoSearchTotalCnt();
-	public List<NoticeBoardCategoryMemberNameDto> selectNoticePageWithName(PageDto pageDto);
-	public int noticeTotalCtnById(int categoryId);
-	public List<NoticeBoardCategoryMemberNameDto> selectNoticeListById(FindNoticeByCategoryIdPageDto findNoticeByCategoryIdPageDto);
 	public LikeDto likeCheck(LikeDto likeDto);
 	public void addLike(LikeDto likeDto);
 	public void cancelLike(LikeDto likeDto);
