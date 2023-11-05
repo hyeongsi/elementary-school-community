@@ -5,7 +5,7 @@ $(document).ready(function(){
         url: "/app/getBoard", // Spring Boot 엔드포인트 URL로 변경
         type: "GET",
         dataType: "json",
-        async : false,
+        async: false,
         success: function(data) {
         str = '';
         	$.each(data, function(i){

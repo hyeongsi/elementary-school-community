@@ -12,8 +12,10 @@
 		FROM (
     	SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
     	FROM post
+    	
 		<!-- WHERE절을 include 태그로 삽입 -->
 		<include refid="search"></include>
+		ORDER BY post_Id DESC
          ) p
 		 LEFT JOIN (
     	 SELECT post_id, COUNT(comment_id) AS comment_count
@@ -24,12 +26,6 @@
 		 ORDER BY post_Id DESC
 	</select>
 
-	<!-- 01_02. 게시글 레코드 갯수 -->
-	<select id="noticeTotalCnt" parameterType="map" resultType="int">
-		SELECT COUNT(*) FROM post
-		<!-- WHERE절을 include 태그로 삽입 -->
-		<include refid="search"></include>
-	</select>
 	<!-- sql code 조각 -->
 	<sql id="search">
 		<choose>
@@ -47,6 +43,12 @@
 		</choose>
 	</sql>
     
+	<!-- 01_02. 게시글 레코드 갯수 -->
+	<select id="noticeTotalCnt" parameterType="map" resultType="int">
+		SELECT COUNT(*) FROM post
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="search"></include>
+	</select>
    
     
     <update id="updateViewCnt" parameterType="long">
@@ -103,15 +105,13 @@
   
 	<insert id="addComment" parameterType="CommentDto">
     	<choose>
-			<!-- 검색옵션이 전체 검색일 경우 -->
 			<when test="parentCommentId == null">
-				INSERT INTO comments 
+				INSERT INTO comments (comment_id, parent_comment_id, post_id, comment_contents, member_id)
     			VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, #{memberId})
     
 			</when>
-			<!-- 전체 검색이 아닐 경우 -->
 			<otherwise>
-				INSERT INTO comments 
+				INSERT INTO comments (comment_id, parent_comment_id, post_id, comment_contents, member_id)
     			VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, #{memberId})
   			</otherwise>
 		</choose>
