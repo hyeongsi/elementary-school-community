@@ -3,7 +3,7 @@ package com.example.project.controller.admin;
 import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.category.CategoryDto;
 import com.example.project.dto.category.CategoryPageDto;
-import com.example.project.dto.category.FindCategoryByBoardIdPageDto;
+import com.example.project.dto.page.FindCategoryByBoardIdPageDto;
 import com.example.project.service.CategoryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
