@@ -1,6 +1,5 @@
 package com.example.project.controller.admin;
 
-import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.category.CategoryDto;
 import com.example.project.dto.category.CategoryPageDto;
 import com.example.project.service.CategoryService;
@@ -27,7 +26,7 @@ public class AdminCategoryController {
 
         final CategoryPageDto categoryPageDto = categoryService.selectCategoryPage(displayUnit, curPage);
         model.addAttribute("categoryPageDto", categoryPageDto);
-        return "admin/categoryList";
+        return "admin/category/categoryList";
     }
 
     @GetMapping("/category")
@@ -39,7 +38,7 @@ public class AdminCategoryController {
         final CategoryPageDto categoryPageDto = categoryService.selectCategoryListById(boardId, displayUnit, curPage);
         model.addAttribute("categoryPageDto", categoryPageDto);
         model.addAttribute("boardId", boardId);
-        return "admin/detailBoardCategory";
+        return "admin/category/detailBoardCategory";
     }
 
     @ResponseBody

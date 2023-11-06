@@ -13,8 +13,8 @@ public class CommentDto {
 	private Long postId;
 	private Long parentCommentId;
 	private Long commentId;
-	
-	
+
+	public CommentDto(){}
 
 	public CommentDto(String memberId, String commentContents, Long postId) {
 		this.memberId = memberId;

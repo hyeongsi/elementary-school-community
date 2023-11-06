@@ -20,6 +20,7 @@ public class MyNoticeController {
 
 	final MyNoticeService mynoticeService;
 	
+	// 내가쓴 게시글 화면단
 	@GetMapping("/mypage/myNoticeList")
     public String noticeList(Principal principal, Model model,
                             @RequestParam(defaultValue = "10") int displayUnit,
@@ -53,6 +54,7 @@ public class MyNoticeController {
         return "mypage/myNoticeList";
     }
 	
+	// 좋아요누른 게시글 화면단
 	@GetMapping("/mypage/myLikesList")
     public String LikesList(Principal principal, Model model,
                             @RequestParam(defaultValue = "10") int displayUnit,

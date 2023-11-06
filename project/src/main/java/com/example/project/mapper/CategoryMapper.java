@@ -1,10 +1,8 @@
 package com.example.project.mapper;
 
-import com.example.project.dto.board.BoardDto;
-import com.example.project.dto.page.PageDto;
 import com.example.project.dto.category.CategoryDto;
 import com.example.project.dto.category.FindCategoryByBoardIdPageDto;
-
+import com.example.project.dto.page.PageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

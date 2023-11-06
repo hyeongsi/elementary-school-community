@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.project.dao.UserDAO;
@@ -14,8 +15,8 @@ import com.example.project.dto.MailDTO;
 @AllArgsConstructor
 public class SendEmailService {
 	
-	@Autowired
 	UserDAO userDAO;
+	PasswordEncoder passwordEncoder;
 	
     private JavaMailSender mailSender;
     private static final String FROM_ADDRESS = "amos5105@naver.com";
@@ -33,8 +34,9 @@ public class SendEmailService {
     }
 
     public void updatePassword(String str,String email){
-    	// 비밀번호 암호화 스킵
-        String pwd = str; // 암호화 비밀번호
+    	// 비밀번호 암호화
+    	
+        String pwd =passwordEncoder.encode(str);
         String id = userDAO.findUserByUserId(email).getId();
         userDAO.updateUserPassword(id,pwd);
     }
