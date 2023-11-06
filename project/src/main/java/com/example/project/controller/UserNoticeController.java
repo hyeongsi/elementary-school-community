@@ -252,19 +252,5 @@ public class UserNoticeController {
 		
         return noticeService.selectBoardList();
     }
-
-	@ResponseBody
-	@GetMapping("/getCustomCategories")
-	public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
-
-		return noticeService.selectNoticeCategoryList();
-	}
-
-	@ResponseBody
-	@GetMapping("/getBoard")
-	public List<BoardDto> getBoard() {
-
-		return noticeService.selectBoardList();
-	}
 	
 }
