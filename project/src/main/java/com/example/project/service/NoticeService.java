@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
@@ -121,5 +122,7 @@ public class NoticeService {
     public Long likeCnt(Long postId) {
     	return noticeMapper.likeCnt(postId);
     }
-    
+    public List<BoardDto> selectBoardList() {
+        return noticeMapper.selectBoardList();
+    }
 }

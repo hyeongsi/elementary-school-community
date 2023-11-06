@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
 <!-- Sidebar -->
-<ul th:fragment="slideBar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" >
+<ul th:fragment="slideBar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/app">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3"> 초등 커뮤니티 </div>
+        <div class="sidebar-brand-text mx-3"> 초등 커뮤니티</div>
     </a>
 
     <!-- Divider -->
@@ -25,9 +25,9 @@
     </div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-  
+
     <li class="nav-item">
-    	<script defer src="/app/js/getCategory.js"></script>
+        <script defer src="/app/js/getCategory.js"></script>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -40,11 +40,17 @@
         </div>
     </li>
 
-    <!-- Nav Item - Charts -->
+    <!-- Nav Item - 유저게시판 -->
+    <script defer src="/app/js/getBoard.js"></script>
+    <script defer src="/app/js/getCustomCategory.js"></script>
+
+    <span id="user-board"></span>
+
+    <!-- Nav Item - 급식표 -->
     <li class="nav-item">
-        <a class="nav-link" href="charts.html">
+        <a class="nav-link" href="/app/cafeteria">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
+            <span>급식표</span></a>
     </li>
 
     <!-- Nav Item - 학사일정 -->

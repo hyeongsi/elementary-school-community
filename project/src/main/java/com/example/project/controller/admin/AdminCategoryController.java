@@ -26,7 +26,7 @@ public class AdminCategoryController {
 
         final CategoryPageDto categoryPageDto = categoryService.selectCategoryPage(displayUnit, curPage);
         model.addAttribute("categoryPageDto", categoryPageDto);
-        return "admin/categoryList";
+        return "admin/category/categoryList";
     }
 
     @GetMapping("/category")
@@ -38,7 +38,7 @@ public class AdminCategoryController {
         final CategoryPageDto categoryPageDto = categoryService.selectCategoryListById(boardId, displayUnit, curPage);
         model.addAttribute("categoryPageDto", categoryPageDto);
         model.addAttribute("boardId", boardId);
-        return "admin/detailBoardCategory";
+        return "admin/category/detailBoardCategory";
     }
 
     @ResponseBody

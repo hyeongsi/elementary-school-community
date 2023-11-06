@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.project.dto.board.BoardDto;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -236,6 +237,19 @@ public class UserNoticeController {
 		System.out.println(boardId);
         return noticeService.selectUserNoticeCategoryList(boardId);
     }
-	
+
+	@ResponseBody
+	@GetMapping("/getCustomCategories")
+	public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
+
+		return noticeService.selectNoticeCategoryList();
+	}
+
+	@ResponseBody
+	@GetMapping("/getBoard")
+	public List<BoardDto> getBoard() {
+
+		return noticeService.selectBoardList();
+	}
 	
 }
