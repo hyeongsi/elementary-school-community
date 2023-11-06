@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -18,6 +19,7 @@ import org.springframework.validation.FieldError;
 public class UserService {
 	
 	UserDAO userDAO;
+	PasswordEncoder passwordEncoder;
 
 	// 로그인
 	public String login(String id, String pwd) {
@@ -94,7 +96,10 @@ public class UserService {
 	// 비밀번호 수정
 	public int updatePwd(String id, String changepwd) {
 		System.out.println("비밀번호 변경 서비스");
-		return userDAO.updatePwd(id, changepwd);
+		
+		String EncordPwd = passwordEncoder.encode(changepwd);
+		
+		return userDAO.updatePwd(id, EncordPwd);
 	}
 
 	// 회원탈퇴

@@ -60,7 +60,7 @@
   		<!-- 비밀번호 수정 -->
   		<insert id="updatePwd" parameterType="UserDTO">
   		 	UPDATE MEMBER_DATA
-  		 	SET PWD = #{changepwd}
+  		 	SET PWD = #{EncordPwd}
   		 	WHERE ID = #{id}
   		</insert>
   		

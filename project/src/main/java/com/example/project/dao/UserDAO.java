@@ -31,8 +31,8 @@ public interface UserDAO {
 	// 회원정보 수정
 	public int updateUser(UserDTO userDTO);
 	
-	// 회원정보 수정
-	public int updatePwd(String id, String changepwd);
+	// 비밀번호 수정
+	public int updatePwd(String id, String EncordPwd);
 	
 	//회원 탈퇴
 	public void deleteUser(String id);
