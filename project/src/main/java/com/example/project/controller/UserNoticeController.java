@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
@@ -31,6 +32,7 @@ public class UserNoticeController {
 	final NoticeService noticeService;
 	final UserService userService;
 	
+	// 게시판 목록
 	@GetMapping("/notice/list")
 	public String noticeList(final Model model,HttpSession session, Principal principal,
             				@RequestParam(defaultValue = "10") int displayUnit,
@@ -44,11 +46,11 @@ public class UserNoticeController {
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
 		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId);
-		
 		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
 	
+	// 게시글쓰기
 	@GetMapping("/notice/write")
 	public String noticeWriteForm(final Model model,HttpSession session, @RequestParam Long categoryId) {
 		if(session.getAttribute("userId")==null) {
@@ -57,8 +59,6 @@ public class UserNoticeController {
 		model.addAttribute("categoryId", categoryId);
 		return "notice/noticeWrite";
 	}
-	
-	
 	
 	@PostMapping("/notice/write")
 	public String noticeWrite(HttpSession session,
@@ -73,6 +73,7 @@ public class UserNoticeController {
 		return "redirect:/notice/list";
 	}
 	
+	// 게시글 수정
 	@GetMapping("/notice/edit")
 	public String noticeEditForm(HttpSession session,final Model model,
 								@RequestParam("postId") Long postId) {
@@ -84,7 +85,6 @@ public class UserNoticeController {
 		return "notice/edit";
 	}
 
-	
 	@PostMapping("/notice/edit")
 	public String noticeUpdate(HttpSession session,
 							   @RequestParam(value="postId", required=false) Long postId, 
@@ -99,6 +99,7 @@ public class UserNoticeController {
 		return "redirect:/notice/detail?postId="+noticeDto.getPostId();
 	}
 	
+	// 게시글 삭제
 	@GetMapping("/notice/delete")
 	public String noticeDelete(Long postId,
 								@RequestParam(defaultValue = "1") int categoryId) {
@@ -106,6 +107,7 @@ public class UserNoticeController {
 		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
+	// 게시글 자세히 보기
 	@GetMapping("/notice/detail")
 	public String retrieve(HttpSession session,final Model model, @RequestParam Long postId,
 							@RequestParam(value="categoryId", defaultValue = "1") int categoryId) {
@@ -119,7 +121,7 @@ public class UserNoticeController {
 		return "notice/detail";
 	}
 	
-
+	// 댓글추가
 	@PostMapping("/addComment")
 	public String addComment(HttpSession session,
 							 @RequestParam Long postId,
@@ -234,22 +236,21 @@ public class UserNoticeController {
 			break;
 			default : boardId = 21;
 		}
-		System.out.println(boardId);
-        return noticeService.selectUserNoticeCategoryList(boardId);
-    }
-
+		return noticeService.selectUserNoticeCategoryList(boardId);
+    }	
+	
 	@ResponseBody
 	@GetMapping("/getCustomCategories")
-	public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
-
-		return noticeService.selectNoticeCategoryList();
-	}
-
+    public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
+		
+        return noticeService.selectNoticeCategoryList();
+    }
+	
 	@ResponseBody
 	@GetMapping("/getBoard")
-	public List<BoardDto> getBoard() {
-
-		return noticeService.selectBoardList();
-	}
+    public List<BoardDto> getBoard() {
+		
+        return noticeService.selectBoardList();
+    }
 	
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,7 +15,11 @@
         </div>
         <div class="sidebar-brand-text mx-3"> 초등 커뮤니티</div>
     </a>
-
+ 
+    <!-- Nav Item - 교육청별 게시판 -->
+  
+    <li class="nav-item">
+    	<script defer src="/app/js/getCategory.js"></script>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
@@ -39,11 +43,11 @@
             </div>
         </div>
     </li>
-
+    
     <!-- Nav Item - 유저게시판 -->
     <script defer src="/app/js/getBoard.js"></script>
     <script defer src="/app/js/getCustomCategory.js"></script>
-
+    
     <span id="user-board"></span>
 
     <!-- Nav Item - 급식표 -->

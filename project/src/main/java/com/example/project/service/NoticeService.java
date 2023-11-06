@@ -121,8 +121,9 @@ public class NoticeService {
     
     public Long likeCnt(Long postId) {
     	return noticeMapper.likeCnt(postId);
-    }
+    } 
+    
     public List<BoardDto> selectBoardList() {
-        return noticeMapper.selectBoardList();
+    	return noticeMapper.selectBoardList();
     }
 }
