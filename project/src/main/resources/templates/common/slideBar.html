@@ -1,31 +1,37 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
 <!-- Sidebar -->
-<ul th:fragment="slideBar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar" >
+<ul th:fragment="slideBar" class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/app">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3"> 초등 커뮤니티 </div>
+        <div class="sidebar-brand-text mx-3"> 초등 커뮤니티</div>
     </a>
-
-   
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Menu
-    </div>
-
+ 
     <!-- Nav Item - 교육청별 게시판 -->
   
     <li class="nav-item">
     	<script defer src="/app/js/getCategory.js"></script>
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Heading -->
+    <div class="sidebar-heading mt-3">
+        Menu
+    </div>
+
+    <!-- Nav Item - Pages Collapse Menu -->
+
+    <li class="nav-item">
+        <script defer src="/app/js/getCategory.js"></script>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
@@ -39,11 +45,9 @@
     </li>
     
     <!-- Nav Item - 유저게시판 -->
-    
     <script defer src="/app/js/getBoard.js"></script>
     <script defer src="/app/js/getCustomCategory.js"></script>
     
-
     <span id="user-board"></span>
 
     <!-- Nav Item - 급식표 -->

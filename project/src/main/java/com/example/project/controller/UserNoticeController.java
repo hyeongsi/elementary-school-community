@@ -237,7 +237,7 @@ public class UserNoticeController {
 			default : boardId = 21;
 		}
 		return noticeService.selectUserNoticeCategoryList(boardId);
-    }
+    }	
 	
 	@ResponseBody
 	@GetMapping("/getCustomCategories")
