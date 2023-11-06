@@ -235,8 +235,7 @@ public class UserNoticeController {
 			break;
 			default : boardId = 21;
 		}
-		System.out.println(boardId);
-        return noticeService.selectUserNoticeCategoryList(boardId);
+		return noticeService.selectUserNoticeCategoryList(boardId);
     }
 	
 	@ResponseBody

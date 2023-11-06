@@ -15,6 +15,7 @@ import com.example.project.dto.notice.NoticeBoardCategoryMemberNameDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.page.MemberPageDto;
 import com.example.project.dto.page.PageDto;
+import com.example.project.dto.board.BoardDto;
 
 @Mapper
 @Repository
@@ -78,4 +79,6 @@ public interface NoticeMapper {
 	public void reLike(LikeDto likeDto);
 	
 	public Long likeCnt(Long postId);
+	
+    public List<BoardDto> selectBoardList();
 }

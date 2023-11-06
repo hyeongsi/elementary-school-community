@@ -10,8 +10,7 @@ $(document).ready(function(){
         str = '';
         	$.each(data, function(i){
         		str += "<li class='nav-item'>" +
-        	    "<script defer src='/app/js/getCustomCategory.js'></script>" +
-                "<a class='nav-link collapsed' href='#' data-toggle='collapse' data-target='#collapseUserPages"+data[i].boardId+"'"+
+        	    "<a class='nav-link collapsed' href='#' data-toggle='collapse' data-target='#collapseUserPages"+data[i].boardId+"'"+
                    "aria-expanded='true' aria-controls='collapseUserPages'>"+
                     "<i class='fas fa-fw fa-folder'></i>"+
                     "<span>"+data[i].boardName+"</span>"+
