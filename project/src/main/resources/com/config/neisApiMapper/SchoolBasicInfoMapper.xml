@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.neisApi.schoolBasicInfo.SchoolBasicInfoMapper">
+
+    <select id="getSeqCurrval" resultType="int">
+        SELECT school_seq.currval
+        FROM DUAL
+    </select>
+
+    <!-- 모든 데이터 삽입 -->
+    <insert id="insertRowList" parameterType="List">
+        INSERT INTO school (
+            sd_schul_code,
+            atpt_ofcdc_sc_code,
+            schul_nm,
+            org_rdnma,
+            org_telno,
+            hmpg_adres,
+            foas_memrd,
+            write_date
+        )
+        <foreach collection="rowList" item="row" separator="UNION ALL">
+            SELECT
+                #{row.sdSchulCode, jdbcType=VARCHAR},
+                #{row.atptOfcdcScCode, jdbcType=VARCHAR},
+                #{row.schulNm, jdbcType=VARCHAR},
+                #{row.orgRdnma, jdbcType=VARCHAR},
+                #{row.orgTelno, jdbcType=VARCHAR},
+                #{row.hmpgAdres, jdbcType=VARCHAR},
+                #{row.foasMemrd, jdbcType=VARCHAR},
+                sysdate
+            FROM DUAL
+        </foreach>
+    </insert>
+
+    <!-- n개월 전 데이터 삭제 -->
+    <delete id="deleteAllNMonthAgo" parameterType="int">
+        DELETE FROM school
+        WHERE MONTHS_BETWEEN(SYSDATE, write_date) >= #{month}
+    </delete>
+
+    <!-- 학교 검색 -->
+<!--    <select id="getSchool" parameterType="SearchSchoolDto" resultType="String">
+        SELECT *
+        FROM school
+        <where>
+            <if test="atptOfcdcScCode != null">
+                AND (ATPT_OFCDC_SC_CODE LIKE CONCAT('%', #{ATPT_OFCDC_SC_CODE}, '%'))
+            </if>
+            <if test="sdSchulCode != null">
+                AND (SD_SCHUL_CODE LIKE CONCAT('%', #{SD_SCHUL_CODE}, '%'))
+            </if>
+            <if test="schulNm != null">
+                AND (SCHUL_NM LIKE CONCAT('%', #{SCHUL_NM}, '%'))
+            </if>
+            <if test="schulKndScNm != null">
+                AND (SCHUL_KND_SC_NM LIKE CONCAT('%', #{SCHUL_KND_SC_NM}, '%'))
+            </if>
+            <if test="lctnScNm != null">
+                AND (LCTN_SC_NM LIKE CONCAT('%', #{LCTN_SC_NM}, '%'))
+            </if>
+            <if test="fondScNm != null">
+                AND (FOND_SC_NM LIKE CONCAT('%', #{FOND_SC_NM}, '%'))
+            </if>
+        </where>
+
+    </select>-->
+
+</mapper>

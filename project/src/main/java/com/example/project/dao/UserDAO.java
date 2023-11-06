@@ -43,11 +43,11 @@ public interface UserDAO {
 	// 매칭된 아이디의 비밀번호 변경
 	public void updateUserPassword(String id, String pwd);
 	
-    // 회원 인원수 반환
-    public int memberTotalCnt();
+  // 회원 인원수 반환
+  public int memberTotalCnt();
 
-    // 회원 목록 페이징 반환
-    public List<UserDTO> selectMemberListPage(PageDto pageDto);	
+  // 회원 목록 페이징 반환
+  public List<UserDTO> selectMemberListPage(PageDto pageDto);	
 	
 	//회원 학교 정보 얻기
 	public SchoolInfo userInfo(String id);
@@ -55,8 +55,12 @@ public interface UserDAO {
 	// 암호화된 비밀번호 가져옴
 	public UserDTO getEncordpwd(String id);
 	
-    // 회원 리스트 삭제
-    public int deleteMemberList(List<UserDTO> userDTOList);
+  // 회원 리스트 삭제
+  public int deleteMemberList(List<UserDTO> userDTOList);
 
+	// 회원 리스트 삭제
+	public int deleteMemberList(List<UserDTO> userDTOList);
 
+	// ID값으로 role 검색
+  public String getUserRoleById(String id);
 }

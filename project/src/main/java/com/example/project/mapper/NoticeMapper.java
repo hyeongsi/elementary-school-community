@@ -1,11 +1,10 @@
 package com.example.project.mapper;
 
+import com.example.project.dto.notice.*;
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
-
 import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.notice.CommentAllJoinDto;
 import com.example.project.dto.notice.CommentDto;
