@@ -2,7 +2,6 @@ package com.example.project.dto.notice;
 
 import java.util.List;
 
-import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
 import com.example.project.dto.page.Page;

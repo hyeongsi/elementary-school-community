@@ -13,10 +13,16 @@ import java.util.List;
 public interface CategoryMapper {
 
     public List<CategoryDto> selectCategoryList();
+    
     public int categoryTotalCnt();
+    
     public List<CategoryDto> selectCategoryPage(PageDto pageDto);
+    
     public List<CategoryDto> selectCategoryListById(FindCategoryByBoardIdPageDto findCategoryByBoardIdPageDto);
+    
     public int categoryTotalCtnById(int boardId);
+    
     public int insertCategory(CategoryDto categoryDto);
+    
     public int deleteCategoryList(List<CategoryDto> categoryDtoList);
 }

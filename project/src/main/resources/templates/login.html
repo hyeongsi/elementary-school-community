@@ -207,6 +207,7 @@
 						<span>use your account</span> 
 						<input type="text" id="id" name="id" placeholder="아이디입력" /> 
 						<input type="password" id="pwd" name="pwd" placeholder="비밀번호 입력" /> 
+						<span th:value="${loginFail}"></span> 
 						
 						<a href="findPassword">Forgot your password?</a>
 
@@ -340,21 +341,34 @@
     	});
     	
   });
+  
+  
     	
   $("#checkEmail").click(function () {
       let email = $("#accountemail").val(); 
-      
-  swal("발송 완료!", "입력하신 이메일로 인증번호가 발송되었습니다.", "success").then((OK) => {
-      if(OK) {
+    
           $.ajax({
               type: "POST",
               url: "http://localhost:8088/app/ConfirmEmail",
               data: { "email": email },
-              // 자식창을 열어서 이메일 인증번호를 입력하고 인증번호가 입력값과 매칭 되면 span태그에 인증완료 반환
+              success:function( msg ){
+  				if(msg.trim()=='OK'){
+  					
+  					swal("발송 완료!", "입력하신 이메일로 인증번호가 발송되었습니다.", "success").then((OK) => {
+  						$("#InputNumber").focus();
+  				  });
+  					
+  				}else{
+  					swal("발송 실패!", "이미존재하는 이메일입니다.", "error").then((OK) => {
+  						$("#accountemail").focus();
+    				});
+  				}	
+  			},
+  			error:function(){
+  				alert('error');
+  			}
               
           })
-      }
-  });
   });
   
   $("#Confirm").click(function () {

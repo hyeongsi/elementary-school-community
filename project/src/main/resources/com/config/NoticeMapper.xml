@@ -4,252 +4,187 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.project.mapper.NoticeMapper">
 
-    <!-- 01_01. 게시글 전체목록 조회 및 검색 조회까지 -->
-    <select id="selectSearchNoticePage"
-            resultType="NoticeDto" parameterType="PageDTO">
-        SELECT p.post_Id, p.title, p.content, p.good, p.view_cnt, p.member_id, p.category_id,
+	   <!-- 01_01. 게시글 전체목록 조회 및 검색 조회까지 -->
+   <select id="selectSearchNoticePage"
+      resultType="NoticeDto" parameterType="PageDTO">
+      SELECT p.post_Id, p.title, p.content, (SELECT COUNT(*) FROM liketable WHERE post_id = p.post_Id AND good = 1) AS good_count, p.view_cnt, p.member_id, p.category_id,
         NVL(comment_count, 0) AS comment_count
-        FROM (
-        SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
-        FROM post
-        <!-- WHERE절을 include 태그로 삽입 -->
-        <include refid="search"></include>
-        ) p
-        LEFT JOIN (
+      FROM (
+       SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
+       FROM post
+       
+      <!-- WHERE절을 include 태그로 삽입 -->
+      <include refid="search"></include>
+      ORDER BY post_Id DESC
+         ) p
+       LEFT JOIN (
         SELECT post_id, COUNT(comment_id) AS comment_count
         FROM comments
-        GROUP BY post_id
-        ) c ON p.post_id = c.post_id
-        WHERE rm BETWEEN #{start} AND #{end}
-        ORDER BY post_Id DESC
-    </select>
+           GROUP BY post_id
+       ) c ON p.post_id = c.post_id
+       WHERE rm BETWEEN #{start} AND #{end}
+       ORDER BY post_Id DESC
+   </select>
 
-    <!-- 01_02. 게시글 레코드 갯수 -->
-    <select id="noticeTotalCnt" parameterType="map" resultType="int">
-        SELECT COUNT(*) FROM post
-        <!-- WHERE절을 include 태그로 삽입 -->
-        <include refid="search"></include>
-    </select>
-    <!-- sql code 조각 -->
-    <!-- 반복되는 sql의 일부를 sql태그를 이용하여 따로 빼둘수 있다. -->
-    <sql id="search">
-        <choose>
-            <!-- 검색옵션이 전체 검색일 경우 -->
-            <when test="searchType == 'all'">
-                WHERE (member_id like '%'||#{keyword}||'%'
-                OR content like '%'||#{keyword}||'%'
-                OR title like '%'||#{keyword}||'%')
-                AND category_id = TO_NUMBER(${categoryId})
-            </when>
-            <!-- 전체 검색이 아닐 경우 -->
-            <otherwise>
-                WHERE category_id = TO_NUMBER(${categoryId}) AND ${searchType} like '%'||#{keyword}||'%'
-            </otherwise>
-        </choose>
-    </sql>
-
-
+   <!-- sql code 조각 -->
+   <sql id="search">
+      <choose>
+         <!-- 검색옵션이 전체 검색일 경우 -->
+         <when test="searchType == 'all'">
+            WHERE (member_id like '%'||#{keyword}||'%'
+            OR content like '%'||#{keyword}||'%'
+            OR title like '%'||#{keyword}||'%')
+            AND category_id = TO_NUMBER(${categoryId})
+         </when>
+         <!-- 전체 검색이 아닐 경우 -->
+         <otherwise>
+           WHERE category_id = TO_NUMBER(${categoryId}) AND ${searchType} like '%'||#{keyword}||'%'
+         </otherwise>
+      </choose>
+   </sql>
+    
+   <!-- 01_02. 게시글 레코드 갯수 -->
+   <select id="noticeTotalCnt" parameterType="map" resultType="int">
+      SELECT COUNT(*) FROM post
+      <!-- WHERE절을 include 태그로 삽입 -->
+      <include refid="search"></include>
+   </select>
+   
+    
     <update id="updateViewCnt" parameterType="long">
         update post
         set view_cnt = view_cnt + 1
         where post_id = #{postId}
-    </update>
-
-
+</update>
+    
+    
     <select id="noticeSearchTotalCnt" resultType="int" parameterType="string">
         SELECT count(*) FROM post
         WHERE title LIKE '%'||#{keyword}||'%'
     </select>
-
-    <insert id="insertNotice" parameterType="NoticeDto">
-        INSERT INTO post (post_id, title, write_time, category_id,content, member_id)
-        VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, #{memberId})
-    </insert>
-
-    <update id="updateNotice" parameterType="NoticeDto">
-        UPDATE post
-        SET title = #{title},
-        content = #{content}
-        WHERE post_id = #{postId}
-    </update>
-
-    <delete id="deleteNotice" parameterType="long">
-        delete from post
-        where post_id = #{postId}
-    </delete>
-
-    <delete id="deleteNoticeList" parameterType="List">
-        DELETE FROM post
-        WHERE post_id IN (
-        <foreach collection="noticeDtoList" item="item" separator=",">
-            #{item.postId}
-        </foreach>
-        )
-    </delete>
-
-    <select id="selectByPostId" resultType="NoticeDto" parameterType="long">
+    
+   <insert id="insertNotice" parameterType="NoticeDto">
+      INSERT INTO post (post_id, title, write_time, category_id,content, member_id) 
+      VALUES(seq_post.nextval, #{title}, sysdate, #{categoryId}, #{content}, #{memberId})
+   </insert>
+   
+   <update id="updateNotice" parameterType="NoticeDto">
+      UPDATE post
+         SET title = #{title},
+             content = #{content}
+      WHERE post_id = #{postId}
+   </update>
+   
+   <delete id="deleteNotice" parameterType="long">
+      delete  from post
+      where post_id = #{postId}
+   </delete>
+   
+   <select id="selectByPostId" resultType="NoticeDto" parameterType="long">
         SELECT post_Id, title, content , good, view_cnt, member_id , category_id
         FROM post
         WHERE post_Id = #{postId}
     </select>
-
+    
     <select id="selectNoticeCategoryList" resultType="NoticeCategoryDto">
-        SELECT category_id, category_name
-        FROM category
+       SELECT category_id, category_name , board_id
+       FROM category
+        WHERE board_id > 37
     </select>
-
-    <select id="selectUserNoticeCategoryList" resultType="NoticeCategoryDto">
-        SELECT category_id, category_name
-        FROM category
-        WHERE board_id = #{boardId}
+    
+     <select id="selectUserNoticeCategoryList" resultType="NoticeCategoryDto">
+       SELECT category_id, category_name 
+       FROM category
+       WHERE board_id = #{boardId}
     </select>
-
-    <insert id="addComment" parameterType="CommentDto">
-        <choose>
-            <!-- 검색옵션이 전체 검색일 경우 -->
-            <when test="parentCommentId == null">
-                INSERT INTO comments
-                VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, #{memberId})
-
-            </when>
-            <!-- 전체 검색이 아닐 경우 -->
-            <otherwise>
-                INSERT INTO comments
-                VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, #{memberId})
-            </otherwise>
-        </choose>
-    </insert>
-
+    
+    <select id="selectBoardList" resultType="BoardDto">
+       SELECT * FROM board
+       WHERE board_id >=60
+    </select>
+  
+   <insert id="addComment" parameterType="CommentDto">
+       <choose>
+         <when test="parentCommentId == null">
+            INSERT INTO comments (comment_id, parent_comment_id, post_id, comment_contents, member_id)
+             VALUES(seq_comments.nextval, null, #{postId}, #{commentContents}, #{memberId})
+    
+         </when>
+         <otherwise>
+            INSERT INTO comments (comment_id, parent_comment_id, post_id, comment_contents, member_id)
+             VALUES(seq_comments.nextval, #{parentCommentId}, #{postId}, #{commentContents}, #{memberId})
+           </otherwise>
+      </choose>
+        </insert>
+    
     <delete id="deleteComment" parameterType="long">
-        DELETE FROM comments
-        WHERE comment_id = #{commentId}
+       DELETE FROM comments
+      WHERE comment_id = #{commentId}
     </delete>
-
-    <delete id="deleteCommentList" parameterType="List">
-        DELETE FROM comments
-        WHERE comment_id IN (
-        <foreach collection="commentDtoList" item="item" separator=",">
-            #{item.commentId}
-        </foreach>
-        )
-    </delete>
-
+    
     <update id="editComment" parameterType="CommentDto">
-        UPDATE comments
-        SET comment_contents = #{commentContents}
-        WHERE comment_id = #{commentId}
+       UPDATE comments
+      SET comment_contents = #{commentContents}
+      WHERE comment_id = #{commentId}
     </update>
-
+    
     <select id="selectCommentList" parameterType="long" resultType="CommentDto">
-        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id
-        FROM comments
-        WHERE post_id = #{postId}
-        START WITH parent_comment_id IS NULL
-        CONNECT BY PRIOR comment_id = parent_comment_id
+       SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id
+       FROM comments
+       WHERE post_id = #{postId}
+       START WITH parent_comment_id IS NULL
+      CONNECT BY PRIOR comment_id = parent_comment_id
     </select>
-
-    <select id="selectCommentListAll" resultType="CommentAllJoinDto" parameterType="PageDto">
-        SELECT comment_id, member_id, board_id, category_id, post_id, COMMENT_CONTENTS, board_name, category_name, name
-        FROM (SELECT rownum rm, comment_id, board_id, category_id, member_id, post_id, COMMENT_CONTENTS, board_name,
-        category_name, name
-        FROM (SELECT cmt.comment_id, cmt.member_id, b.board_id, c.category_id, cmt.post_id, cmt.COMMENT_CONTENTS,
-        b.board_name, c.category_name, m.name
-        FROM comments cmt
-        JOIN member_data m on cmt.member_id = m.id
-        JOIN post p on cmt.post_id = p.post_id
-        JOIN category c on p.category_id = c.category_id
-        JOIN board b on c.board_id = b.board_id
-        ORDER BY comment_id DESC))
-        WHERE rm between #{start} AND #{end}
-    </select>
-
-    <select id="commentTotalCnt" resultType="int">
-        SELECT COUNT(*) FROM comments
-    </select>
-
-    <select id="noticeNoSearchTotalCnt" resultType="int">
-        SELECT COUNT(*) FROM post
-    </select>
-
-    <select id="selectNoticePageWithName" resultType="NoticeBoardCategoryMemberNameDto" parameterType="PageDto">
-        SELECT post_id, board_id, title, content, view_cnt, board_name, category_name, name
-        FROM (SELECT rownum rm, post_id, b.board_id, title, content, view_cnt, b.board_name, c.category_name, m.name
-        FROM post p
-        JOIN category c on p.category_id = c.category_id
-        JOIN member_data m on p.member_id = m.id
-        JOIN board b on b.board_id = c.board_id
-        ORDER BY post_id DESC)
-        WHERE rm between #{start} AND #{end}
-    </select>
-
-    <select id="noticeTotalCtnById" parameterType="int" resultType="int">
-        SELECT COUNT(*)
-        FROM (SELECT rownum rm, post_id, title, content, view_cnt, b.board_name, c.category_name, m.name, c.category_id
-        FROM post p
-        JOIN category c on p.category_id = c.category_id
-        JOIN member_data m on p.member_id = m.id
-        JOIN board b on b.board_id = c.board_id)
-        WHERE category_id = #{categoryId}
-    </select>
-
-    <select id="selectNoticeListById" resultType="NoticeBoardCategoryMemberNameDto"
-            parameterType="FindNoticeByCategoryIdPageDto">
-        SELECT post_id, board_id, title, content, view_cnt, board_name, category_name, name
-        FROM (SELECT rownum rm, post_id, b.board_id, title, content, view_cnt, b.board_name, c.category_name, m.name
-        FROM post p
-        JOIN category c on p.category_id = c.category_id
-        JOIN member_data m on p.member_id = m.id
-        JOIN board b on b.board_id = c.board_id
-        WHERE p.category_id = #{categoryId}
-        ORDER BY post_id DESC)
-        WHERE rm between #{pageDto.start} AND #{pageDto.end}
-    </select>
-
-    <select id="commnetCntList" parameterType="long" resultType="list">
+    
+    <select id="commnetCntList" parameterType="long" resultType="list"> 
         SELECT p.post_id, NVL(COUNT(c.comment_id), 0) AS comment_count
-        FROM post p
-        LEFT JOIN comments c ON p.post_id = c.post_id
-        WHERE p.category_id = 1
-        GROUP BY p.post_id
-    </select>
-
+      FROM post p
+      LEFT JOIN comments c ON p.post_id = c.post_id
+      WHERE p.category_id = 1
+      GROUP BY p.post_id
+     </select>
+    
     <select id="likeCheck" parameterType="LikeDto" resultType="LikeDto">
-        SELECT * FROM liketable
-        WHERE member_id = #{memberId} AND post_id = #{postId}
+       SELECT * FROM liketable
+       WHERE member_id = #{memberId} AND post_id = #{postId}
     </select>
-
+    
     <insert id="addLike" parameterType="LikeDto">
-        INSERT INTO liketable
-        VALUES (#{memberId}, #{postId}, 1)
+       INSERT INTO liketable 
+       VALUES (#{memberId}, #{postId}, 1)
     </insert>
-
+    
     <update id="cancelLike" parameterType="LikeDto">
-        UPDATE liketable
-        SET good = 0
-        WHERE member_id = #{memberId} AND post_id = #{postId}
+       UPDATE liketable
+       SET good = 0
+       WHERE member_id = #{memberId} AND post_id = #{postId}
     </update>
-
+    
     <update id="reLike" parameterType="LikeDto">
-        UPDATE liketable
-        SET good = 1
-        WHERE member_id = #{memberId} AND post_id = #{postId}
+       UPDATE liketable
+       SET good = 1
+       WHERE member_id = #{memberId} AND post_id = #{postId}
     </update>
-
+    
     <select id="likeCnt" parameterType="long" resultType="long">
-        SELECT COUNT(*) FROM liketable
-        WHERE post_id = #{postId} AND good=1
+       SELECT COUNT(*) FROM liketable
+      WHERE post_id = #{postId} AND good=1
     </select>
 
-    <select id="selectSearchNoticePageById" resultType="NoticeDto"
-            parameterType="MemberPageDto">
-        SELECT post_Id, title, content, good, view_cnt, member_id, category_id
-        FROM (
-        SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id,
-        category_id
-        FROM post
-        WHERE member_id = #{memberId} <!-- member_id를 사용한 검색 조건 추가 -->
-        ) WHERE rm BETWEEN #{start} AND #{end}
-        ORDER BY post_Id DESC
-    </select>
 
+
+   <select id="selectSearchNoticePageById" resultType="NoticeDto"
+      parameterType="MemberPageDto">
+      SELECT post_Id, title, content, good, view_cnt, member_id, category_id
+      FROM (
+      SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id,
+      category_id
+      FROM post
+      WHERE member_id = #{memberId} <!-- member_id를 사용한 검색 조건 추가 -->
+      ) WHERE rm BETWEEN #{start} AND #{end}
+      ORDER BY post_Id DESC
+   </select>
+    
+    
+   
 </mapper>

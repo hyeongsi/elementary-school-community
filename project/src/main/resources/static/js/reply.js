@@ -2,6 +2,7 @@ $(document).ready(function () {
 	$(".reply").bind('click',function () {
        	$('.reply-input').remove();
        	$('.edit-input').remove();
+       	console.log($(this).attr('id').substring(8));
        	var HTML = `<form class="reply-input" action="../addComment" method="post">
 													<input type="hidden" name="postId" id="postIdInput" value="`+document.querySelector(".postId-input").value+ `">
        												<input type="hidden" name="parentCommentId" id="parentCommentId" value="`+ $(this).attr('id').substr(8) +`">
@@ -10,7 +11,7 @@ $(document).ready(function () {
 													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
 												 -->
 												</form>`;
-       	document.querySelector("#replyBtn"+$(this).attr('id').substring(8)).insertAdjacentHTML("afterend", HTML);
+       	document.querySelector("#edit-comment-btn"+$(this).attr('id').substring(8)).insertAdjacentHTML("afterend", HTML);
        	
        	
     });

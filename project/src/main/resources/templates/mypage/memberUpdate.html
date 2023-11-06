@@ -13,13 +13,20 @@
 <script defer src="./js/schoolSearch.js"></script>
 <link rel="stylesheet" href="./css/modal.css">
 <link rel="stylesheet" href="./css/schSearch.css">
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link
+         href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+         rel="stylesheet"
+         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+         crossorigin="anonymous"
+      />
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
 
 <!-- Custom fonts for this template -->
 <link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
@@ -66,7 +73,7 @@
 
 							<div id="userManage" class="border border-3 py-4 px-5">
 
-								<form id="frm" method="post">
+								<form id="frm">
 
 									<div class="row">
 
@@ -84,7 +91,7 @@
 
 										<div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
 										<label for="school_name">학년</label>
-											<select class="form-control" id="userGrade" name="usergrade">
+											<select class="form-control" id="userGrade" name="usergrade" require>
 												<option value="" selected>학년 선택</option>
 												<option value="1">1학년</option>
 												<option value="2">2학년</option>
@@ -94,10 +101,11 @@
 												<option value="6">6학년</option>
 											</select> 
 										</div>
+										
 											
 										<div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">	
 										<label for="school_name">반</label> 
-											<select class="form-control" id="userClass" name="userclass">
+											<select class="form-control" id="userClass" name="userclass" require>
 												<option value="" selected>반 선택</option>
 												<option value="1">1반</option>
 												<option value="2">2반</option>
@@ -121,13 +129,14 @@
 												<option value="20">20반</option>
 											</select>
 										</div>
+										
 
 
 										<!-- 									모달										 -->
 
 										<!-- 시도교육청 코드 -->
 										<input class="d-none" type="text" id="ATPT_OFCDC_SC_CODE_SIGN"
-											name="education_code" size="20" value="">
+											name="educationCode" th:value="${user.educationCode}" size="20" value="">
 
 										<!-- 시도교육청 이름 -->
 										<div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
@@ -138,7 +147,7 @@
 
 										<!-- 학교 코드 -->
 										<input class="d-none" type="text" id="SD_SCHUL_CODE_SIGN"
-											name="school_code" size="20" value="">
+											name="schoolCode" th:value="${user.schoolCode}" size="20" value="">
 
 										<!-- 학교 이름 -->
 										<div class="d-flex flex-column col-12 col-md-6 col-xl-3 mt-2">
@@ -245,39 +254,63 @@
 	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
 	<!-- 회원 -->
-	<script th:src="@{/js/memberManage.js}"></script>
+	<!-- <script th:src="@{/js/memberManage.js}"></script> -->
 	
 	<script type="text/javascript">
 	
 	$("#memberSave").on("click", function () {
   		let formData = $("#frm").serialize(); // 폼 데이터 직렬화
   		
-  		$.ajax({
-    		url: "http://localhost:8088/app/mypage/memberUpdate",
-    		type: "post",
-    		data: formData, // 직렬화한 폼 데이터를 전송
-    		success: function (data) {
-      		if (data.trim() === 'YES') {
-      			swal("저장 완료!", "초등 커뮤니티에 오신것을 환영합니다!", "success").then((OK) => {
-        		      if(OK) {
-          				container.classList.remove("right-panel-active");
-        		      }
-      			})
-      		} else {
-      			swal("가입 실패!", "작성란을 다시한번 확인해주세요!", "failed").then((OK) => {
-      		      if(OK) {
-        				container.classList.remove("right-panel-active");
-      		      }
-    			})
-      		}
-    		},
-    		error: function () {
-      		alert('에러 발생');
-    		}
-  		});
+  		
+  		Swal.fire({
+		      title: '정말로 수정 하시겠습니까?',
+		      text: "다시 되돌릴 수 없습니다.",
+		      icon: 'warning',
+		      showCancelButton: true,
+		      confirmButtonColor: '#3085d6',
+		      cancelButtonColor: '#d33',
+		      confirmButtonText: '승인',
+		      cancelButtonText: '취소',
+		      reverseButtons: false, // 버튼 순서 거꾸로
+		      
+		    }).then((result) => {
+		    	
+		    	$.ajax({
+		    		url: "http://localhost:8088/app/mypage/memberUpdate",
+		    		type: "post",
+		    		data: formData, // 직렬화한 폼 데이터를 전송
+		    		success: function (data) {
+		      			if (data.trim()==='YES') {
+		      				
+		      				if (result.isConfirmed) {
+		      			        Swal.fire(
+		      			          'success',
+		      			          '수정이 완료되었습니다.',
+		      			          'success'
+		      			        ).then(function(){
+		      			        	location.href="./memberProfile"
+		      			      })
+		      			    }
+		      				
+		      			} else {
+		      				
+		      				Swal.fire('실패!', '빈칸이 있는지 확인해주세요.', 'error');
+		      			
+		      			}
+		    		},error: function () {
+		    			
+		    			Swal.fire('에러 발생', '서버 오류가 발생했습니다.', 'error');
+		      		
+		    		}
+		  		});
+		    })
+		    
+  		
+  		
 	});
 	
 	</script>
+	
 	
 
 </body>

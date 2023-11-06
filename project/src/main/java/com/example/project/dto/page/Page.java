@@ -17,8 +17,6 @@ public class Page {
         maxPage = calcMaxPage();
         startPage = calcStartPage();
         endPage = calcEndPage();
-        if(endPage == 0)
-            endPage=1;
     }
 
     public int getDisplayUnit() {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.project.dto.MailDTO;
 import com.example.project.service.ConfirmEmailService;
+import com.example.project.service.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -18,22 +19,26 @@ import lombok.AllArgsConstructor;
 public class EmailConfirmController {
 	
 	ConfirmEmailService ces;
+	UserService userService;
 	
 	// ################## Confirm and Send Email ##################
 	
-	// 비밀번호 찾기 화면단
-	@GetMapping("/Chiled")
-	public String findPassword() {
-		return "Chiled";
-	}
-	
 	//인증번호 발송
 	   @PostMapping("/ConfirmEmail")
-	   public @ResponseBody void sendConfirmEmail(String email){
+	   public @ResponseBody String sendConfirmEmail(String email){
+		   
+		   boolean e = userService.getEmail(email);
+		   
+		   if(e) {
+			   System.out.println("NO");
+			   return "NO"; // 존재
+		   }
 		   
 		   MailDTO mailDTO = ces.createConfirmMail(email);
 		   ces.mailSend(mailDTO);
 		   
+		   System.out.println("OK");
+		   return "OK";
 	    }    
 	
 

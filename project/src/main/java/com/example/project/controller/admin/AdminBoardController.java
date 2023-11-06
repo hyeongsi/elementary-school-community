@@ -26,7 +26,7 @@ public class AdminBoardController {
 
         final BoardPageDto boardPageDto = boardService.selectBoardPage(displayUnit, curPage);
         model.addAttribute("boardPageDto", boardPageDto);
-        return "admin/board/boardList";
+        return "admin/boardList";
     }
 
     @ResponseBody

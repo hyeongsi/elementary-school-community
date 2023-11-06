@@ -25,6 +25,7 @@ public class ConfirmEmailService {
         System.out.println(tempPassword);
         
         redisService.setWithExpiration("email", tempPassword, 120, TimeUnit.SECONDS);
+        
         String code = redisService.get("email");
         
         System.out.println(code);
@@ -53,7 +54,7 @@ public class ConfirmEmailService {
     }
     
     
-    // 이메일 전송 메서드ㄴ
+    // 이메일 전송 메서드
     public void mailSend(MailDTO mailDTO) {
     	System.out.println("이멜 전송 완료!");
         SimpleMailMessage message = new SimpleMailMessage();
