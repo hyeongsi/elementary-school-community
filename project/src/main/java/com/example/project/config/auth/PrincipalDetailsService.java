@@ -29,14 +29,18 @@ public class PrincipalDetailsService implements UserDetailsService {
     // 이 함수 리턴하면 시큐리티 session(내부 Authentication(내부 PrincipalDetails(내부 userDTO))) 형태로 들어가게 됨
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        UserDTO userDTO = userDAO.getUserById(id);
-        if(userDTO != null){
-            Collection<GrantedAuthority> authorities = new ArrayList<>();
-            authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        final UserDTO userDTO = userDAO.getUserById(id);
 
-            return new User(userDTO.getId(), userDTO.getPwd(), authorities);
-        }
-        return null;
+        if(userDTO == null)
+            throw new UsernameNotFoundException("id에 맞는 user가 없습니다.");
+
+        // id값으로 권한을 가져옴
+        final String role = userDAO.getUserRoleById(id);
+
+        final Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(role));
+
+        return new PrincipalUser(userDTO, authorities);
     }
 
 }

@@ -1,18 +1,14 @@
 package com.example.project.mapper;
 
-import java.util.List;
-import java.util.Map;
-
+import com.example.project.dto.NoticeCategoryDto;
 import com.example.project.dto.notice.*;
+import com.example.project.dto.page.MemberPageDto;
+import com.example.project.dto.page.PageDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.example.project.dto.NoticeCategoryDto;
-import com.example.project.dto.notice.CommentDto;
-import com.example.project.dto.notice.LikeDto;
-import com.example.project.dto.notice.NoticeDto;
-import com.example.project.dto.page.MemberPageDto;
-import com.example.project.dto.page.PageDto;
+import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository

@@ -51,4 +51,7 @@ public interface UserDAO {
 
 	// 회원 리스트 삭제
 	public int deleteMemberList(List<UserDTO> userDTOList);
+
+	// ID값으로 role 검색
+    public String getUserRoleById(String id);
 }

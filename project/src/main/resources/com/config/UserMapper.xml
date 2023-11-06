@@ -119,4 +119,11 @@
         WHERE id = #{id}
     </select>
 
+    <!-- ID값으로 role 검색  -->
+    <select id="getUserRoleById" parameterType="string" resultType="string">
+        SELECT role
+        FROM MEMBER_DATA
+        WHERE ID = #{id}
+    </select>
+
 </mapper>

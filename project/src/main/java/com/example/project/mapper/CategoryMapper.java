@@ -1,13 +1,15 @@
 package com.example.project.mapper;
 
+import com.example.project.dto.category.CategoryDto;
 import com.example.project.dto.category.FindCategoryByBoardIdPageDto;
 import com.example.project.dto.page.PageDto;
-import com.example.project.dto.category.CategoryDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface CategoryMapper {
 
     public List<CategoryDto> selectCategoryList();
