@@ -4,21 +4,36 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" 
+    	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <title>초등 커뮤니티 - 관리자 - 회원목록</title>
+    
+<script defer src="./js/modal.js"></script>
+<script defer src="./js/schoolSearch.js"></script>
+<link rel="stylesheet" href="./css/modal.css">
+<link rel="stylesheet" href="./css/schSearch.css">
+
+    
+    
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	
     <!-- Custom fonts for this template -->
-    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" rel="stylesheet" type="text/css">
-    <link
-            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-            rel="stylesheet">
+    <link th:href="@{/vendor/fontawesome-free/css/all.min.css}" 
+    	rel="stylesheet" type="text/css">
+   
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+    <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" 
+    	rel="stylesheet">
 
 </head>
 
@@ -37,7 +52,7 @@
         <div id="content">
 
             <!-- Topbar -->
-            <nav th:replace="mypage/common/member_topBar::member_topBar"></nav>
+            <nav th:replace="mypage/common/member_topBar :: member_topBar"></nav>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -125,8 +140,9 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
+<!-- 탑바 경로 수정 -->
 <!-- Logout Modal-->
-<div th:replace="common/topBar :: logoutModal"></div>
+<div th:replace="mypage/common/member_topBar :: logoutModal"></div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
