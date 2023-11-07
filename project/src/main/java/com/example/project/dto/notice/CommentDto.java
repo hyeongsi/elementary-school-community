@@ -2,8 +2,10 @@ package com.example.project.dto.notice;
 
 import org.apache.ibatis.type.Alias;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 @Getter
 @Alias("CommentDto")
 public class CommentDto {
@@ -13,6 +15,7 @@ public class CommentDto {
 	private Long postId;
 	private Long parentCommentId;
 	private Long commentId;
+	private boolean delCheck;
 
 	public CommentDto(){}
 

@@ -95,6 +95,13 @@
 											<script defer src="../js/editComment.js"></script>
 											<table border="1"></table>
 											<tr th:each="comment : ${Comment}">
+											<div th:if="${comment.delCheck}" >
+													<td th:text="${comment.commentContents}">내용</td>&nbsp
+													</div>
+											<th:block th:if="${!comment.delCheck}">
+											<div th:if="${comment.delCheck}" >
+													<td th:text="${comment.commentContents}">내용</td>&nbsp
+													</div>
 												<div class="comments comment_"
 													th:attrappend="class=${comment.commentId}"
 													th:value="${comment.memberId}">
@@ -115,6 +122,9 @@
 														th:if="${session.userId.toString().equals(comment.memberId)}"
 														class="del-comment" style="color: red;"
 														th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
+											</th:if>
+												
+												</div>
 												</div>
 
 											</tr>

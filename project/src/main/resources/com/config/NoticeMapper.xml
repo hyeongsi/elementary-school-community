@@ -118,10 +118,29 @@
         </choose>
     </insert>
 
+<!-- 
     <delete id="deleteComment" parameterType="long">
         DELETE FROM comments
         WHERE comment_id = #{commentId}
     </delete>
+ -->
+ 	<update id="deleteComment" parameterType="long">
+      	UPDATE comments SET del_check = 1, comment_contents = '삭제된 댓글입니다'
+	   	WHERE comment_id = #{commentId}
+    </update>
+    
+    <delete id="completeDelComment" parameterType="long">
+      	DELETE comments
+	   	WHERE comment_id = #{commentId}
+    </delete>
+    
+    <select id="deleteCheck" parameterType="long" resultType="int">
+      	SELECT COUNT(p.parent_comment_id) AS referenced_count
+		FROM comments c
+		LEFT JOIN comments p ON c.comment_id = p.parent_comment_id
+		WHERE c.comment_id = #{comment_id}
+		GROUP BY c.comment_id
+    </select>
 
     <update id="editComment" parameterType="CommentDto">
         UPDATE comments
@@ -130,7 +149,7 @@
     </update>
 
     <select id="selectCommentList" parameterType="long" resultType="CommentDto">
-        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id
+        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id, del_check
         FROM comments
         WHERE post_id = #{postId}
         START WITH parent_comment_id IS NULL
