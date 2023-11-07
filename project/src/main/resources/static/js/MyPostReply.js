@@ -3,7 +3,7 @@ $(document).ready(function () {
        	$('.reply-input').remove();
        	$('.edit-input').remove();
        	console.log($(this).attr('id').substring(8));
-       	var HTML = `<form class="reply-input" action="../addComment" method="post">
+       	var HTML = `<form class="reply-input" action="./MyPostAddCmt" method="post">
 													<input type="hidden" name="postId" id="postIdInput" value="`+document.querySelector(".postId-input").value+ `">
        												<input type="hidden" name="parentCommentId" id="parentCommentId" value="`+ $(this).attr('id').substr(8) +`">
 													<textarea name="comment" rows="3" cols="100%" placeholder="댓글을 입력해주세요."></textarea>
