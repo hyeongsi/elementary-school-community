@@ -139,13 +139,15 @@ public class UserNoticeController {
 		return "redirect:notice/detail?postId="+postId;
 	}
 	
+	// 댓글삭제
 	@GetMapping("/delComment")
 	public String delComment(HttpSession session,
 			 				@RequestParam Long postId,
 			 				@RequestParam Long commentId,
 			 				@RequestParam String memberId) {
 		
-		
+		// 로그인 확인
+		// 자식댓글 여부 확인하고 없으면 완전삭제, 존재하면 update로 삭제처리(속임수)
 		if(session.getAttribute("userId")==null) {
 			return "redirect:/login";
 		}
@@ -160,6 +162,7 @@ public class UserNoticeController {
 		return "redirect:notice/detail?postId="+postId;
 	}
 	
+	// 댓글수정
 	@PostMapping("/editComment")
 	public String editComment(HttpSession session,
 							  @RequestParam Long postId,
@@ -178,10 +181,13 @@ public class UserNoticeController {
 		return "redirect:notice/detail?postId="+postId;
 	}
 	
+	// 좋아요
 	@GetMapping("/notice/like")
 	public String likeBtn(HttpSession session,
 						  @RequestParam(required = false) String memberId,
 					      @RequestParam(required = false) Long postId) {
+		
+		// 좋아요 로그가 없으면 insert로 좋아요를 기록하고 있으면 해당 좋아요를 delete해서 취소
 		memberId = session.getAttribute("userId").toString();
 		LikeDto likeDto = new LikeDto(memberId, postId, null);
 		if(noticeService.likeCheck(likeDto)==null||noticeService.likeCheck(likeDto).getGood()==false) {
@@ -192,16 +198,18 @@ public class UserNoticeController {
 		return "redirect:/notice/detail?postId="+postId;
 	}
 	
+	// 게시판 카테고리 list를 가져옴
 	@ResponseBody
 	@GetMapping("/getCategories")
     public List<NoticeCategoryDto> getCategories(HttpSession session) {
-		String userId = null;
-		String userEO = null;
+		String userId = null;	
+		String userEO = null;	// 유저의 시도교육청 코드
 		if(session.getAttribute("userId")!=null) {
 		userId = session.getAttribute("userId").toString();	// 시도교육청
 		userEO = userService.userInfo(userId).getOfficeOfEducationCode().toString();
 		}
 		int boardId = 21;
+		// 스위치문으로 boardid에 맞는 시도교육청 코드 매핑
 		switch (userEO != null ? userEO: "NULL") {
 			case "B10": boardId = 21;
 			break;
@@ -242,6 +250,7 @@ public class UserNoticeController {
 		return noticeService.selectUserNoticeCategoryList(boardId);
     }	
 	
+	// 시도교육청 외의 게시판 카테고리를 가져옴
 	@ResponseBody
 	@GetMapping("/getCustomCategories")
     public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
@@ -249,6 +258,7 @@ public class UserNoticeController {
         return noticeService.selectNoticeCategoryList();
     }
 	
+	// 카테고리 대분류 Board list를 가져옴
 	@ResponseBody
 	@GetMapping("/getBoard")
     public List<BoardDto> getBoard() {
