@@ -52,8 +52,8 @@ public class UserNoticeController {
 	
 	// 게시글쓰기
 	@GetMapping("/notice/write")
-	public String noticeWriteForm(final Model model,HttpSession session, @RequestParam Long categoryId) {
-		if(session.getAttribute("userId")==null) {
+	public String noticeWriteForm(final Model model, Principal principal, @RequestParam Long categoryId) {
+		if(principal == null) {
 			return "redirect:/login";
 		}
 		model.addAttribute("categoryId", categoryId);
@@ -61,23 +61,24 @@ public class UserNoticeController {
 	}
 	
 	@PostMapping("/notice/write")
-	public String noticeWrite(HttpSession session,
+	public String noticeWrite(Principal principal,
 							  @RequestParam String title,
 							  @RequestParam String content, 
 							  @RequestParam Long categoryId){
-		if(session.getAttribute("userId")==null) {
+		if(principal == null) {
 			return "redirect:/login";
 		}
-		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null, session.getAttribute("userId").toString(),categoryId);
+
+		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null, principal.getName(),categoryId);
 		noticeService.insertNotice(noticeDto);
 		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
 	// 게시글 수정
 	@GetMapping("/notice/edit")
-	public String noticeEditForm(HttpSession session,final Model model,
+	public String noticeEditForm(Principal principal,final Model model,
 								@RequestParam("postId") Long postId) {
-		if(session.getAttribute("userId")==null) {
+		if(principal==null) {
 			return "redirect:/login";
 		}
 		// NoticeDto noticeDto = new NoticeDto(null, title, content,null,null,null);
@@ -86,12 +87,12 @@ public class UserNoticeController {
 	}
 
 	@PostMapping("/notice/edit")
-	public String noticeUpdate(HttpSession session,
+	public String noticeUpdate(Principal principal,
 							   @RequestParam(value="postId", required=false) Long postId, 
 							   @RequestParam String title, 
 							   @RequestParam String content) {
 		
-		if(session.getAttribute("userId")==null) {
+		if(principal==null) {
 			return "redirect:/login";
 		}
 		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
@@ -123,16 +124,15 @@ public class UserNoticeController {
 	
 	// 댓글추가
 	@PostMapping("/addComment")
-	public String addComment(HttpSession session,
+	public String addComment(Principal principal,
 							 @RequestParam Long postId,
 							 @RequestParam String comment,
 							 @RequestParam(required = false) Long parentCommentId) {
-		if(session.getAttribute("userId")==null) {
+		if(principal==null) {
 			return "redirect:/login";
 		}
-		
-		
-		CommentDto commentDto = new CommentDto(session.getAttribute("userId").toString(), comment, postId, parentCommentId);
+
+		CommentDto commentDto = new CommentDto(principal.getName(), comment, postId, parentCommentId);
 		noticeService.addComment(commentDto);
 		
 		
@@ -140,16 +140,16 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/delComment")
-	public String delComment(HttpSession session,
+	public String delComment(Principal principal,
 			 				@RequestParam Long postId,
 			 				@RequestParam Long commentId,
 			 				@RequestParam String memberId) {
 		
 		
-		if(session.getAttribute("userId")==null) {
+		if(principal == null) {
 			return "redirect:/login";
 		}
-		if(session.getAttribute("userId").toString().equals(memberId)) {
+		if(principal.getName().equals(memberId)) {
 			if(noticeService.deleteCheck(commentId)!=0) {
 				System.out.println(noticeService.deleteCheck(commentId));
 			noticeService.deleteComment(commentId);
@@ -161,16 +161,16 @@ public class UserNoticeController {
 	}
 	
 	@PostMapping("/editComment")
-	public String editComment(HttpSession session,
+	public String editComment(Principal principal,
 							  @RequestParam Long postId,
 							  @RequestParam Long commentId,
 							  @RequestParam String comment,
 							  @RequestParam String memberId) {
 		
-		if(session.getAttribute("userId")==null) {
+		if(principal == null) {
 			return "redirect:/login";
 		}
-		if(session.getAttribute("userId").toString().equals(memberId)) {
+		if(principal.getName().equals(memberId)) {
 			CommentDto commentDto = new CommentDto(null, comment, null, null, commentId);
 			noticeService.editComment(commentDto);
 			}
@@ -179,10 +179,10 @@ public class UserNoticeController {
 	}
 	
 	@GetMapping("/notice/like")
-	public String likeBtn(HttpSession session,
+	public String likeBtn(Principal principal,
 						  @RequestParam(required = false) String memberId,
 					      @RequestParam(required = false) Long postId) {
-		memberId = session.getAttribute("userId").toString();
+		memberId = principal.getName();
 		LikeDto likeDto = new LikeDto(memberId, postId, null);
 		if(noticeService.likeCheck(likeDto)==null||noticeService.likeCheck(likeDto).getGood()==false) {
 			noticeService.addLike(likeDto);
@@ -194,11 +194,11 @@ public class UserNoticeController {
 	
 	@ResponseBody
 	@GetMapping("/getCategories")
-    public List<NoticeCategoryDto> getCategories(HttpSession session) {
+    public List<NoticeCategoryDto> getCategories(Principal principal) {
 		String userId = null;
 		String userEO = null;
-		if(session.getAttribute("userId")!=null) {
-		userId = session.getAttribute("userId").toString();	// 시도교육청
+		if(principal == null) {
+		userId = principal.getName()
 		userEO = userService.userInfo(userId).getOfficeOfEducationCode().toString();
 		}
 		int boardId = 21;
@@ -244,7 +244,7 @@ public class UserNoticeController {
 	
 	@ResponseBody
 	@GetMapping("/getCustomCategories")
-    public List<NoticeCategoryDto> getCustomCategories(HttpSession session) {
+    public List<NoticeCategoryDto> getCustomCategories() {
 		
         return noticeService.selectNoticeCategoryList();
     }
