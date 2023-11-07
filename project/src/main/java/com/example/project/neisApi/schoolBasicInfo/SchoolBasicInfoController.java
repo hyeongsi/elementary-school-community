@@ -1,15 +1,12 @@
 package com.example.project.neisApi.schoolBasicInfo;
 
-import com.example.project.neisApi.schoolBasicInfo.dto.SearchSchoolDto;
+import com.example.project.dto.searchSchool.SearchSchoolDto;
 import com.example.project.neisApi.schoolBasicInfo.dto.schoolInfo.SchoolInfoResponse;
+import com.example.project.dto.searchSchool.SearchSchoolPageDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 
@@ -20,8 +17,14 @@ public class SchoolBasicInfoController {
 
     private final SchoolBasicInfoService schoolBasicInfoService;
 
+    @GetMapping("/apiCallTest")
+    public String apiCallTest() throws JsonProcessingException {
+        schoolBasicInfoService.getApiResponseOne();
+        return "";
+    }
+
     @GetMapping("/apiCall")
-    public String apiCall(@RequestParam(defaultValue = "25") int pIndex,
+    public String apiCall(@RequestParam(defaultValue = "1") int pIndex,
                           @RequestParam(defaultValue = "100") int pSize){
         return schoolBasicInfoService.apiCall(pIndex, pSize);
     }
@@ -52,13 +55,23 @@ public class SchoolBasicInfoController {
         return "success";
     }
 
-/*    @GetMapping("/getSchool")
-    public String getSchool(@RequestParam(defaultValue = "25") int pIndex,
+    @GetMapping("/getSchool")
+    public SchoolInfoResponse getSchool(@RequestParam(defaultValue = "1") int pIndex,
                             @RequestParam(defaultValue = "100") int pSize,
-                            @RequestParam(required = false) SearchSchoolDto searchSchoolDto){
+                            @RequestParam(required = false) String ATPT_OFCDC_SC_CODE,
+                            @RequestParam(required = false) String SD_SCHUL_CODE,
+                            @RequestParam(required = false) String SCHUL_NM,
+                            @RequestParam(required = false) String SCHUL_KND_SC_NM,
+                            @RequestParam(required = false) String LCTN_SC_NM,
+                            @RequestParam(required = false) String FOND_SC_NM) throws JsonProcessingException {
 
-//        schoolBasicInfoService.selectSchool(pIndex, pSize, searchSchoolDto);
-        return "";
-    }*/
+        final int start = pIndex * pSize - pSize + 1;
+        final int end = pIndex * pSize;
+        final SearchSchoolDto searchSchoolDto = new SearchSchoolDto(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, SCHUL_NM,
+                SCHUL_KND_SC_NM, LCTN_SC_NM, FOND_SC_NM);
+        final SearchSchoolPageDto searchSchoolPageDto = new SearchSchoolPageDto(start, end, searchSchoolDto);
+
+        return schoolBasicInfoService.selectSchool(pIndex, pSize, searchSchoolPageDto);
+    }
 
 }

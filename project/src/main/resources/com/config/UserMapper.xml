@@ -121,7 +121,7 @@
     </delete>
 
     <!-- 암호화된 비밀번호 조회 -->
-    <select id="getEncordpwd" parameterType="UserDTO" resultType="UserDTO">
+    <select id="getEncordpwd" parameterType="String" resultType="UserDTO">
         <!-- NVL함수 NULL값 처리 -->
         SELECT PWD
         FROM MEMBER_DATA

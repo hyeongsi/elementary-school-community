@@ -1,8 +1,12 @@
 package com.example.project.neisApi.schoolBasicInfo;
 
+import com.example.project.dto.searchSchool.SchoolInfoRow;
+import com.example.project.dto.searchSchool.SearchSchoolDto;
+import com.example.project.dto.searchSchool.SearchSchoolPageDto;
+import com.example.project.neisApi.schoolBasicInfo.dto.HeadData;
 import com.example.project.neisApi.schoolBasicInfo.dto.ResultData;
+import com.example.project.neisApi.schoolBasicInfo.dto.schoolInfo.SchoolInfoData;
 import com.example.project.neisApi.schoolBasicInfo.dto.schoolInfo.SchoolInfoResponse;
-import com.example.project.neisApi.schoolBasicInfo.dto.schoolInfo.SchoolInfoRow;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -37,7 +41,7 @@ public class SchoolBasicInfoService {
     }
 
     public String apiCall(){
-        return apiCall(25,100);
+        return apiCall(1,100);
     }
 
     // schoolInfo neis api 호출
@@ -49,6 +53,30 @@ public class SchoolBasicInfoService {
                         .queryParam("pIndex", pIndex)
                         .queryParam("pSize", pSize)
                         .queryParam("SCHUL_KND_SC_NM", "초등학교")
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        return jsonStr;
+    }
+
+    // schoolInfo neis api 호출
+    public String apiCall(final int pIndex, final int pSize, final SearchSchoolPageDto searchSchoolPageDto) {
+        final SearchSchoolDto searchSchoolDto = searchSchoolPageDto.getSearchSchoolDto();
+
+        final String jsonStr = webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/hub/schoolInfo")
+                        .queryParam("KEY", "d3348e90712e42a0a67f03cad20d4336")
+                        .queryParam("Type", "json")
+                        .queryParam("pIndex", pIndex)
+                        .queryParam("pSize", pSize)
+                        .queryParam("SCHUL_KND_SC_NM", "초등학교")
+                        .queryParam("ATPT_OFCDC_SC_CODE", searchSchoolDto.getAtptOfCdcScCode())
+                        .queryParam("SD_SCHUL_CODE", searchSchoolDto.getSdSchulCode())
+                        .queryParam("SCHUL_NM", searchSchoolDto.getSchulNm())
+                        .queryParam("LCTN_SC_NM", searchSchoolDto.getLctnScNm())
+                        .queryParam("FOND_SC_NM", searchSchoolDto.getFondScNm())
                         .build())
                 .retrieve()
                 .bodyToMono(String.class)
@@ -85,7 +113,7 @@ public class SchoolBasicInfoService {
 
     // api 호출 후 저장
     @Transactional
-    public int apiSave(SchoolInfoResponse schoolInfoResponse) throws JsonProcessingException {
+    public int apiSave(final SchoolInfoResponse schoolInfoResponse) throws JsonProcessingException {
 
         final List<SchoolInfoRow> rowList = schoolInfoResponse.getRow();
         return schoolBasicInfoMapper.insertRowList(rowList);
@@ -121,13 +149,16 @@ public class SchoolBasicInfoService {
             connection.setAutoCommit(true);
             return false;
         }
+        finally {
+            connection.close();
+        }
 
         connection.commit();
         return true;
     }
 
     // jsonString 데이터 SchoolInfoResponse로 파싱
-    public SchoolInfoResponse jsonStrToSchoolInfoResponse(String jsonStr) throws JsonProcessingException {
+    public SchoolInfoResponse jsonStrToSchoolInfoResponse(final String jsonStr) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(jsonStr, SchoolInfoResponse.class);
     }
@@ -137,5 +168,32 @@ public class SchoolBasicInfoService {
         int cnt = schoolBasicInfoMapper.deleteAllNMonthAgo(month);
         System.out.println(cnt + "개의 데이터가 삭제되었습니다.");
         return cnt;
+    }
+
+    public SchoolInfoResponse selectSchool(final int pIndex, final int pSize, final SearchSchoolPageDto searchSchoolPageDto) throws JsonProcessingException {
+        final List<SchoolInfoRow> schoolInfoRows = schoolBasicInfoMapper.selectSchool(searchSchoolPageDto);
+        final int listTotalCount = schoolBasicInfoMapper.selectSchoolTotalCnt(searchSchoolPageDto);
+
+        if(listTotalCount == 0){
+            final String jsonStr = apiCall(pIndex, pSize, searchSchoolPageDto);
+            return jsonStrToSchoolInfoResponse(jsonStr);
+        }
+
+        return rowsToResponse(schoolInfoRows, listTotalCount);
+    }
+
+    private SchoolInfoResponse rowsToResponse(final List<SchoolInfoRow> schoolInfoRows, final int listTotalCount){
+        HeadData headData;
+        headData = new HeadData(0, new ResultData("INFO-000", "정상 처리되었습니다."));
+
+        List<HeadData> headList = new LinkedList<>();
+        headList.add(new HeadData(listTotalCount, null));
+        headList.add(headData);
+
+        List<SchoolInfoData> schoolInfoDataList = new LinkedList<>();
+        schoolInfoDataList.add(new SchoolInfoData(headList, null));
+        schoolInfoDataList.add(new SchoolInfoData(null, schoolInfoRows));
+
+        return new SchoolInfoResponse(schoolInfoDataList);
     }
 }

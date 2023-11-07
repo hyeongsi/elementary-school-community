@@ -12,9 +12,7 @@ public class PageDto {
     private String keyword;
     private String searchType;
     private int categoryId;
-    
-    
-    
+
     public PageDto(int start, int end, String keyword, String searchType,int categoryId) {
 		this.start = start;
 		this.end = end;
