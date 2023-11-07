@@ -1,9 +1,11 @@
-package com.example.project.neisApi.schoolBasicInfo.dto.schoolInfo;
+package com.example.project.dto.searchSchool;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.ibatis.type.Alias;
 
+@Alias("SchoolInfoRow")
 @Getter
 public class SchoolInfoRow {
 
