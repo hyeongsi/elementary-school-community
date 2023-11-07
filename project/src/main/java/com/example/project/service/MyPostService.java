@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MyNoticeService {
+public class MyPostService {
 
     final NoticeMapper noticeMapper;
 
-    public MyNoticeService(final NoticeMapper noticeMapper) {
+    public MyPostService(final NoticeMapper noticeMapper) {
         this.noticeMapper = noticeMapper;
     }
     

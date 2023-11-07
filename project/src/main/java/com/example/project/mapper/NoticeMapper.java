@@ -21,8 +21,9 @@ public interface NoticeMapper {
     public List<NoticeDto> selectSearchNoticePage(PageDto pageDto);
 
     public List<NoticeDto> selectSearchNoticePageById(MemberPageDto memberPageDto);
-
-
+    
+    public List<NoticeDto> selectSearchLikePostById(MemberPageDto memberPageDto);
+    
     public int noticeTotalCnt(Map<String, String> map);
 
     public int noticeSearchTotalCnt();

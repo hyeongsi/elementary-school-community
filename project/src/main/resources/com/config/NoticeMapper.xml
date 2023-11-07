@@ -208,6 +208,15 @@
         ) WHERE rm BETWEEN #{start} AND #{end}
         ORDER BY post_Id DESC
     </select>
+    
+    <select id="selectSearchLikePostById" resultType="NoticeDto"
+            parameterType="MemberPageDto">
+        SELECT post.post_Id, post.title, post.content, post.good, post.view_cnt, post.member_id, post.category_id
+		FROM POST
+		INNER JOIN liketable l ON post.post_Id = l.post_Id
+		WHERE l.member_id = #{memberId}
+		ORDER BY post.post_Id DESC
+    </select>
 
     <select id="noticeNoSearchTotalCnt" resultType="int">
         SELECT COUNT(*) FROM post
