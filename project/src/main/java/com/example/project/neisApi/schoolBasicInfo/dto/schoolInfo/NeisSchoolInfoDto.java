@@ -1,7 +1,7 @@
 package com.example.project.neisApi.schoolBasicInfo.dto.schoolInfo;
 
+import com.example.project.dto.searchSchool.SchoolInfoRow;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
