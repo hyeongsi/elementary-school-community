@@ -92,7 +92,10 @@
                                             <tr th:each="notice : ${noticePageDto.noticeDtoList}">
                                                 <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
-                                                <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
+                                                
+                                                
+                                                <!-- 내 게시글 GetMapping -->
+                                                <td ><a th:href="@{/mypage/MyPostDetail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
                                                 <td th:text="${notice.content}">내용</td>
                                                 <td th:text="${notice.good}">0</td>
                                                 <td th:text="${notice.viewCnt}">0</td>

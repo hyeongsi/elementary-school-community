@@ -198,7 +198,7 @@ public class UserNoticeController {
 		String userId = null;
 		String userEO = null;
 		if(principal == null) {
-		userId = principal.getName()
+		userId = principal.getName();
 		userEO = userService.userInfo(userId).getOfficeOfEducationCode().toString();
 		}
 		int boardId = 21;
