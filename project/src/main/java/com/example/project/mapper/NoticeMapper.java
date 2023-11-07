@@ -74,6 +74,8 @@ public interface NoticeMapper {
     public void addLike(LikeDto likeDto);
 
     public void cancelLike(LikeDto likeDto);
+    
+    public void deleteLike(LikeDto likeDto);
 
     public void reLike(LikeDto likeDto);
 
