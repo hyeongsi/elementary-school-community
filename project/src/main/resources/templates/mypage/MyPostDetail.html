@@ -43,7 +43,7 @@
 			<div id="content">
 
 				<!-- Topbar -->
-				<nav th:replace="mypage/common/member_topBar::member_topBar"></nav>
+				<nav th:replace="common/topBar :: topBar"></nav>
 
 				<!-- Begin Page Content -->
 				<div class="container-fluid">
@@ -184,12 +184,10 @@
 							<!-- dataTable_Wrapper -->
 						</div>
 					</div>
-
+					<!-- /.container-fluid -->
+					
 				</div>
-				<!-- /.container-fluid -->
-
-			</div>
-			<!-- End of Main Content -->
+				<!-- End of Main Content -->
 
 			<!-- Footer -->
 			<footer class="sticky-footer bg-white">
@@ -201,10 +199,11 @@
 			</footer>
 			<!-- End of Footer -->
 
+			</div>
+			
 		</div>
 		<!-- End of Content Wrapper -->
 
-	</div>
 	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
