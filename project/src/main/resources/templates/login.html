@@ -251,7 +251,7 @@
 	</script>
 
 	<script type="text/javascript">
-  //#################### 템플릿 ############################
+	//#################### 템플릿 ############################
     const signUpButton = document.getElementById('signUp');
     const signInButton = document.getElementById('signIn');
     const container = document.getElementById('container');
@@ -321,11 +321,14 @@
     				//alert('success')
     				//alert(msg);
     				if(msg.trim()=='OK'){
-    					$("#idcheck").html("이 아이디는 사용 가능합니다.");
-    					$("#accountid").val( $("#accountid").val());
-    					$("#CheckValue").val("true");
-    					document.getElementById('accountid').readOnly = true;
-    					
+    					if($("#accountid").val() == ""){
+    						$("#idcheck").html("아이디를 입력해주세요.");
+    					}else{
+    						$("#idcheck").html("이 아이디는 사용 가능합니다.");
+        					$("#accountid").val( $("#accountid").val());
+        					$("#CheckValue").val("true");
+        					document.getElementById('accountid').readOnly = true;
+    					}
     				}else{
     					$("#idcheck").html("이 아이디는 사용중입니다.");
     					$("#accountid").val("");//삭제
