@@ -76,10 +76,8 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 15px"><input type="checkbox"></th>
                                                 <th style="min-width: 50px">No.</th>
                                                 <th style="min-width: 100px">제목</th>
-                                                <th style="min-width: 140px">내용</th>
                                                 <th style="min-width: 140px">좋아요</th>
                                                 <th style="min-width: 140px">조회수</th>
                                                 <th style="min-width: 140px">글쓴이</th>
@@ -87,13 +85,14 @@
                                             </tr>
                                             </thead>
                                             <tr th:each="notice : ${noticePageDto.noticeDtoList}">
-                                                <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
                                                 <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
                                                 <!-- 
                                                  <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}+[+${notice.commentCount}+]"></a></td>
                                                  -->
+                                                <!-- 
                                                 <td th:text="${notice.content}">내용</td>
+                                                 -->
                                                 <td th:text="${notice.good}">0</td>
                                                 <td th:text="${notice.viewCnt}">0</td>
                                                 <td th:text="${notice.memberId}">0</td>

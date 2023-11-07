@@ -70,7 +70,7 @@ public class UserNoticeController {
 		}
 		NoticeDto noticeDto = new NoticeDto(null , title, content,null,null, session.getAttribute("userId").toString(),categoryId);
 		noticeService.insertNotice(noticeDto);
-		return "redirect:/notice/list";
+		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
 	// 게시글 수정
