@@ -52,6 +52,10 @@ public interface NoticeMapper {
     public int commentTotalCnt();
 
     public void deleteComment(Long commentId);
+    
+    public int deleteCheck(Long commentId);
+    
+    public void completeDelComment(Long commentId);
 
     public int deleteCommentList(List<CommentDto> commentDtoList);
 

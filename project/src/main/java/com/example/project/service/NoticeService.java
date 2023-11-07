@@ -99,6 +99,13 @@ public class NoticeService {
     public void deleteComment(Long commentId) {
     	noticeMapper.deleteComment(commentId);
     }
+    public int deleteCheck(Long commentId) {
+    	return noticeMapper.deleteCheck(commentId);
+    }
+    
+    public void completeDelComment(Long commentId) {
+    	noticeMapper.completeDelComment(commentId);
+    }
     
     public void editComment(CommentDto commentDto) {
     	noticeMapper.editComment(commentDto);

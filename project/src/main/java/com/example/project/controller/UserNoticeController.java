@@ -144,11 +144,18 @@ public class UserNoticeController {
 			 				@RequestParam Long postId,
 			 				@RequestParam Long commentId,
 			 				@RequestParam String memberId) {
+		
+		
 		if(session.getAttribute("userId")==null) {
 			return "redirect:/login";
 		}
 		if(session.getAttribute("userId").toString().equals(memberId)) {
-		noticeService.deleteComment(commentId);
+			if(noticeService.deleteCheck(commentId)!=0) {
+				System.out.println(noticeService.deleteCheck(commentId));
+			noticeService.deleteComment(commentId);
+			}else {
+				noticeService.completeDelComment(commentId);
+			}
 		}
 		return "redirect:notice/detail?postId="+postId;
 	}
