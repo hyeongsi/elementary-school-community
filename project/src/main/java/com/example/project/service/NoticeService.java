@@ -122,6 +122,10 @@ public class NoticeService {
     public void cancelLike(LikeDto likeDto) {
     	noticeMapper.cancelLike(likeDto);
     }
+    
+    public void deleteLike(LikeDto likeDto) {
+    	noticeMapper.deleteLike(likeDto);
+    }
     public void reLike(LikeDto likeDto) {
     	noticeMapper.reLike(likeDto);
     }

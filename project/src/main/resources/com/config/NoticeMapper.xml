@@ -179,6 +179,11 @@
         SET good = 0
         WHERE member_id = #{memberId} AND post_id = #{postId}
     </update>
+    
+    <delete id="deleteLike" parameterType="LikeDto">
+    	DELETE liketable
+    	WHERE member_id = #{memberId} AND post_id = #{postId}
+    </delete>
 
     <update id="reLike" parameterType="LikeDto">
         UPDATE liketable

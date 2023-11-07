@@ -185,13 +185,9 @@ public class UserNoticeController {
 		memberId = session.getAttribute("userId").toString();
 		LikeDto likeDto = new LikeDto(memberId, postId, null);
 		if(noticeService.likeCheck(likeDto)==null||noticeService.likeCheck(likeDto).getGood()==false) {
-			if(noticeService.likeCheck(likeDto)==null) {
-				noticeService.addLike(likeDto);
+			noticeService.addLike(likeDto);
 			} else {
-				noticeService.reLike(likeDto);
-			}
-		}else {
-			noticeService.cancelLike(likeDto);
+			noticeService.deleteLike(likeDto);
 		}
 		return "redirect:/notice/detail?postId="+postId;
 	}
