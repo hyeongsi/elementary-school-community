@@ -1,275 +1,256 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<title>초등 커뮤니티</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>초등 커뮤니티</title>
 
-    <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet"
+	type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
 
-    <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-	<script defer src="/app/js/mainPage/mainPageCommon.js"></script>
+<!-- Custom styles for this template-->
+<link href="css/sb-admin-2.min.css" rel="stylesheet">
+<script defer src="/app/js/mainPage/mainPageCommon.js"></script>
 </head>
 
 <body id="page-top">
 
-    <!-- Page Wrapper -->
-    <div id="wrapper">
+	<!-- Page Wrapper -->
+	<div id="wrapper">
 
-        <!-- Slide bar -->
-        <ul th:replace="common/slideBar :: slideBar"></ul>
+		<!-- Slide bar -->
+		<ul th:replace="common/slideBar :: slideBar"></ul>
 
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Main Content -->
-            <div id="content">
+			<!-- Main Content -->
+			<div id="content">
 
-                <!-- Topbar -->
-                <nav th:replace="common/topBar::topBar"></nav>
+				<!-- Topbar -->
+				<nav th:replace="common/topBar::topBar"></nav>
 
-                <!-- Begin Page Content -->
-                <div class="container-fluid">
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
 
-                    <!-- Content Row -->
-                    <div class="row">
+					<!-- Content Row -->
+					<div class="row">
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                        	<script defer src="/app/js/mainPage/todayTimetable.js"></script>
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                시간표</div>
-                                            <div class="today-time-table h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-4 col-md-6 mb-4">
+							<div class="card border-left-primary shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<script defer src="/app/js/mainPage/todayTimetable.js"></script>
+											<div
+												class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+												시간표</div>
+											<div
+												class="today-time-table h5 mb-0 font-weight-bold text-gray-800"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-calendar fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                        <script defer src="/app/js/mainPage/todayCafeteria.js"></script>
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                오늘의 급식</div>
-                                            <div class="today-cafeteria h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fa fa-beer fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-4 col-md-6 mb-4">
+							<div class="card border-left-success shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<script defer src="/app/js/mainPage/todayCafeteria.js"></script>
+											<div
+												class="text-xs font-weight-bold text-success text-uppercase mb-1">
+												오늘의 급식</div>
+											<div
+												class="today-cafeteria h5 mb-0 font-weight-bold text-gray-800"></div>
+										</div>
+										<div class="col-auto">
+											<i class="fa fa-beer fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-                        <!-- Earnings (Monthly) Card Example -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">학사일정
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                            	
-                                            	 <script defer src="/app/js/mainPage/todaySchedule.js"></script>
-                                            	 
-                                                	<div class="dataInfoWrap"></div>
-                                                    <div class="today-schedule h5 mb-0 font-weight-bold text-gray-800"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+						<!-- Earnings (Monthly) Card Example -->
+						<div class="col-xl-4 col-md-6 mb-4">
+							<div class="card border-left-info shadow h-100 py-2">
+								<div class="card-body">
+									<div class="row no-gutters align-items-center">
+										<div class="col mr-2">
+											<div
+												class="text-xs font-weight-bold text-info text-uppercase mb-1">학사일정
+											</div>
+											<div class="row no-gutters align-items-center">
+												<div class="col-auto">
 
-                    <!-- Content Row -->
-                    <div class="row">
+													<script defer src="/app/js/mainPage/todaySchedule.js"></script>
 
-                        <!-- Content Column -->
-                        <div sec:authorize="isAuthenticated()" class="col-lg-12 mb-6">
+													<div class="dataInfoWrap"></div>
+													<div
+														class="today-schedule h5 mb-0 font-weight-bold text-gray-800"></div>
+												</div>
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 
-                            <!-- Project Card Example -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">교육청 인기글</h6>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped text-center table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th class="col-md-2">제목</th>
-                                            <th class="col-md-7">내용</th>
-                                            <th class="col-md-1">좋아요</th>
-                                            <th class="col-md-1">조회수</th>
-                                            <th class="col-md-1">글쓴이</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr style="cursor:pointer;" onclick="">
-                                            <td>테스트제목</td>
-                                            <td>테스트내용</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>aa</td>
-                                        </tr>
-                                        <tr style="cursor:pointer;" onclick="">
-                                            <td>테스트제목</td>
-                                            <td>테스트내용</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>aa</td>
-                                        </tr>
-                                        <tr style="cursor:pointer;" onclick="">
-                                            <td>테스트제목</td>
-                                            <td>테스트내용</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>aa</td>
-                                        </tr>
-                                        <tr style="cursor:pointer;" onclick="">
-                                            <td>테스트제목</td>
-                                            <td>테스트내용</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>aa</td>
-                                        </tr>
-                                        <tr style="cursor:pointer;" onclick="">
-                                            <td>테스트제목</td>
-                                            <td>테스트내용</td>
-                                            <td>2</td>
-                                            <td>1</td>
-                                            <td>aa</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+					<!-- Content Row -->
+					<div class="row">
 
-                        </div>
+						<!-- Content Column -->
+						<div sec:authorize="isAuthenticated()" class="col-lg-12 mb-6">
 
-                        <div class="col-lg-12 mb-6">
+							<!-- Project Card Example -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">교육청 인기글</h6>
+								</div>
+								<div class="card-body">
 
-                            <!-- Illustrations -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">커스텀 게시판 인기글</h6>
-                                </div>
-                                <div class="card-body">
-                                    <table class="table table-striped text-center table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th class="col-md-2">제목</th>
-                                                <th class="col-md-7">내용</th>
-                                                <th class="col-md-1">좋아요</th>
-                                                <th class="col-md-1">조회수</th>
-                                                <th class="col-md-1">글쓴이</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr style="cursor:pointer;" onclick="">
-                                                <td>테스트제목</td>
-                                                <td>테스트내용</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>aa</td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="">
-                                                <td>테스트제목</td>
-                                                <td>테스트내용</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>aa</td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="">
-                                                <td>테스트제목</td>
-                                                <td>테스트내용</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>aa</td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="">
-                                                <td>테스트제목</td>
-                                                <td>테스트내용</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>aa</td>
-                                            </tr>
-                                            <tr style="cursor:pointer;" onclick="">
-                                                <td>테스트제목</td>
-                                                <td>테스트내용</td>
-                                                <td>2</td>
-                                                <td>1</td>
-                                                <td>aa</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+									<table class="table table-striped text-center table-hover">
+										<thead>
+											<tr>
+												<th class="col-md-2">제목</th>
+												<th class="col-md-7">내용</th>
+												<th class="col-md-1">좋아요</th>
+												<th class="col-md-1">조회수</th>
+												<th class="col-md-1">글쓴이</th>
+											</tr>
+										</thead>
+										<thead>
+											<tr style="cursor: pointer;" th:each="item : ${top5}" th:onclick="">
+										<td class="title col-md-2" th:text="${item.title}"></td>
+       									<td class="content col-md-7" th:text="${item.content}"></td>
+        								<td class="viewCount col-md-1" th:text="${item.viewCnt}"></td>
+        								<td class="likeCount col-md-1" th:text="${item.likeCount}"></td>
+        								<td class="memberName col-md-1" th:text="${item.memberName}"></td>
+										</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
 
-                        </div>
-                    </div>
+						</div>
 
-                </div>
-                <!-- /.container-fluid -->
+						<div class="col-lg-12 mb-6">
 
-            </div>
-            <!-- End of Main Content -->
+							<!-- Illustrations -->
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="m-0 font-weight-bold text-primary">커스텀 게시판 인기글</h6>
+								</div>
+								<div class="card-body">
+									<table class="table table-striped text-center table-hover">
+										<thead>
+											<tr>
+												<th class="col-md-2">제목</th>
+												<th class="col-md-7">내용</th>
+												<th class="col-md-1">좋아요</th>
+												<th class="col-md-1">조회수</th>
+												<th class="col-md-1">글쓴이</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr style="cursor: pointer;" onclick="">
+												<td>테스트제목</td>
+												<td>테스트내용</td>
+												<td>2</td>
+												<td>1</td>
+												<td>aa</td>
+											</tr>
+											<tr style="cursor: pointer;" onclick="">
+												<td>테스트제목</td>
+												<td>테스트내용</td>
+												<td>2</td>
+												<td>1</td>
+												<td>aa</td>
+											</tr>
+											<tr style="cursor: pointer;" onclick="">
+												<td>테스트제목</td>
+												<td>테스트내용</td>
+												<td>2</td>
+												<td>1</td>
+												<td>aa</td>
+											</tr>
+											<tr style="cursor: pointer;" onclick="">
+												<td>테스트제목</td>
+												<td>테스트내용</td>
+												<td>2</td>
+												<td>1</td>
+												<td>aa</td>
+											</tr>
+											<tr style="cursor: pointer;" onclick="">
+												<td>테스트제목</td>
+												<td>테스트내용</td>
+												<td>2</td>
+												<td>1</td>
+												<td>aa</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
 
-        </div>
-        <!-- End of Content Wrapper -->
+						</div>
+					</div>
 
-    </div>
-    <!-- End of Page Wrapper -->
+				</div>
+				<!-- /.container-fluid -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+			</div>
+			<!-- End of Main Content -->
 
-    <!-- Logout Modal-->
-    <div th:replace="common/topBar :: logoutModal"></div>
+		</div>
+		<!-- End of Content Wrapper -->
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	</div>
+	<!-- End of Page Wrapper -->
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+	<!-- Logout Modal-->
+	<div th:replace="common/topBar :: logoutModal"></div>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+	<!-- Bootstrap core JavaScript-->
+	<script src="vendor/jquery/jquery.min.js"></script>
+	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+	<!-- Core plugin JavaScript-->
+	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script src="js/sb-admin-2.min.js"></script>
+
+	<!-- Page level plugins -->
+	<script src="vendor/chart.js/Chart.min.js"></script>
+
+	<!-- Page level custom scripts -->
+	<script src="js/demo/chart-area-demo.js"></script>
+	<script src="js/demo/chart-pie-demo.js"></script>
 
 </body>
 
