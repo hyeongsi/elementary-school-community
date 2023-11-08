@@ -9,7 +9,6 @@ public class AdminPageController {
     @GetMapping("/admin")
     public String adminForward(){
 
-        System.out.println("admin");
         return "forward:/admin/memberList";
     }
 }

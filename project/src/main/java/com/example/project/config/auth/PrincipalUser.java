@@ -2,8 +2,10 @@ package com.example.project.config.auth;
 
 import com.example.project.dto.UserDTO;
 import lombok.Getter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Collection;
 
