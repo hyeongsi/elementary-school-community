@@ -60,4 +60,6 @@ public interface UserDAO {
 
     // ID값으로 role 검색
     public String getUserRoleById(String id);
+    
+    
 }

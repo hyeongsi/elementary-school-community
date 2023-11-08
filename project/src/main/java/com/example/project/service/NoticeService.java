@@ -75,9 +75,11 @@ public class NoticeService {
     	return noticeMapper.deleteNotice(postId);
     }
     
+    // 아이디값으로 게시글 정보 가져옴
     public NoticeDto selectByPostId(Long postId) {
     	return noticeMapper.selectByPostId(postId);
     }
+    
     public int updateNotice(final NoticeDto noticeDto) {
     	return noticeMapper.updateNotice(noticeDto);
     }
@@ -93,9 +95,12 @@ public class NoticeService {
     public void addComment(CommentDto commnetDto) {
     	noticeMapper.addComment(commnetDto);
     }
+    
+    // 댓글 정보 가져옴
     public List<CommentDto> selectCommentList(Long postId){
     	return noticeMapper.selectCommentList(postId);
     }
+    
     public void deleteComment(Long commentId) {
     	noticeMapper.deleteComment(commentId);
     }

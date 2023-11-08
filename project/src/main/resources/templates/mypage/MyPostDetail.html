@@ -88,14 +88,14 @@
 																<td>Ex) 서울 교육청 게시판</td>
 
 																<th scope="row">등록일</th>
-																<td>Ex) 2023-11-08</td>
+																<td th:text="${notice.write_time}"></td>
 															</tr>
 															<tr>
 																<th scope="row">이름</th>
-																<td>Ex) 엄준식</td>
+																<td th:text="${User.name}"></td>
 
 																<th scope="row">조회수</th>
-																<td colspan="3">Ex) 5,342</td>
+																<td th:text="${notice.viewCnt}"></td>
 															</tr>
 															<tr>
 																<th scope="row">제목</th>
@@ -159,10 +159,10 @@
 															</div>
 															<div class="reply-content">
 																<ul class="info">
-																	<li class="nickname" th:text="${comment.memberId}">유저ID</li>
+																	<li class="nickname" th:text="${User.name}">유저 이름</li>&nbsp;&nbsp;
 																	
 																	<!-- 댓글 작성 시간 -->
-																	<li class="date">2023-11-08</li>
+																	<li class="date" th:text="${comment.reply_time}">작성시간</li>
 																</ul>
 																<p class="text" th:text="${comment.commentContents}">댓글 내용</p>
 																<ul class="control">
