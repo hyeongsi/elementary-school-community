@@ -31,6 +31,9 @@
     <link rel="stylesheet" th:href="@{/Post/css/common.css}" />
     <link rel="stylesheet" th:href="@{/Post/css/content.css}" />
     <link rel="stylesheet" th:href="@{/Post/css/button.css}" />
+    
+    <!--  Reply Style -->
+    <link rel="stylesheet" th:href="@{/Post/css/reply.css}" />
 
 </head>
 
@@ -134,6 +137,36 @@
 												</span>
 										</span>
 										
+										<!-- article reply -->
+										<div class="article-reply">
+										    <h1></h1>
+										<s_rp_container>
+											<ul class="reply-list">
+												<s_rp_rep>
+													<li id='[##_rp_rep_id_##]' class="[##_rp_rep_class_##] reply-li">
+														<div class="thumb">
+															<img src="images/undraw_profile.svg" width="48" height="48" class=reply_profile>
+														</div>
+														<div class="reply-content">
+															<ul class="info">
+																<li class="nickname" >엄준식</li>
+																<li class="date">2023-11-08</li>
+															</ul>
+															<p class="text">댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
+															<ul class="control">
+																<li class="">댓글</li>
+																<li class="">수정</li>
+																<li class="">삭제</li>
+															</ul>
+														</div>
+													</li>
+												</s_rp_rep>
+											</ul>
+										</s_rp_container>
+										
+										</div>
+
+										
 										
 										<div id="cmt">
 											
@@ -171,12 +204,8 @@
 													
 													<!-- 댓글 내용 -->
 													<td th:text="${comment.commentContents}">내용</td>&nbsp
-													
-													
-													<!-- 답글 버튼 -->
-													<button class="reply btn btn-outline-primary "
-														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-														id="replyBtn">답글</button>
+
+
 														
 													<!-- 수정 버튼 -->	
 													<span th:if="${session.userId!=null}"> <a
@@ -198,11 +227,22 @@
 												</div>
 
 											</tr>
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
+											
 
 											<div class="common_input_wrapper">
 												<script defer src="../js/comment.js"></script>
 												
-												<!-- 댓글 추가 GetMapping -->
+												<!-- 대댓글 댓글 추가 GetMapping -->
 												<form name="comment-input" action="./MyPostAddCmt" method="post">
 													
 													<input type="hidden" class="postId-input" name="postId"
