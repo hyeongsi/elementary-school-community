@@ -25,6 +25,12 @@
 <!-- Custom styles for this page -->
 <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
 	rel="stylesheet">
+	
+	<!-- Post Style -->
+	<link rel="stylesheet" th:href="@{/Post/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/content.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/button.css}" />
 
 </head>
 
@@ -65,9 +71,46 @@
 									<div id="outter">
 										<div style="padding-top: 10px; padding-bottom: 10px;">
 
-											<!-- 제목 -->
-											<div class="subject_inner_text" th:text="${notice.title}"></div>
-											
+
+
+											<div class="content">
+												<section>
+													<table class="tb tb_row">
+														<colgroup>
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th scope="row">글 유형</th>
+																<td>Ex) 서울 교육청 게시판</td>
+
+																<th scope="row">등록일</th>
+																<td>Ex) 2023-11-08</td>
+															</tr>
+															<tr>
+																<th scope="row">이름</th>
+																<td>Ex) 엄준식</td>
+
+																<th scope="row">조회수</th>
+																<td colspan="3">Ex) 5,342</td>
+															</tr>
+															<tr>
+																<th scope="row">제목</th>
+																<td colspan="3" th:text="${notice.title}"></td>
+															</tr>
+															<tr>
+																<th scope="row">내용</th>
+																<td colspan="3" >여기에 내용을 넣을지 아래에 내용을 넣을지 미정</td>
+															</tr>
+														</tbody>
+													</table>
+													
+												</section>
+											</div>
+
 											<!-- 내용 -->
 											<div class="subject_inner_text" th:text="${notice.content}"></div>
 
