@@ -16,7 +16,7 @@ public class CommentDto {
 	private Long parentCommentId;
 	private Long commentId;
 	private boolean delCheck;
-	private String reply_time;
+	private String replyTime;
 
 	public CommentDto(){}
 
@@ -51,7 +51,7 @@ public class CommentDto {
 		this.postId = postId;
 		this.parentCommentId = parentCommentId;
 		this.commentId = commentId;
-		this.reply_time = reply_time;
+		this.replyTime = replyTime;
 	}
 	
 	
@@ -61,7 +61,7 @@ public class CommentDto {
 	public String toString() {
 		return "CommentDto [memberId=" + memberId + ", commentContents=" + commentContents + ", postId=" + postId
 				+ ", parentCommentId=" + parentCommentId + ", commentId=" + commentId + ", delCheck=" + delCheck
-				+ ", reply_time=" + reply_time + "]";
+				+ ", replyTime=" + replyTime + "]";
 	}
 
 	

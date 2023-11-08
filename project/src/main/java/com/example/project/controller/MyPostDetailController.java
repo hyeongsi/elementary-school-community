@@ -48,9 +48,11 @@ public class MyPostDetailController {
 		UserDTO userDTO = userService.getUserById(id);
 		
 		model.addAttribute("notice", noticeDto);
+		System.out.println(noticeDto);
 		
 		// 댓글 정보 가져옴
 		model.addAttribute("Comment", noticeService.selectCommentList(postId));
+		System.out.println(noticeService.selectCommentList(postId));
 		
 		model.addAttribute("like", noticeService.likeCnt(postId));
 		model.addAttribute("User", userDTO);
