@@ -73,9 +73,6 @@
 
 									<div id="outter">
 										<div style="padding-top: 10px; padding-bottom: 10px;">
-
-
-
 											<div class="content">
 												<section>
 													<table class="tb tb_row">
@@ -105,21 +102,17 @@
 																<td colspan="3" th:text="${notice.title}"></td>
 															</tr>
 															<tr>
-																<th scope="row">내용</th>
-																<td colspan="3" >여기에 내용을 넣을지 아래에 내용을 넣을지 미정</td>
+																<!-- 내용 -->
+																<td colspan="4" th:text="${notice.content}"></td>
 															</tr>
 														</tbody>
 													</table>
 													
 												</section>
 											</div>
-
-											<!-- 내용 -->
-											<div class="subject_inner_text" th:text="${notice.content}"></div>
-
 										</div>
 										
-										<!-- 글 삭제 버튼 GetMapping -->
+										<!-- 좋아요 버튼 GetMapping -->
 										<button type="button" class="like-btn btn btn-outline-primary"
 											th:onclick="|location.href='@{/mypage/MyPostlike(postId=${notice.postId})}'|">
 											<span class="material-symbols-outlined">thumb_up</span> 
@@ -132,136 +125,100 @@
 												<!-- 글 수정 버튼 GetMapping -->
 												<a class="notice-edit-btn btn btn-outline-primary mr-2" th:value="${notice.memberId}"
 												th:href="@{/mypage/MyPostEdit(postId=${notice.postId})}">글 수정</a>
+												
+												<!-- 글 삭제 버튼 GetMapping -->
 												<a class="btn btn-outline-danger mr-2" id="delBtn" style="color: red;"
 												th:href="@{/mypage/MyPostDelete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a> 
 												</span>
 										</span>
 										
 										<!-- article reply -->
+
 										<div class="article-reply">
-										    <h1></h1>
-										<s_rp_container>
-											<ul class="reply-list">
-												<s_rp_rep>
-													<li id='[##_rp_rep_id_##]' class="[##_rp_rep_class_##] reply-li">
-														<div class="thumb">
-															<img src="images/undraw_profile.svg" width="48" height="48" class=reply_profile>
-														</div>
-														<div class="reply-content">
-															<ul class="info">
-																<li class="nickname" >엄준식</li>
-																<li class="date">2023-11-08</li>
-															</ul>
-															<p class="text">댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
-															<ul class="control">
-																<li class="">댓글</li>
-																<li class="">수정</li>
-																<li class="">삭제</li>
-															</ul>
-														</div>
-													</li>
-												</s_rp_rep>
-											</ul>
-										</s_rp_container>
-										
-										</div>
-
-										
-										
-										<div id="cmt">
-											
-											<!-- 댓글 헤드라인 -->
-											<tr id="ct_id">
-												<td>댓글</td>
-												<br>
-											</tr>
-											<!-- 대댓글 작성 js 주소 -->
-											<script defer src="../js/MyPostReply.js"></script>
-											
-											<!-- 대댓글 수정 js 주소 -->
-											<script defer src="../js/MyPostEditComment.js"></script>
-											
-											<table border="1"></table>
+											    
+											<h1></h1>
+											<!-- 댓글 가져오기 반복 -->
 											<tr th:each="comment : ${Comment}">
-											<div th:if="${comment.delCheck}" >
+												<th:block th:if="${comment.delCheck}">
 													<td th:text="${comment.commentContents}">내용</td>
-													</div>
-											<th:block th:if="${!comment.delCheck}">
-											<div th:if="${comment.delCheck}" >
-													<td th:text="${comment.commentContents}">내용</td>
-													</div>
-													
-												<div class="comments comment_"
-													th:attrappend="class=${comment.commentId}"
-													th:value="${comment.memberId}">
-													<td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-													
-													<!-- 유저 ID -->
-													<td th:text="${comment.memberId}">유저ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
-													
-													<!-- 코멘트 ID -->
-													<td th:text="${comment.commentId}">코멘트ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
-													
-													<!-- 댓글 내용 -->
-													<td th:text="${comment.commentContents}">내용</td>&nbsp
-
-
-														
-													<!-- 수정 버튼 -->	
-													<span th:if="${session.userId!=null}"> <a
-														th:if="${session.userId.toString().equals(comment.memberId)}">
-															<button class="edit-comment btn btn-outline-primary "
-																th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-																id="edit-comment-btn">수정</button>
-																
-													</a> &nbsp
-													</span> 
-													
-													<!-- 취소 버튼 -->
-													<a th:if="${session.userId.toString().equals(comment.memberId)}"
-														class="del-comment" style="color: red;"
-														th:href="@{/mypage/MyPostDelCmt(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a> <!-- 댓글 삭제 GetMapping -->
-											</th:if>
+												</th:block>
+												<th:block th:if="${!comment.delCheck}">
+												<div class="comments comment_" th:attrappend="class=${comment.commentId}" th:value="${comment.memberId}">
 												
-												</div>
-												</div>
+												<!-- 대댓글 위치 뒤로 밀기 -->
+												<!-- <td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td> -->	
+																					
+													<s_rp_container>
+													<ul class="reply-list">
+														<s_rp_rep>
+														<li id='[##_rp_rep_id_##]' th:class="${comment.parentCommentId} != null ? re-reply : reply-li">
 
+															<div class="thumb">
+																<img src="images/undraw_profile.svg" width="48"
+																	height="48" class=reply_profile>
+															</div>
+															<div class="reply-content">
+																<ul class="info">
+																	<li class="nickname" th:text="${comment.memberId}">유저ID</li>
+																	
+																	<!-- 댓글 작성 시간 -->
+																	<li class="date">2023-11-08</li>
+																</ul>
+																<p class="text" th:text="${comment.commentContents}">댓글 내용</p>
+																<ul class="control">
+																		<!-- 댓글 버튼 -->	
+																		<button class="reply btn btn-outline-primary "
+																			th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="replyBtn">답글</button>
+																		
+																		<!-- 수정 버튼 -->
+																		<span th:if="${session.userId!=null}"> 
+																			<a th:if="${session.userId.toString().equals(comment.memberId)}">
+																				<button class="edit-comment btn btn-outline-primary "
+																					th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="edit-comment-btn">수정</button>
+																		</a> &nbsp;
+																		</span>
+																		<!-- 댓글 삭제 GetMapping -->
+																		<a th:if="${session.userId.toString().equals(comment.memberId)}"
+																			class="del-comment" style="color: red;"
+																			th:href="@{/mypage/MyPostDelCmt(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">삭제</a>
+																</ul>
+															</div>
+														</li>
+														</s_rp_rep>
+													</ul>
+													</s_rp_container>
+													</div>
+												</th:block>
 											</tr>
-											
-											
-											
-											
-											
-											
-											
-											
-											
-											
-											
 
 											<div class="common_input_wrapper">
-												<script defer src="../js/comment.js"></script>
-												
+											
+											<!-- ########## 대댓글 ########## -->
+
+							
+
 												<!-- 대댓글 댓글 추가 GetMapping -->
-												<form name="comment-input" action="./MyPostAddCmt" method="post">
-													
+												<form name="comment-input" action="./MyPostAddCmt"
+													method="post">
 													<input type="hidden" class="postId-input" name="postId"
 														id="postIdInput">
-														
+
 													<!-- 댓글 입력란 -->
+													<br>
 													<div class="comment-wrap">
 														<textarea id="comment-resize" name="comment" rows="3"
-															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea>
-															
-														<!-- 댓글 등록 버튼 -->	
+															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea><br><br>
+														
+														<!-- 댓글 등록 버튼 -->
 														<button type="submit"
-															class="common_input_btn btn-outline-primary" tabindex="0"
+															class="reply btn btn-outline-primary" tabindex="0"
 															id="customButton">등록</button>
 													</div>
-												
 												</form>
-											</div>
+											</div><!-- End -->
+
 										</div>
+
 									</div>
 								</div>
 								<!-- table -->
@@ -281,39 +238,22 @@
 									</div>
 								</div>
 								<!-- end table -->
-
-								<!-- pagenation -->
-								<div class="row">
-									<div class="col-sm-12 col-md-5">
-										<div class="dataTables_info" id="dataTable_info" role="status"
-											aria-live="polite">Showing 1 to 10 of 57 entries</div>
-									</div>
-								</div>
+								
 							</div>
 							<!-- dataTable_Wrapper -->
+							
 						</div>
 					</div>
 					<!-- /.container-fluid -->
 					
 				</div>
 				<!-- End of Main Content -->
-
-			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
-			<!-- End of Footer -->
-
+				
 			</div>
 			
 		</div>
 		<!-- End of Content Wrapper -->
 
-	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
@@ -337,6 +277,13 @@
 	<!-- Page level plugins -->
 	<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+	
+	<!-- 대댓글 작성 js 주소 -->
+    <script defer src="../js/MyPostReply.js"></script>
+
+    <!-- 대댓글 수정 js 주소 -->
+    <script defer src="../js/MyPostEditComment.js"></script>
+    <script defer src="../js/comment.js"></script>
 
 </body>
 
