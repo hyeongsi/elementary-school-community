@@ -48,11 +48,9 @@ public class MyPostDetailController {
 		UserDTO userDTO = userService.getUserById(id);
 		
 		model.addAttribute("notice", noticeDto);
-		System.out.println(noticeDto);
 		
 		// 댓글 정보 가져옴
 		model.addAttribute("Comment", noticeService.selectCommentList(postId));
-		System.out.println(noticeService.selectCommentList(postId));
 		
 		model.addAttribute("like", noticeService.likeCnt(postId));
 		model.addAttribute("User", userDTO);
@@ -65,12 +63,18 @@ public class MyPostDetailController {
 	 
 	// 게시글 수정 폼 페이지로 이동
 	@GetMapping("/mypage/MyPostEdit")
-	public String noticeEditForm(Principal principal, final Model model, @RequestParam("postId") Long postId) {
-	    if (principal == null) {
+	public String noticeEditForm(HttpSession session, Principal principal, final Model model, @RequestParam("postId") Long postId) {
+	    
+		if (principal == null) {
 	        // 사용자가 로그인하지 않은 경우, 로그인 페이지로 리다이렉트
 	        return "redirect:/login";
 	    }
-
+		
+		// 세션에서 받아온 ID값으로 유저 이름 호출
+		String id = (String) session.getAttribute("userId");
+		UserDTO userDTO = userService.getUserById(id);
+		model.addAttribute("User", userDTO);
+				
 	    // 게시글 수정을 위해 해당 게시글 정보를 불러와 모델에 추가
 	    model.addAttribute("notice", noticeService.selectByPostId(postId));
 	    return "mypage/MyPostEdit"; // 게시글 수정 폼 페이지로 이동
