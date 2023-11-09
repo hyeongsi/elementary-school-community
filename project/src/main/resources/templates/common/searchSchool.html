@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<!--
+    button에 아래의 속성을 추가해서 사용하면 됨
+    data-target="#searchSchoolModal" data-toggle="modal" data-dismiss="modal" onclick="initSchoolSearch()"
+-->
+<!-- 찾은 학교이름, 학교코드, 교육청이름, 코육청코드가 들어갈 id를 매개변수로 주면 됨-->
+<div th:fragment="searchSchool(schNm, schulCode, atptNm, atptCode)">
+    <!-- 학교찾기 모달 -->
+    <div class="modal fade" id="searchSchoolModal" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="schoolSearchabel">학교 검색</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3 row">
+                        <label for="SEARCH_ATPT_OFCDC_SC_CODE" class="col-sm-2 col-form-label">교육청</label>
+                        <div class="col-sm-10">
+                            <select id="SEARCH_ATPT_OFCDC_SC_CODE" class="form-control">
+                                <option value="B10">서울특별시교육청</option>
+                                <option value="C10">부산광역시교육청</option>
+                                <option value="D10">대구광역시교육청</option>
+                                <option value="E10">인천광역시교육청</option>
+                                <option value="F10">광주광역시교육청</option>
+                                <option value="G10">대전광역시교육청</option>
+                                <option value="H10">울산광역시교육청</option>
+                                <option value="I10">세종특별시교육청</option>
+                                <option value="J10">경기도교육청</option>
+                                <option value="K10">강원특별자치도교육청</option>
+                                <option value="M10">충청북도교육청</option>
+                                <option value="N10">충청남도교육청</option>
+                                <option value="P10">전라북도교육청</option>
+                                <option value="Q10">전라남도교육청</option>
+                                <option value="R10">경상북도교육청</option>
+                                <option value="S10">경상남도교육청</option>
+                                <option value="T10">제주특별자치도교육청</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="SEARCH_SCHUL_NM" class="col-sm-2 col-form-label">학교</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="SEARCH_SCHUL_NM">
+                        </div>
+                    </div>
+                    <div class="mb-1 mx-2 row">
+                        <button class="btn btn-outline-primary col-12" onclick="getSchool()">검색</button>
+                    </div>
+                    <div class="mx-2 mt-4" style="font-size: 12px">
+                        <div id="searchSchoolList"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-target="#memberEditModal" data-toggle="modal" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        // 선택한 학교 정보 보내기
+        /*<![CDATA[*/
+        function submitSchoolInfo(SCHUL_NM, SD_SCHUL_CODE, ATPT_OFCDC_SC_NM, ATPT_OFCDC_SC_CODE){
+            const schulNmEle = document.querySelector(/*[[${schNm}]]*/);
+            const sdSchulCodeEle = document.querySelector(/*[[${schulCode}]]*/);
+            const atptNmEle = document.querySelector(/*[[${atptNm}]]*/);
+            const atptCodeEle = document.querySelector(/*[[${atptCode}]]*/);
+
+            if(schulNmEle != null){
+                schulNmEle.value = SCHUL_NM;
+            }
+            if(sdSchulCodeEle != null){
+                sdSchulCodeEle.value = SD_SCHUL_CODE;
+            }
+            if(atptNmEle != null){
+                atptNmEle.value = ATPT_OFCDC_SC_NM;
+            }
+            if(atptCodeEle != null){
+                atptCodeEle.value = ATPT_OFCDC_SC_CODE;
+            }
+        }
+        /*]]>*/
+    </script>
+    <script defer src="/app/js/schoolSearchModal.js"></script>
+
+</div>
+
+</body>
+</html>
