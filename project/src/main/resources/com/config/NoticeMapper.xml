@@ -47,7 +47,7 @@
 	) c ON p.post_id = c.post_id
 	WHERE 
 	<include refid="mypageSearch"></include>
-	rm BETWEEN #{start} AND #{end}
+	AND rm BETWEEN #{start} AND #{end}
 	ORDER BY post_Id DESC
 </select>
 

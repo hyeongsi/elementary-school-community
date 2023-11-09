@@ -45,3 +45,4 @@
          */
         location.href = location.pathname + '?' + new URLSearchParams(queryParams).toString();
     }
+    

@@ -80,13 +80,12 @@
                                                 <th style="min-width: 140px">좋아요</th>
                                             </tr>
                                             </thead>
-                                            <tr th:each="notice : ${noticePageDto.noticeDtoList}">
+                                            <tr th:each="notice : ${noticePageDto.noticeDtoList}" th:onclick="'location.href=\'./MyPostDetail?postId=\' + ' + ${notice.postId}">
                                                 <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
-                                                
-                                                
+
                                                 <!-- 내 게시글 GetMapping -->
-                                                <td ><a th:href="@{/mypage/MyPostDetail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
+                                                <td th:text="${notice.title}"></td>
                                                 <td>
                                                 	<span class="d-inline-block text-truncate" style="max-width: 300px;" th:text="${notice.content}"></span>
                                                 </td>
