@@ -19,21 +19,14 @@ function getSchedule(officeOfEducationCode, schoolCode){
     }
     const date = getToday();
     const url = getURL(officeOfEducationCode, schoolCode, date);
+    console.log(url);
 
     fetch(url)
         .then(response => response.json())
         .then(res => scheduleProcess(res))
         .catch(error => {
-           // displayScheduleException();
+            displayScheduleException();
         });
-
-    // https://open.neis.go.kr/hub/SchoolSchedule?
-    // Key=d3348e90712e42a0a67f03cad20d4336
-    // &Type=json
-    // &ATPT_OFCDC_SC_CODE=B10
-    // &SD_SCHUL_CODE=7031110
-    // &AA_FROM_YMD=20220301
-    // &AA_TO_YMD=20220331
 }
 
 // 요청 url 생성
@@ -43,6 +36,11 @@ function getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, date){
 }
 
 function getResultCode(res){
+	if(res.SchoolSchedule[0].head[1].RESULT.CODE == "INFO-200"){
+		const dataInfoWrap = document.querySelector(`.dataInfoWrap`);
+	    const html = `<div class="infoText">일정 없음</div>`;
+	     dataInfoWrap.innerHTML = html;
+	}
     return res.SchoolSchedule[0].head[1].RESULT.CODE;
 }
 
@@ -53,14 +51,13 @@ function scheduleProcess(res){
         clearScheduleInfo();
         updateCalendarWithSchedule(res);
     }else{
-        //displayScheduleException();
+        displayScheduleException();
     }
 }
 
 // 달력 업데이트
 function updateCalendarWithSchedule(res){
     const row = res.SchoolSchedule[1].row;
-
         const eventDateBoardElement = document.querySelector(`.today-schedule`);
 
         const redColor = "#e31b20";

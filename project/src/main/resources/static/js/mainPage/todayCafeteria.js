@@ -23,7 +23,10 @@ function getMealSchedule(officeOfEducationCode, schoolCode){
         .then(response => response.json())
         .then(res => mealScheduleProcess(res))
         .catch(error => {
-            //displayScheduleException();
+        	const dataInfoWrap = document.querySelector(`.dataInfoWrap-meal`);
+    	    const html = `<div class="infoText">일정 없음</div>`;
+    	    dataInfoWrap.innerHTML = html;
+            displayScheduleException();
         });
     setTimeout(() => {
     	  console.error("Fetch 요청이 시간 초과되었습니다");
@@ -37,8 +40,7 @@ function getCURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, date){
 }
 
 function getMealResultCode(res){
-	console.log(res.mealServiceDietInfo[0].head[1].RESULT.CODE);
-    return res.mealServiceDietInfo[0].head[1].RESULT.CODE;
+	 return res.mealServiceDietInfo[0].head[1].RESULT.CODE;
 }
 // 급식표 처리
 function mealScheduleProcess(res){
@@ -53,7 +55,6 @@ function mealScheduleProcess(res){
 
 // 에러 여부 검사
 function mealFilter(res){
-	console.log("dd");
 	const result = getMealResultCode(res);
 	switch (result){
 	case "INFO-000":    // 정상 처리되었습니다.
@@ -78,20 +79,17 @@ function mealFilter(res){
 // 달력 업데이트
 function updateMealScheduleTable(res){
     const row = res.mealServiceDietInfo[1].row;
-
     
-    console.log("dd");
+    
         const eventDateBoardElement = document.querySelector(`.today-cafeteria`);
-
+       
         const redColor = "#e31b20";
         if(row[0].SBTR_DD_SC_NM != "해당없음"){
             eventDateBoardElement.style.color = redColor;
         }
 
-         console.log(solution(row[0].DDISH_NM + "식단"));
         row[0].DDISH_NM=solution(row[0].DDISH_NM)
         shortMeal = row[0].DDISH_NM.replace(/\<br\/>/g, '');
-        console.log(shortMeal);
         const html = `<style>
       .meal-table{
        text-align: center;

@@ -54,6 +54,7 @@
 											<div
 												class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 												시간표</div>
+												<div class="dataInfoWrap-class"></div>
 											<div
 												class="today-time-table h5 mb-0 font-weight-bold text-gray-800"></div>
 										</div>
@@ -77,6 +78,7 @@
 												오늘의 급식</div>
 											<div
 												class="today-cafeteria h5 mb-0 font-weight-bold text-gray-800"></div>
+										<div class="dataInfoWrap-meal"></div>
 										</div>
 										<div class="col-auto">
 											<i class="fa fa-beer fa-2x text-gray-300"></i>
@@ -139,15 +141,15 @@
 											</tr>
 										</thead>
 										<thead>
-											<tr style="cursor: pointer;" th:each="item : ${top5}" th:onclick="">
-										<td class="title col-md-2">
-										<a th:href="@{/notice/detail(postId=${item.postId})}" th:text="${item.title}"></a>
-										</td>
+										<span th:if="${loginCheck}==1">
+											<tr style="cursor: pointer;" th:each="item : ${top5}" th:onclick="|location.href='@{/notice/detail(postId=${item.postId})}'|">
+										<td class="title col-md-2" th:text="${item.title}"></td>
        									<td class="content col-md-7" th:text="${item.content}"></td>
         								<td class="likeCount col-md-1" th:text="${item.likeCount}"></td>
         								<td class="viewCount col-md-1" th:text="${item.viewCnt}"></td>
         								<td class="memberName col-md-1" th:text="${item.memberName}"></td>
 										</tr>
+										</span>
 										</thead>
 									</table>
 								</div>
@@ -160,56 +162,28 @@
 							<!-- Illustrations -->
 							<div class="card shadow mb-4">
 								<div class="card-header py-3">
-									<h6 class="m-0 font-weight-bold text-primary">커스텀 게시판 인기글</h6>
+									<h6 class="m-0 font-weight-bold text-primary">공용 게시판 인기글</h6>
 								</div>
 								<div class="card-body">
 									<table class="table table-striped text-center table-hover">
 										<thead>
 											<tr>
-												<th class="col-md-7">게시판 이름</th>
+												<th class="col-md-2 justify-content-start">게시판 이름</th>
 												<th class="col-md-2">제목</th>
 												<th class="col-md-1">좋아요</th>
 												<th class="col-md-1">조회수</th>
 												<th class="col-md-1">글쓴이</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr style="cursor: pointer;" onclick="">
-												<td>테스트제목</td>
-												<td>테스트내용</td>
-												<td>2</td>
-												<td>1</td>
-												<td>aa</td>
-											</tr>
-											<tr style="cursor: pointer;" onclick="">
-												<td>테스트제목</td>
-												<td>테스트내용</td>
-												<td>2</td>
-												<td>1</td>
-												<td>aa</td>
-											</tr>
-											<tr style="cursor: pointer;" onclick="">
-												<td>테스트제목</td>
-												<td>테스트내용</td>
-												<td>2</td>
-												<td>1</td>
-												<td>aa</td>
-											</tr>
-											<tr style="cursor: pointer;" onclick="">
-												<td>테스트제목</td>
-												<td>테스트내용</td>
-												<td>2</td>
-												<td>1</td>
-												<td>aa</td>
-											</tr>
-											<tr style="cursor: pointer;" onclick="">
-												<td>테스트제목</td>
-												<td>테스트내용</td>
-												<td>2</td>
-												<td>1</td>
-												<td>aa</td>
-											</tr>
-										</tbody>
+										<thead>
+											<tr style="cursor: pointer;" th:each="pTop : ${publicTop5}" th:onclick="|location.href='@{/notice/detail(postId=${pTop.postId})}'|">
+       									<td class="content col-md-2 justify-content-start" th:text="|${pTop.categoryName}(${pTop.boardName})|"></td>
+										<td class="title col-md-2" th:text="${pTop.title}"></td>
+        								<td class="likeCount col-md-1" th:text="${pTop.likeCount}"></td>
+        								<td class="viewCount col-md-1" th:text="${pTop.viewCnt}"></td>
+        								<td class="memberName col-md-1" th:text="${pTop.memberName}"></td>
+										</tr>
+										</thead>
 									</table>
 								</div>
 							</div>

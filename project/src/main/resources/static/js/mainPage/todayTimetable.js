@@ -22,7 +22,10 @@ function getTimeTable(officeOfEducationCode, schoolCode, usergrade, userclass){
         .then(response => response.json())
         .then(res => timeScheduleProcess(res))
         .catch(error => {
-           // displayScheduleException();
+        	const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
+    	    const html = `<div class="infoText">일정 없음</div>`;
+    	    dataInfoWrap.innerHTML = html;
+            displayScheduleException();
         });
 }
 

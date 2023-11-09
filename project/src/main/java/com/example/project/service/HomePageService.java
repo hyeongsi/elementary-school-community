@@ -19,4 +19,8 @@ public class HomePageService {
 	public List<MainPageDto> mainPageTop5(int boardId){
 		return homePageMapper.mainPageTop5(boardId);
 	}
+	
+	public List<MainPageDto> mainPagePublicTop5(){
+		return homePageMapper.mainPagePublicTop5();
+	}
 }

@@ -12,4 +12,6 @@ public interface HomePageMapper {
 	
 	public List<MainPageDto> mainPageTop5(int boardId);
 	
+	public List<MainPageDto> mainPagePublicTop5();
+	
 }
