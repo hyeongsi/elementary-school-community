@@ -20,8 +20,10 @@ public interface NoticeMapper {
     //public List<NoticeDto> selectNoticePage(PageDto pageDto);
     public List<NoticeDto> selectSearchNoticePage(PageDto pageDto);
 
+    // 게시글  정보 리스트로 호출
     public List<NoticeDto> selectSearchNoticePageById(MemberPageDto memberPageDto);
     
+    // 좋아요 누른 게시글 리스트로 호출
     public List<NoticeDto> selectSearchLikePostById(MemberPageDto memberPageDto);
     
     public int noticeTotalCnt(Map<String, String> map);

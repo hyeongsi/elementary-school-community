@@ -110,27 +110,41 @@
 													
 												</section>
 											</div>
-										</div>
+										</div><br><br>
 										
-										<!-- 좋아요 버튼 GetMapping -->
-										<button type="button" class="like-btn btn btn-outline-primary"
-											th:onclick="|location.href='@{/mypage/MyPostlike(postId=${notice.postId})}'|">
-											<span class="material-symbols-outlined">thumb_up</span> 
-											<span th:text="${like}"></span>
-										</button>
 										
-										&nbsp <span th:if="${session.userId!=null}"> 
+										<!-- #################### 버튼 3종  #################### -->
+										
+										<div class="row ">
+											<div class="col-sm-12 col-md-11 d-flex justify-content-center align-items-center">
+										
+												<!-- 좋아요 버튼 GetMapping -->
+												<button type="button" class="like-btn btn btn-primary"
+														th:onclick="|location.href='@{/mypage/MyPostlike(postId=${notice.postId})}'|">
+													<span class="material-symbols-outlined">thumb_up</span> 
+													<span th:text="${like}"></span>
+												</button>
+											</div>
+										</div><br>
+										
+										<div class="row ">
+											<div class="col-sm-12 col-md-12 d-flex justify-content-end align-items-end">
+											 	<span th:if="${session.userId!=null}"> 
 												<span th:if="${session.userId.toString().equals(notice.memberId)}">
 												
-												<!-- 글 수정 버튼 GetMapping -->
-												<a class="notice-edit-btn btn btn-outline-primary mr-2" th:value="${notice.memberId}"
-												th:href="@{/mypage/MyPostEdit(postId=${notice.postId})}">글 수정</a>
+													<!-- 글 삭제 버튼 GetMapping -->
+													<a class="notice-edit-btn btn btn-primary mr-2" th:value="${notice.memberId}"
+													th:href="@{/mypage/MyPostEdit(postId=${notice.postId})}">글 수정</a>
 												
-												<!-- 글 삭제 버튼 GetMapping -->
-												<a class="btn btn-outline-danger mr-2" id="delBtn" style="color: red;"
-												th:href="@{/mypage/MyPostDelete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a> 
+													<!-- 글 수정 버튼 GetMapping -->
+													<a class="btn btn-danger mr-2" id="delBtn" style="color: white;"
+														th:href="@{/mypage/MyPostDelete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a> 
 												</span>
-										</span>
+												</span>
+											</div>
+										</div>
+										
+										<!-- #################### 답글  #################### -->
 										
 										<!-- article reply -->
 

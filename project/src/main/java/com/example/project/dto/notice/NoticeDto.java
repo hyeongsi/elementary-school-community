@@ -19,7 +19,20 @@ public class NoticeDto {
 	private Long viewCnt;
 	private String memberId;
 	private Long categoryId;
+	private Long comment_count;
 	private String write_time;
+	
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long comment_count,String write_time) {
+		this.postId = postId;
+		this.title = title;
+		this.content = content;
+		this.good = good;
+		this.viewCnt = viewCnt;
+		this.memberId = memberId;
+		this.categoryId = categoryId;
+		this.comment_count = comment_count;
+		this.write_time = write_time;
+	}
 	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String write_time) {
 		this.postId = postId;
