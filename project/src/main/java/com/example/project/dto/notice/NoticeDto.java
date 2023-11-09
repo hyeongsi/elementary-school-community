@@ -1,5 +1,7 @@
 package com.example.project.dto.notice;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
@@ -17,6 +19,31 @@ public class NoticeDto {
 	private Long viewCnt;
 	private String memberId;
 	private Long categoryId;
+	private Long comment_count;
+	private String write_time;
+	
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long comment_count,String write_time) {
+		this.postId = postId;
+		this.title = title;
+		this.content = content;
+		this.good = good;
+		this.viewCnt = viewCnt;
+		this.memberId = memberId;
+		this.categoryId = categoryId;
+		this.comment_count = comment_count;
+		this.write_time = write_time;
+	}
+	
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String write_time) {
+		this.postId = postId;
+		this.title = title;
+		this.content = content;
+		this.good = good;
+		this.viewCnt = viewCnt;
+		this.memberId = memberId;
+		this.categoryId = categoryId;
+		this.write_time = write_time;
+	}
 	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
 		this.postId = postId;
@@ -31,7 +58,14 @@ public class NoticeDto {
 	@Override
 	public String toString() {
 		return "NoticeDto [postId=" + postId + ", title=" + title + ", content=" + content + ", good=" + good
-				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + "]";
+				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + ", write_date="
+				+ write_time + "]";
 	}
+
+	
+
+	
+
+	
 
 }

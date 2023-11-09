@@ -63,4 +63,5 @@ public interface UserDAO {
 
     // 전 학생 학년 증가
     public int increaseGrade();
+  
 }

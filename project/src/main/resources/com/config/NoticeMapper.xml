@@ -26,7 +26,7 @@
         WHERE rm BETWEEN #{start} AND #{end}
         ORDER BY post_Id DESC
     </select>
-
+    
     <!-- sql code 조각 -->
     <sql id="search">
         <choose>
@@ -43,6 +43,58 @@
             </otherwise>
         </choose>
     </sql>
+    
+    
+    <select id="selectSearchNoticePageById"
+	resultType="NoticeDto" parameterType="MemberPageDto">
+	 SELECT p.post_Id, p.title, p.content, (SELECT COUNT(*) FROM liketable
+	WHERE post_id = p.post_Id AND good = 1) AS good_count,
+	p.view_cnt, p.member_id, p.category_id, NVL(comment_count, 0) AS comment_count,
+	TO_CHAR(p.write_time, 'YYYY-MM-DD HH24:MI:SS') AS write_time
+	FROM (
+	SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id,
+	category_id, write_time
+	FROM post
+	WHERE member_id = #{memberId}
+  	ORDER BY post_Id DESC
+	) p
+  	LEFT JOIN (
+	SELECT post_id, COUNT(comment_id) AS comment_count
+	FROM comments
+	GROUP BY post_id
+	) c ON p.post_id = c.post_id
+	WHERE 
+	<include refid="mypageSearch"></include>
+	AND rm BETWEEN #{start} AND #{end}
+	ORDER BY post_Id DESC
+</select>
+
+<!-- sql code 조각 -->
+    <sql id="mypageSearch">
+        <choose>
+            <!-- 검색옵션이 전체 검색일 경우 -->
+            <when test="searchType == 'all'">
+                (member_id like '%'||#{keyword}||'%'
+                OR content like '%'||#{keyword}||'%'
+                OR title like '%'||#{keyword}||'%')
+                AND category_id = #{categoryId}
+            </when>
+            <!-- 전체 검색이 아닐 경우 -->
+            <otherwise>
+                category_id = #{categoryId} AND #{searchType} like '%'||#{keyword}||'%'
+            </otherwise>
+        </choose>
+    </sql>
+    
+        <select id="selectSearchLikePostById" resultType="NoticeDto"
+            parameterType="MemberPageDto">
+        	SELECT post.post_Id, post.title, post.content, post.good, post.view_cnt, post.member_id, post.category_id, TO_CHAR(write_time, 'YYYY-MM-DD HH24:MI:SS') AS write_time
+        	FROM POST
+        	INNER JOIN liketable l ON post.post_Id = l.post_Id
+        	WHERE l.member_id = #{memberId}
+        	 ORDER BY post.post_Id DESC
+   	 </select>
+
 
     <!-- 01_02. 게시글 레코드 갯수 -->
     <select id="noticeTotalCnt" parameterType="map" resultType="int">
@@ -81,11 +133,13 @@
         where post_id = #{postId}
     </delete>
 
+	<!-- id값으로 게시글 목록 반환 로직 -->
     <select id="selectByPostId" resultType="NoticeDto" parameterType="long">
-        SELECT post_Id, title, content , good, view_cnt, member_id , category_id
+        SELECT post_Id, title, content , good, view_cnt, member_id , category_id, TO_CHAR(write_time, 'YYYY-MM-DD HH24:MI:SS') write_time
         FROM post
         WHERE post_Id = #{postId}
     </select>
+    
 
     <select id="selectNoticeCategoryList" resultType="NoticeCategoryDto">
         SELECT category_id, category_name , board_id
@@ -148,8 +202,9 @@
         WHERE comment_id = #{commentId}
     </update>
 
+	<!-- 댓글 정보 가져옴 -->
     <select id="selectCommentList" parameterType="long" resultType="CommentDto">
-        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id, del_check
+        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id, del_check, TO_CHAR(reply_time, 'YYYY-MM-DD HH24:MI:SS') reply_time
         FROM comments
         WHERE post_id = #{postId}
         START WITH parent_comment_id IS NULL
@@ -194,28 +249,6 @@
     <select id="likeCnt" parameterType="long" resultType="long">
         SELECT COUNT(*) FROM liketable
         WHERE post_id = #{postId} AND good=1
-    </select>
-
-
-    <select id="selectSearchNoticePageById" resultType="NoticeDto"
-            parameterType="MemberPageDto">
-        SELECT post_Id, title, content, good, view_cnt, member_id, category_id
-        FROM (
-        SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id,
-        category_id
-        FROM post
-        WHERE member_id = #{memberId} <!-- member_id를 사용한 검색 조건 추가 -->
-        ) WHERE rm BETWEEN #{start} AND #{end}
-        ORDER BY post_Id DESC
-    </select>
-    
-    <select id="selectSearchLikePostById" resultType="NoticeDto"
-            parameterType="MemberPageDto">
-        SELECT post.post_Id, post.title, post.content, post.good, post.view_cnt, post.member_id, post.category_id
-		FROM POST
-		INNER JOIN liketable l ON post.post_Id = l.post_Id
-		WHERE l.member_id = #{memberId}
-		ORDER BY post.post_Id DESC
     </select>
 
     <select id="noticeNoSearchTotalCnt" resultType="int">

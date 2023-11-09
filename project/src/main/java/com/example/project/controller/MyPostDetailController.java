@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.project.dto.UserDTO;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.MyPostService;
 import com.example.project.service.NoticeService;
+import com.example.project.service.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -25,6 +27,7 @@ public class MyPostDetailController {
 
 	final MyPostService mynoticeService;
 	final NoticeService noticeService;
+	final UserService userService;
 	
 	//################################## 게시글 자세히 보기 ##################################
 	
@@ -35,15 +38,23 @@ public class MyPostDetailController {
 		// 사용자의 세션 정보에서 userId를 가져와서 출력
 		System.out.println(session.getAttribute("userId"));
 
+		String id = (String) session.getAttribute("userId");
+		
 		// 게시글 조회수 증가
 		noticeService.updateViewCnt(postId);
 
 		// 게시글 정보, 댓글 목록, 좋아요 수를 모델에 추가
 		NoticeDto noticeDto = noticeService.selectByPostId(postId);
+		UserDTO userDTO = userService.getUserById(id);
+		
 		model.addAttribute("notice", noticeDto);
+		
+		// 댓글 정보 가져옴
 		model.addAttribute("Comment", noticeService.selectCommentList(postId));
+		
 		model.addAttribute("like", noticeService.likeCnt(postId));
-
+		model.addAttribute("User", userDTO);
+		
 		return "mypage/MyPostDetail"; // 내가쓴 게시글 자세히 보기 페이지로 이동
 	}
 
@@ -52,12 +63,18 @@ public class MyPostDetailController {
 	 
 	// 게시글 수정 폼 페이지로 이동
 	@GetMapping("/mypage/MyPostEdit")
-	public String noticeEditForm(Principal principal, final Model model, @RequestParam("postId") Long postId) {
-	    if (principal == null) {
+	public String noticeEditForm(HttpSession session, Principal principal, final Model model, @RequestParam("postId") Long postId) {
+	    
+		if (principal == null) {
 	        // 사용자가 로그인하지 않은 경우, 로그인 페이지로 리다이렉트
 	        return "redirect:/login";
 	    }
-
+		
+		// 세션에서 받아온 ID값으로 유저 이름 호출
+		String id = (String) session.getAttribute("userId");
+		UserDTO userDTO = userService.getUserById(id);
+		model.addAttribute("User", userDTO);
+				
 	    // 게시글 수정을 위해 해당 게시글 정보를 불러와 모델에 추가
 	    model.addAttribute("notice", noticeService.selectByPostId(postId));
 	    return "mypage/MyPostEdit"; // 게시글 수정 폼 페이지로 이동

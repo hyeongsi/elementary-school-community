@@ -78,7 +78,7 @@
   			FROM MEMBER_DATA
   			WHERE EMAIL=#{email}
   		</select>
-  		
+
   		<!-- 매칭된 아이디로 비밀번호 수정 -->
   		<insert id="updateUserPassword" parameterType="UserDTO">
   		 	UPDATE MEMBER_DATA

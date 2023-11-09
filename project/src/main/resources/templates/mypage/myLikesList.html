@@ -56,17 +56,7 @@
                         <div id="dataTable_Wrapper" class="dataTables_wrapper dt-bootstrap4">
 
                             <div class="row mt-3">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="dataTable_length"><label>보기 <select
-                                            name="dataTable_length" th:onchange="|location.href='@{/notice/list}?displayUnit=' + this.value|"
-                                            class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 10" value="10">10</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 25" value="25">25</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 50" value="50">50</option>
-                                        <option th:selected="${noticePageDto.page.displayUnit} == 100" value="100">100</option>
-                                    </select> 단위</label></div>
-                                </div>
-                                <div class="col-sm-12 col-md-6">
+                                <div class="col-sm-12 col-md-12">
                                     <div class="d-flex justify-content-end">
                                         <button class="btn btn-sm btn-outline-danger" type="button">삭제</button>
                                     </div>
@@ -76,7 +66,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%"
+                                        <table class="table table-hover" id="dataTable" width="100%"
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
@@ -84,22 +74,25 @@
                                                 <th style="min-width: 50px">No.</th>
                                                 <th style="min-width: 100px">제목</th>
                                                 <th style="min-width: 140px">내용</th>
-                                                <th style="min-width: 140px">좋아요</th>
-                                                <th style="min-width: 140px">조회수</th>
                                                 <th style="min-width: 140px">글쓴이</th>
-                                                
+                                                <th style="min-width: 140px">작성일</th>
+                                                <th style="min-width: 140px">조회수</th>
+                                                <th style="min-width: 140px">좋아요</th>
                                             </tr>
                                             </thead>
-                                            <tr th:each="notice : ${noticePageDto.noticeDtoList}">
+                                            <tr th:each="notice : ${noticePageDto.noticeDtoList}" th:onclick="'location.href=\'./MyPostDetail?postId=\' + ' + ${notice.postId}">
                                                 <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
                                                 
                                                 <!-- 내 게시글 GetMapping -->
-                                                <td ><a th:href="@{/mypage/MyPostDetail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
-                                                <td th:text="${notice.content}">내용</td>
-                                                <td th:text="${notice.good}">0</td>
+                                                <td th:text="${notice.title}"></td>
+                                                <td>
+                                                	<span class="d-inline-block text-truncate" style="max-width: 300px;" th:text="${notice.content}"></span>
+                                                </td>
+                                                <td th:text="${User.name}">0</td>
+                                                <td th:text="${notice.write_time}">0</td>
                                                 <td th:text="${notice.viewCnt}">0</td>
-                                                <td th:text="${notice.memberId}">0</td>
+                                                <td th:text="${notice.good}">0</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -110,34 +103,8 @@
 
                             <!-- pagenation -->
                             <div class="row">
-                                <div class="col-sm-12 col-md-5">
                                 
-                                <!-- 검색 -->
-										<div class="search_box">
-											<form id="searchForm" method="get" th:action="@{'/notice/list'}">
-												<div class="sch_group fl">
-													<select  id="searchType" name="searchType" title="검색 유형 선택">
-														<option value="all">전체 검색</option>
-														<option value="title">제목</option>
-														<option value="content">내용</option>
-														<option value="memberId">작성자</option>
-													</select> <input type="text" id="keyword" name="keyword"
-														placeholder="키워드를 입력해 주세요." title="키워드 입력" />
-													<input type="hidden" name="categoryId" th:value="${categoryId}" />
-													<button type="submit" class="bt_search"
-														onclick="movePage(1);">
-														<i class="fas fa-search"></i><span class="skip_info">검색</span>
-													</button>
-												</div>
-											</form>
-										</div>
-										<!-- 검색 -->
-										
-										<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 57 entries
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-7">
+                                <div class="col-sm-12 col-md-11 d-flex justify-content-center align-items-center">
                                     <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
                                         
                                         <ul class="pagination">
@@ -159,7 +126,25 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div><br>
+                            
+								<div class="row ">
+									<div class="col-sm-12 col-md-11 d-flex justify-content-center align-items-center">
+										<!-- 검색 -->
+											<form id="searchForm" method="get" th:action="@{'/notice/list'}" class="form-inline">
+													<select id="searchType" name="searchType" title="검색 유형 선택" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+														<option value="all">전체 검색</option>
+														<option value="title">제목</option>
+														<option value="content">내용</option>
+													</select> 
+													<input  type="text" id="keyword" name="keyword" placeholder="키워드를 입력해 주세요." title="키워드 입력" class="form-control"/> <input type="hidden" name="categoryId" th:value="${categoryId}" />
+													<button type="submit" class="btn btn-primary" onclick="movePage(1);">
+														<i class="fas fa-search"></i><span class="skip_info">검색</span>
+													</button>
+											</form>
+										<!-- End 검색 -->
+									</div>
+								</div>
                         </div>
                         <!-- dataTable_Wrapper -->
                     </div>
