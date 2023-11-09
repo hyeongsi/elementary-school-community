@@ -141,5 +141,11 @@
         WHERE ID = #{id}
     </select>
 
+	 <!-- 전 학생 학년 증가 -->
+	<update id="increaseGrade">
+		UPDATE MEMBER_DATA
+		SET usergrade = TO_CHAR((TO_NUMBER(usergrade) + 1))
+		WHERE usergrade != '6'
+	</update>
 
 </mapper>

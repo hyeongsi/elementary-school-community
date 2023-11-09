@@ -19,7 +19,10 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script defer src="/app/js/adminList.js"></script>
+    <script defer src="/app/js/adminModal.js"></script>
 </head>
 
 <body id="page-top">
@@ -37,7 +40,7 @@
         <div id="content">
 
             <!-- Topbar -->
-            <nav th:replace="admin/common/admin_topBar::topBar"></nav>
+            <nav th:replace="common/topBar::topBar"></nav>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -66,7 +69,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%"
+                                        <table class="table table-bordered table-hover" id="dataTable" width="100%"
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
@@ -78,10 +81,11 @@
                                                 <th style="min-width: 150px">학교</th>
                                                 <th style="min-width: 150px">학년</th>
                                                 <th style="min-width: 150px">반</th>
+                                                <th>  </th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <tr th:each="userDto : ${userPageDto.userDTOList}">
+                                            <tr th:each="userDto : ${userPageDto.userDTOList}" th:data-id="${userDto.id}">
                                                 <td><input type="checkbox" name="elementCk" th:data-elementid="${userDto.id}"></td>
                                                 <td th:text="${userDto.id}">null</td>
                                                 <td th:text="${userDto.name}">null</td>
@@ -90,6 +94,33 @@
                                                 <td th:text="${userDto.school}">null</td>
                                                 <td th:text="${userDto.usergrade}">null</td>
                                                 <td th:text="${userDto.userclass}">null</td>
+                                                <td>
+                                                    <a class="btn btn-outline-primary btn-sm"
+                                                        data-toggle="modal"
+                                                        href="#memberEditModal"
+                                                        style="cursor: pointer; font-size: 8px"
+                                                        th:id="${userDto.id}"
+                                                        th:name="${userDto.name}"
+                                                        th:email="${userDto.email}"
+                                                        th:education="${userDto.education}"
+                                                        th:school="${userDto.school}"
+                                                        th:educationCode="${userDto.educationCode}"
+                                                        th:schoolCode="${userDto.schoolCode}"
+                                                        th:usergrade="${userDto.usergrade}"
+                                                        th:userclass="${userDto.userclass}"
+                                                        th:onclick="initMemberEdit([
+                                                            this.getAttribute('id'),
+                                                            this.getAttribute('name'),
+                                                            this.getAttribute('email'),
+                                                            this.getAttribute('education'),
+                                                            this.getAttribute('school'),
+                                                            this.getAttribute('educationCode'),
+                                                            this.getAttribute('schoolCode'),
+                                                            this.getAttribute('usergrade'),
+                                                            this.getAttribute('userclass')
+                                                           ])">수정
+                                                    </a>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -121,21 +152,112 @@
         </div>
         <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
-
     </div>
     <!-- End of Content Wrapper -->
 
 </div>
 <!-- End of Page Wrapper -->
+
+<!-- 회원정보 모달 -->
+<div class="modal fade" id="memberEditModal" tabindex="-1" role="dialog"
+     aria-labelledby="memberEditLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="memberEditLabel">회원정보 변경</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3 row">
+                    <label for="editId" class="col-sm-2 col-form-label">아이디</label>
+                    <div class="col-sm-10">
+                        <input type="text" readonly class="form-control" id="editId" value="아이디" redonly required>
+                    </div>
+                </div>
+                <form id="userEditForm">
+                    <div class="mb-3 row">
+                        <label for="editName" class="col-sm-2 col-form-label">이름</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editName" name="name" value="이름" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editEmail" class="col-sm-2 col-form-label">이메일</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="editEmail" name="email" value="aaa@aaa.com" require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editGrade" class="col-sm-2 col-form-label">학년</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="editGrade" name="usergrade" require>
+                                <option value="1">1학년</option>
+                                <option value="2">2학년</option>
+                                <option value="3">3학년</option>
+                                <option value="4">4학년</option>
+                                <option value="5">5학년</option>
+                                <option value="6">6학년</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editClass" class="col-sm-2 col-form-label">반</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="editClass" name="userclass" require>
+                                <option value="1">1반</option>
+                                <option value="2">2반</option>
+                                <option value="3">3반</option>
+                                <option value="4">4반</option>
+                                <option value="5">5반</option>
+                                <option value="6">6반</option>
+                                <option value="7">7반</option>
+                                <option value="8">8반</option>
+                                <option value="9">9반</option>
+                                <option value="10">10반</option>
+                                <option value="11">11반</option>
+                                <option value="12">12반</option>
+                                <option value="13">13반</option>
+                                <option value="14">14반</option>
+                                <option value="15">15반</option>
+                                <option value="16">16반</option>
+                                <option value="17">17반</option>
+                                <option value="18">18반</option>
+                                <option value="19">19반</option>
+                                <option value="20">20반</option>
+                            </select>
+                        </div>
+                    </div>
+                    <input type="hidden" id="editEducationCode" name="educationCode">
+                    <input type="hidden" id="editSchoolCode" name="schoolCode">
+
+                    <div class="mb-3 row">
+                        <label for="editEducation" class="col-sm-2 col-form-label">교육청</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editEducation" name="education" readonly require>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="editSchool" class="col-sm-2 col-form-label">학교</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="editSchool" name="school" readonly require>
+                        </div>
+                    </div>
+                </form>
+                <!-- end userEditForm -->
+                <button class="btn btn-outline-primary col-12" data-target="#searchSchoolModal" data-toggle="modal" data-dismiss="modal" onclick="initSchoolSearch()">학교 검색</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                <button type="button" class="btn btn-primary" onclick="updateMember()">변경</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 학교찾기 모달 -->
+<div th:replace="common/searchSchool :: searchSchool('#editSchool', '#editSchoolCode', '#editEducation', '#editEducationCode')"></div>
 
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top">

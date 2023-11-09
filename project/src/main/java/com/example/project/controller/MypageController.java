@@ -31,9 +31,9 @@ public class MypageController {
 
 	// 세션에 저장된 id값에 해당되는 유저의 정보 출력
 	@GetMapping("/mypage/memberProfile")
-	public String memberProfile(Principal principal,HttpSession session, Model model) {
+	public String memberProfile(Principal principal, Model model) {
 		
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		if (id != null) {
 			UserDTO userDTO = userService.getUserById(id);
 			model.addAttribute("user", userDTO);
