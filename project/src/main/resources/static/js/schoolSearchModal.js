@@ -1,4 +1,4 @@
-const url = "http://localhost:8088/app/schoolBasicInfo/getSchool";
+const searchUrl = "http://localhost:8088/app/schoolBasicInfo/getSchool";
 const type = "json";
 
 // 학교 선택 시 검색결과 지우고, 선택한 값 세팅
@@ -21,9 +21,9 @@ function getSchool(pIndex = 1, pSize = 100){
     const ATPT_OFCDC_SC_CODE = searchStptSelectElement.options[searchStptSelectElement.selectedIndex].value;
     const SCHUL_NM = document.getElementById('SEARCH_SCHUL_NM').value;
     
-    const url = getURL(pIndex, pSize, ATPT_OFCDC_SC_CODE, SCHUL_NM);
+    const searchUrl = getURL(pIndex, pSize, ATPT_OFCDC_SC_CODE, SCHUL_NM);
 
-    fetch(url)
+    fetch(searchUrl)
         .then(response => response.json())
         .then(res => updateSearchSchoolList(res, pIndex, pSize));
 }
@@ -73,6 +73,8 @@ function updateSearchSchoolList(res, pIndex, pSize){
 
 // 학교 검색 모달을 출력하기 전 input 초기화
 function initSchoolSearch(){
+    console.log("test");
+
     document.querySelector("#SEARCH_ATPT_OFCDC_SC_CODE").options[0].selected = true;
     document.querySelector("#SEARCH_SCHUL_NM").value = "";
 
@@ -103,5 +105,5 @@ function nextPage(pIndex, pSize, endPIndex){
 
 // 학교정보 요청 url 생성 /  페이지, 한번에 요청할 데이터 개수, 시도교육청코드, 학교이름으로 요청 url 생성
 function getURL(pIndex, pSize, ATPT_OFCDC_SC_CODE, SCHUL_NM){
-    return `${url}?pIndex=${pIndex}&pSize=${pSize}&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SCHUL_NM=${SCHUL_NM}`;
+    return `${searchUrl}?pIndex=${pIndex}&pSize=${pSize}&ATPT_OFCDC_SC_CODE=${ATPT_OFCDC_SC_CODE}&SCHUL_NM=${SCHUL_NM}`;
 }
