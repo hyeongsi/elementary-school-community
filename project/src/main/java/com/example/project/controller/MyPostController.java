@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.project.dto.UserDTO;
 import com.example.project.dto.notice.NoticeDto;
 import com.example.project.dto.notice.NoticePageDto;
 import com.example.project.service.MyPostService;
 import com.example.project.service.NoticeService;
+import com.example.project.service.UserService;
 
 import lombok.AllArgsConstructor;
 
@@ -21,8 +23,9 @@ import lombok.AllArgsConstructor;
 @Controller
 public class MyPostController {
 
-	final MyPostService mynoticeService;
+	final MyPostService mypostService;
 	final NoticeService noticeService;
+	final UserService userService;
 	
 	// 내가쓴 게시글 화면단
 	@GetMapping("/mypage/myPostList")
@@ -32,6 +35,7 @@ public class MyPostController {
 	                        @RequestParam(defaultValue = "") String keyword,
 	                        @RequestParam(defaultValue = "title") String searchType,
 	                        @RequestParam(defaultValue = "1") int categoryId,
+	                        @RequestParam(required = false) String write_date,
 	                        HttpSession session) {
 
 	    // 사용자가 로그인한 상태인지 확인
@@ -46,8 +50,12 @@ public class MyPostController {
 	        return "redirect:/login";
 	    }
 
+	    System.out.println(keyword + " " + searchType);
 	    // 세션에서 사용자 ID 가져오기
 	    String memberId = (String) session.getAttribute("userId");
+	    
+	    UserDTO userDTO = userService.getUserById(memberId);
+		model.addAttribute("User", userDTO);
 
 	    // 모델에 데이터 추가
 	    model.addAttribute("categoryId", categoryId);
@@ -55,11 +63,41 @@ public class MyPostController {
 	    model.addAttribute("keyword", keyword);
 
 	    // 내가쓴 게시글 페이지 정보를 조회하기 위해 서비스의 메서드 호출
-	    final NoticePageDto noticePageDto = mynoticeService.selectSearchNoticePageById(displayUnit, curPage, keyword, searchType, categoryId, memberId);
+	    final NoticePageDto noticePageDto = mypostService.selectSearchNoticePageById(displayUnit, curPage, keyword, searchType, categoryId, memberId, write_date);
 
+	    System.out.println(noticePageDto.toString());
+	    
 	    // 조회된 게시글 페이지 정보를 모델에 추가
 	    model.addAttribute("noticePageDto", noticePageDto);
+	    
 
 	    return "mypage/myPostList";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
