@@ -40,7 +40,7 @@
         <div id="content">
 
             <!-- Topbar -->
-            <nav th:replace="mypage/common/member_topBar::member_topBar"></nav>
+            <nav th:replace="common/topBar :: topBar"></nav>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -93,7 +93,9 @@
                                             <tr th:each="notice : ${noticePageDto.noticeDtoList}">
                                                 <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
-                                                <td ><a th:href="@{/notice/detail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
+                                                
+                                                <!-- 내 게시글 GetMapping -->
+                                                <td ><a th:href="@{/mypage/MyPostDetail(postId=${notice.postId})}" th:text="${notice.title}"></a></td>
                                                 <td th:text="${notice.content}">내용</td>
                                                 <td th:text="${notice.good}">0</td>
                                                 <td th:text="${notice.viewCnt}">0</td>
@@ -190,8 +192,9 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
+<!-- 탑바 경로 수정 -->
 <!-- Logout Modal-->
-<div th:replace="common/topBar :: logoutModal"></div>
+<div th:replace="mypage/common/member_topBar :: logoutModal"></div>
 
 <!-- Bootstrap core JavaScript-->
 <script th:src="@{/vendor/jquery/jquery.min.js}"></script>

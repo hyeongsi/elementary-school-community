@@ -13,16 +13,15 @@
 <script defer src="./js/schoolSearch.js"></script>
 <link rel="stylesheet" href="./css/modal.css">
 <link rel="stylesheet" href="./css/schSearch.css">
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <link
          href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
          rel="stylesheet"
          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-         crossorigin="anonymous"
-      />
+         crossorigin="anonymous" />
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -236,8 +235,9 @@
 		class="fas fa-angle-up"></i>
 	</a>
 
-	<!-- Logout Modal-->
-	<div th:replace="common/topBar :: logoutModal"></div>
+<!-- 탑바 경로 수정 -->
+<!-- Logout Modal-->
+<div th:replace="mypage/common/member_topBar :: logoutModal"></div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>

@@ -24,7 +24,8 @@
             <div  th:if="${user?.id!=null}">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span th:text="${user.name}" class="mr-2 d-none d-lg-inline text-gray-600 small">사용자 이름</span>
+                <span th:text="${user.name}" 
+                	  class="mr-2 d-none d-lg-inline text-gray-600 small">사용자 이름</span>
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"> 님</span>
                 <img class="img-profile rounded-circle"
                      src="images/undraw_profile.svg">
@@ -57,16 +58,13 @@
 </nav>
 
 
-<!-- logoutModal 경로문제인듯함 -->
-
-
 <!-- Logout Modal-->
 <div th:fragment="logoutModal" class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까? --- 마이페이지</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
@@ -75,8 +73,8 @@
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
                 
-                <form action="./logout" method="post">
-						<button type="submit" class="btn btn-primary">로그아웃11</button>
+                <form action="../logout" method="post">
+						<button type="submit" class="btn btn-primary">로그아웃</button>
 				</form>
         </div>
     </div>

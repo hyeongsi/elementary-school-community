@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<title>초등 커뮤니티 - 관리자 - 게시판목록</title>
+
+<link th:href="@{../css/commentWrap.css}" rel="stylesheet">
+<script defer src="../js/commentWrap.js"></script>
+<link th:href="@{../css/comments.css}" rel="stylesheet">
+
+<!-- Custom fonts for this template -->
+<link th:href="@{/vendor/fontawesome-free/css/all.min.css}"
+	rel="stylesheet" type="text/css">
+<link
+	href="https://fonts.googleapis.com/css?family=Nunito|Material+Symbols+Outlined:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+	rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
+
+<!-- Custom styles for this page -->
+<link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
+	rel="stylesheet">
+	
+	<!-- Post Style -->
+	<link rel="stylesheet" th:href="@{/Post/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/content.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/button.css}" />
+    
+    <!--  Reply Style -->
+    <link rel="stylesheet" th:href="@{/Post/css/reply.css}" />
+
+</head>
+
+<body id="page-top">
+
+	<!-- Page Wrapper -->
+	<div id="wrapper">
+
+		<!-- Sidebar -->
+		<ul th:replace="mypage/common/member_slidebar :: member_slidebar"></ul>
+
+		<!-- Content Wrapper -->
+		<div id="content-wrapper" class="d-flex flex-column">
+
+			<!-- Main Content -->
+			<div id="content">
+
+				<!-- Topbar -->
+				<nav th:replace="common/topBar :: topBar"></nav>
+
+				<!-- Begin Page Content -->
+				<div class="container-fluid">
+
+					<!-- DataTales Example -->
+					<div class="card shadow mb-4">
+						<div class="card-header py-3">
+						
+							<!-- 타이틀 제목 -->
+							<h6 class="m-0 font-weight-bold text-primary">내 게시글</h6>
+						</div>
+						<div class="card-body">
+
+							<div id="dataTable_Wrapper"
+								class="dataTables_wrapper dt-bootstrap4">
+
+								<div>
+
+									<div id="outter">
+										<div style="padding-top: 10px; padding-bottom: 10px;">
+											<div class="content">
+												<section>
+													<table class="tb tb_row">
+														<colgroup>
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th scope="row">글 유형</th>
+																<td>Ex) 서울 교육청 게시판</td>
+
+																<th scope="row">등록일</th>
+																<td th:text="${notice.write_time}"></td>
+															</tr>
+															<tr>
+																<th scope="row">이름</th>
+																<td th:text="${User.name}"></td>
+
+																<th scope="row">조회수</th>
+																<td th:text="${notice.viewCnt}"></td>
+															</tr>
+															<tr>
+																<th scope="row">제목</th>
+																<td colspan="3" th:text="${notice.title}"></td>
+															</tr>
+															<tr>
+																<!-- 내용 -->
+																<td colspan="4" th:text="${notice.content}"></td>
+															</tr>
+														</tbody>
+													</table>
+													
+												</section>
+											</div>
+										</div>
+										
+										<!-- 좋아요 버튼 GetMapping -->
+										<button type="button" class="like-btn btn btn-outline-primary"
+											th:onclick="|location.href='@{/mypage/MyPostlike(postId=${notice.postId})}'|">
+											<span class="material-symbols-outlined">thumb_up</span> 
+											<span th:text="${like}"></span>
+										</button>
+										
+										&nbsp <span th:if="${session.userId!=null}"> 
+												<span th:if="${session.userId.toString().equals(notice.memberId)}">
+												
+												<!-- 글 수정 버튼 GetMapping -->
+												<a class="notice-edit-btn btn btn-outline-primary mr-2" th:value="${notice.memberId}"
+												th:href="@{/mypage/MyPostEdit(postId=${notice.postId})}">글 수정</a>
+												
+												<!-- 글 삭제 버튼 GetMapping -->
+												<a class="btn btn-outline-danger mr-2" id="delBtn" style="color: red;"
+												th:href="@{/mypage/MyPostDelete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a> 
+												</span>
+										</span>
+										
+										<!-- article reply -->
+
+										<div class="article-reply">
+											    
+											<h1></h1>
+											<!-- 댓글 가져오기 반복 -->
+											<tr th:each="comment : ${Comment}">
+												<th:block th:if="${comment.delCheck}">
+													<td th:text="${comment.commentContents}">내용</td>
+												</th:block>
+												<th:block th:if="${!comment.delCheck}">
+												<div class="comments comment_" th:attrappend="class=${comment.commentId}" th:value="${comment.memberId}">
+												
+												<!-- 대댓글 위치 뒤로 밀기 -->
+												<!-- <td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td> -->	
+																					
+													<s_rp_container>
+													<ul class="reply-list">
+														<s_rp_rep>
+														<li id='[##_rp_rep_id_##]' th:class="${comment.parentCommentId} != null ? re-reply : reply-li">
+
+															<div class="thumb">
+																<img src="images/undraw_profile.svg" width="48"
+																	height="48" class=reply_profile>
+															</div>
+															<div class="reply-content">
+																<ul class="info">
+																	<li class="nickname" th:text="${User.name}">유저 이름</li>&nbsp;&nbsp;
+																	
+																	<!-- 댓글 작성 시간 -->
+																	<li class="date" th:text="${comment.replyTime}">작성시간</li>
+																</ul>
+																<p class="text" th:text="${comment.commentContents}">댓글 내용</p>
+																<ul class="control">
+																		<!-- 댓글 버튼 -->	
+																		<button class="reply btn btn-outline-primary "
+																			th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="replyBtn">답글</button>
+																		
+																		<!-- 수정 버튼 -->
+																		<span th:if="${session.userId!=null}"> 
+																			<a th:if="${session.userId.toString().equals(comment.memberId)}">
+																				<button class="edit-comment btn btn-outline-primary "
+																					th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="edit-comment-btn">수정</button>
+																		</a> &nbsp;
+																		</span>
+																		<!-- 댓글 삭제 GetMapping -->
+																		<a th:if="${session.userId.toString().equals(comment.memberId)}"
+																			class="del-comment" style="color: red;"
+																			th:href="@{/mypage/MyPostDelCmt(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">삭제</a>
+																</ul>
+															</div>
+														</li>
+														</s_rp_rep>
+													</ul>
+													</s_rp_container>
+													</div>
+												</th:block>
+											</tr>
+
+											<div class="common_input_wrapper">
+											
+											<!-- ########## 대댓글 ########## -->
+
+							
+
+												<!-- 대댓글 댓글 추가 GetMapping -->
+												<form name="comment-input" action="./MyPostAddCmt"
+													method="post">
+													<input type="hidden" class="postId-input" name="postId"
+														id="postIdInput">
+
+													<!-- 댓글 입력란 -->
+													<br>
+													<div class="comment-wrap">
+														<textarea id="comment-resize" name="comment" rows="3"
+															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea><br><br>
+														
+														<!-- 댓글 등록 버튼 -->
+														<button type="submit"
+															class="reply btn btn-outline-primary" tabindex="0"
+															id="customButton">등록</button>
+													</div>
+												</form>
+											</div><!-- End -->
+
+										</div>
+
+									</div>
+								</div>
+								<!-- table -->
+								<div class="row">
+									<div class="col-sm-12">
+										<div class="table-responsive">
+											<table class="table table-bordered" id="dataTable"
+												width="100%" style="text-align: center">
+												<thead style="text-align: center">
+
+												</thead>
+												<tbody>
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- end table -->
+								
+							</div>
+							<!-- dataTable_Wrapper -->
+							
+						</div>
+					</div>
+					<!-- /.container-fluid -->
+					
+				</div>
+				<!-- End of Main Content -->
+				
+			</div>
+			
+		</div>
+		<!-- End of Content Wrapper -->
+
+
+	<!-- Scroll to Top Button-->
+	<a class="scroll-to-top rounded" href="#page-top"> <i
+		class="fas fa-angle-up"></i>
+	</a>
+
+<!-- 탑바 경로 수정 -->
+<!-- Logout Modal-->
+<div th:replace="mypage/common/member_topBar :: logoutModal"></div>
+
+	<!-- Bootstrap core JavaScript-->
+	<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+	<!-- Core plugin JavaScript-->
+	<script th:src="@{/vendor/jquery-easing/jquery.easing.min.js}"></script>
+
+	<!-- Custom scripts for all pages-->
+	<script th:src="@{/js/sb-admin-2.min.js}"></script>
+
+	<!-- Page level plugins -->
+	<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
+	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+	
+	<!-- 대댓글 작성 js 주소 -->
+    <script defer src="../js/MyPostReply.js"></script>
+
+    <!-- 대댓글 수정 js 주소 -->
+    <script defer src="../js/MyPostEditComment.js"></script>
+    <script defer src="../js/comment.js"></script>
+
+</body>
+
+</html>

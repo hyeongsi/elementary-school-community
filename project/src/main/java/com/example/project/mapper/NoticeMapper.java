@@ -21,8 +21,9 @@ public interface NoticeMapper {
     public List<NoticeDto> selectSearchNoticePage(PageDto pageDto);
 
     public List<NoticeDto> selectSearchNoticePageById(MemberPageDto memberPageDto);
-
-
+    
+    public List<NoticeDto> selectSearchLikePostById(MemberPageDto memberPageDto);
+    
     public int noticeTotalCnt(Map<String, String> map);
 
     public int noticeSearchTotalCnt();
@@ -32,7 +33,8 @@ public interface NoticeMapper {
     public int deleteNoticeList(List<NoticeDto> noticeDtoList);
 
     public int deleteNotice(Long postId);
-
+    
+    // 아이디값으로 게시글 정보 가져옴
     public NoticeDto selectByPostId(Long postId);
 
     public int updateNotice(NoticeDto noticeDto);
@@ -45,6 +47,7 @@ public interface NoticeMapper {
 
     public void addComment(CommentDto commnetDto);
 
+    // 댓글 정보 가져옴
     public List<CommentDto> selectCommentList(Long postId);
 
     public List<CommentAllJoinDto> selectCommentListAll(PageDto pageDto);
