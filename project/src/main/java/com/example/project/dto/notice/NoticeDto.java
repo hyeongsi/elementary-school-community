@@ -5,8 +5,10 @@ import java.util.Date;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
 @Getter
 @Setter
 @Alias("NoticeDto")
@@ -19,10 +21,13 @@ public class NoticeDto {
 	private Long viewCnt;
 	private String memberId;
 	private Long categoryId;
-	private Long comment_count;
+	private Long commentCount;
 	private String writeTime;
+	private String name;
 	
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long comment_count,String write_time) {
+	
+	
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long commentCount,String writeTime) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
@@ -30,8 +35,9 @@ public class NoticeDto {
 		this.viewCnt = viewCnt;
 		this.memberId = memberId;
 		this.categoryId = categoryId;
-		this.comment_count = comment_count;
+		this.commentCount = commentCount;
 		this.writeTime = writeTime;
+		
 	}
 	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String writeTime) {
@@ -62,10 +68,5 @@ public class NoticeDto {
 				+ writeTime + "]";
 	}
 
-	
-
-	
-
-	
 
 }

@@ -30,7 +30,7 @@
     <select id="selectSearchNoticePageById"
 	resultType="NoticeDto" parameterType="MemberPageDto">
 	 SELECT p.post_Id, p.title, p.content, (SELECT COUNT(*) FROM liketable
-	WHERE post_id = p.post_Id AND good = 1) AS good_count,
+	WHERE post_id = p.post_Id AND good = 1) AS good,
 	p.view_cnt, p.member_id, p.category_id, NVL(comment_count, 0) AS comment_count,
 	TO_CHAR(p.write_time, 'YYYY-MM-DD HH24:MI:SS') AS write_time
 	FROM (
@@ -47,7 +47,7 @@
 	) c ON p.post_id = c.post_id
 	WHERE 
 	<include refid="mypageSearch"></include>
-	rm BETWEEN #{start} AND #{end}
+	AND rm BETWEEN #{start} AND #{end}
 	ORDER BY post_Id DESC
 </select>
 
@@ -59,21 +59,13 @@
                 (member_id like '%'||#{keyword}||'%'
                 OR content like '%'||#{keyword}||'%'
                 OR title like '%'||#{keyword}||'%')
-                AND category_id = #{categoryId}
             </when>
             <!-- 전체 검색이 아닐 경우 -->
             <otherwise>
-                category_id = #{categoryId} AND #{searchType} like '%'||#{keyword}||'%'
+                ${searchType} like '%'||#{keyword}||'%'
             </otherwise>
         </choose>
     </sql>
-    
-    
-    
-    
-    
-    
-    
     
     <!-- sql code 조각 -->
     <sql id="search">
@@ -145,9 +137,11 @@
 
 	<!-- id값으로 게시글 목록 반환 로직 -->
     <select id="selectByPostId" resultType="NoticeDto" parameterType="long">
-        SELECT post_Id, title, content , good, view_cnt, member_id , category_id, TO_CHAR(write_time, 'YYYY-MM-DD HH24:MI:SS') write_time
-        FROM post
-        WHERE post_Id = #{postId}
+	SELECT post_Id, title, content , good, view_cnt, p.member_id ,
+	category_id, TO_CHAR(write_time, 'YYYY-MM-DD HH24:MI:SS') write_time,
+	(select name from member_data where id = p.member_id) name
+	FROM post p
+	WHERE post_Id = #{postId}
     </select>
     
 

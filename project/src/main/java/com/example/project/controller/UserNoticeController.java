@@ -135,7 +135,6 @@ public class UserNoticeController {
 			// 사용자의 세션 정보에서 userId를 가져와서 출력
 			System.out.println(session.getAttribute("userId"));
 
-			String id = (String) session.getAttribute("userId");
 			
 			// 게시글 조회수 증가
 			noticeService.updateViewCnt(postId);
