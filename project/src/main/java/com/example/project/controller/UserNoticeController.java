@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.UserDTO;
 import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
@@ -39,13 +40,18 @@ public class UserNoticeController {
             				@RequestParam(defaultValue = "1") int curPage,
             				@RequestParam(defaultValue = "") String keyword,
             				@RequestParam(defaultValue = "title") String searchType,
-            				@RequestParam(defaultValue = "1") int categoryId) {
+            				@RequestParam(defaultValue = "1") int categoryId,
+            				@RequestParam(required = false) String write_date) {
 		
+		String memberId = (String) session.getAttribute("userId");
+	    
+	    UserDTO userDTO = userService.getUserById(memberId);
+		model.addAttribute("User", userDTO);
 		
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
-		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId);
+		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId, write_date);
 		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
@@ -74,29 +80,38 @@ public class UserNoticeController {
 		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
-	// 게시글 수정
-	@GetMapping("/notice/edit")
-	public String noticeEditForm(Principal principal,final Model model,
-								@RequestParam("postId") Long postId) {
-		if(principal==null) {
-			return "redirect:/login";
+	// 게시글 수정 폼 페이지로 이동
+		@GetMapping("/notice/edit")
+		public String noticeEditForm(HttpSession session, Principal principal, final Model model, @RequestParam("postId") Long postId) {
+		    
+			if (principal == null) {
+		        // 사용자가 로그인하지 않은 경우, 로그인 페이지로 리다이렉트
+		        return "redirect:/login";
+		    }
+			
+			// 세션에서 받아온 ID값으로 유저 이름 호출
+			String id = (String) session.getAttribute("userId");
+			UserDTO userDTO = userService.getUserById(id);
+			model.addAttribute("User", userDTO);
+					
+		    // 게시글 수정을 위해 해당 게시글 정보를 불러와 모델에 추가
+		    model.addAttribute("notice", noticeService.selectByPostId(postId));
+		    return "notice/edit"; // 게시글 수정 폼 페이지로 이동
 		}
-		// NoticeDto noticeDto = new NoticeDto(null, title, content,null,null,null);
-		model.addAttribute("notice", noticeService.selectByPostId(postId));
-		return "notice/edit";
-	}
 
-	@PostMapping("/notice/edit")
-	public String noticeUpdate(Principal principal,
-							   @RequestParam(value="postId", required=false) Long postId, 
-							   @RequestParam String title, 
-							   @RequestParam String content) {
-		
-		if(principal==null) {
-			return "redirect:/login";
-		}
-		NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null,null);
-		noticeService.updateNotice(noticeDto);
+		// 게시글 수정 처리
+		@PostMapping("/notice/edit")
+		public String noticeUpdate(Principal principal, @RequestParam(value = "postId", required = false) Long postId, @RequestParam String title, @RequestParam String content) {
+		    if (principal == null) {
+		        // 사용자가 로그인하지 않은 경우, 로그인 페이지로 리다이렉트
+		        return "redirect:/login";
+		    }
+
+		    // 입력된 게시글 정보를 이용하여 게시글을 수정
+		    NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null, null);
+		    noticeService.updateNotice(noticeDto);
+		    
+		    // 수정된 게시글의 상세 페이지로 리다이렉트
 		return "redirect:/notice/detail?postId="+noticeDto.getPostId();
 	}
 	
@@ -108,19 +123,32 @@ public class UserNoticeController {
 		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
-	// 게시글 자세히 보기
-	@GetMapping("/notice/detail")
-	public String retrieve(HttpSession session,final Model model, @RequestParam Long postId,
-							@RequestParam(value="categoryId", defaultValue = "1") int categoryId) {
-		System.out.println(session.getAttribute("userId"));
-		noticeService.updateViewCnt(postId);
-		NoticeDto noticeDto = noticeService.selectByPostId(postId);
-		model.addAttribute("notice", noticeDto);
-		model.addAttribute("Comment",noticeService.selectCommentList(postId));
-		model.addAttribute("like", noticeService.likeCnt(postId));
-		
-		return "notice/detail";
-	}
+	// 내가쓴 게시글 자세히 보기 페이지로 이동
+		@GetMapping("/notice/detail")
+		public String retrieve(HttpSession session, final Model model, @RequestParam Long postId,
+				@RequestParam(value = "categoryId", defaultValue = "1") int categoryId) {
+			// 사용자의 세션 정보에서 userId를 가져와서 출력
+			System.out.println(session.getAttribute("userId"));
+
+			String id = (String) session.getAttribute("userId");
+			
+			// 게시글 조회수 증가
+			noticeService.updateViewCnt(postId);
+
+			// 게시글 정보, 댓글 목록, 좋아요 수를 모델에 추가
+			NoticeDto noticeDto = noticeService.selectByPostId(postId);
+			UserDTO userDTO = userService.getUserById(id);
+			
+			model.addAttribute("notice", noticeDto);
+			
+			// 댓글 정보 가져옴
+			model.addAttribute("Comment", noticeService.selectCommentList(postId));
+			
+			model.addAttribute("like", noticeService.likeCnt(postId));
+			model.addAttribute("User", userDTO);
+			
+			return "notice/detail"; // 내가쓴 게시글 자세히 보기 페이지로 이동
+		}
 	
 	// 댓글추가
 	@PostMapping("/addComment")
