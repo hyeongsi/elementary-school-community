@@ -6,11 +6,13 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -19,6 +21,7 @@ import com.example.project.service.UserService;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MypageController {
@@ -74,6 +77,24 @@ public class MypageController {
 		
 		System.out.println("컨트롤러");
 		
+		return "YES";
+	}
+
+	// 회원정보 수정
+	@PatchMapping("/mypage/memberUpdate")
+	@ResponseBody
+	public String modifyInfoById(@Valid UserDTO userDTO, Errors errors) {
+
+		log.info("modifyInfoById() start");
+		if (errors.hasErrors()) {
+			log.info("modifyInfoById() error");
+			log.info("modifyInfoById() userDTO: " + userDTO);
+			return "NO"; // 유효성 검사 오류가 발생하면 다시 회원가입 폼으로 이동
+		}
+
+		userService.modifyInfo(userDTO);
+		log.info("modifyInfoById() end");
+
 		return "YES";
 	}
 
