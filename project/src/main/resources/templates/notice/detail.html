@@ -25,6 +25,15 @@
 <!-- Custom styles for this page -->
 <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}"
 	rel="stylesheet">
+	
+	<!-- Post Style -->
+	<link rel="stylesheet" th:href="@{/Post/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/content.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/button.css}" />
+    
+    <!--  Reply Style -->
+    <link rel="stylesheet" th:href="@{/Post/css/reply.css}" />
 
 </head>
 
@@ -51,10 +60,9 @@
 					<!-- DataTales Example -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
+						
 							<!-- 타이틀 제목 -->
-							<h6 class="m-0 font-weight-bold text-primary">
-								<div class="subject_inner_text" th:text="${notice.title}"></div>
-							</h6>
+							<h6 class="m-0 font-weight-bold text-primary">게시글</h6>
 						</div>
 						<div class="card-body">
 
@@ -65,88 +73,167 @@
 
 									<div id="outter">
 										<div style="padding-top: 10px; padding-bottom: 10px;">
+											<div class="content">
+												<section>
+													<table class="tb tb_row">
+														<colgroup>
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+														</colgroup>
+														<tbody>
+															<tr>
+																<th scope="row">글 유형</th>
+																<td>Ex) 서울 교육청 게시판</td>
 
-											<div class="subject_inner_text" th:text="${notice.content}"></div>
+																<th scope="row">등록일</th>
+																<td th:text="${notice.write_time}"></td>
+															</tr>
+															<tr>
+																<th scope="row">이름</th>
+																<td th:text="${User.name}"></td>
 
-										</div>
-										<button type="button" class="like-btn btn btn-outline-primary"
-											th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
-											<span class="material-symbols-outlined">thumb_up</span> <span
-												th:text="${like}"></span>
-										</button>
-										&nbsp <span th:if="${session.userId!=null}"> 
+																<th scope="row">조회수</th>
+																<td th:text="${notice.viewCnt}"></td>
+															</tr>
+															<tr>
+																<th scope="row">제목</th>
+																<td colspan="3" th:text="${notice.title}"></td>
+															</tr>
+															<tr>
+																<!-- 내용 -->
+																<td colspan="4" th:text="${notice.content}"></td>
+															</tr>
+														</tbody>
+													</table>
+													
+												</section>
+											</div>
+										</div><br><br>
+										
+										
+										<!-- #################### 버튼 3종  #################### -->
+										
+										<div class="row ">
+											<div class="col-sm-12 col-md-11 d-flex justify-content-center align-items-center">
+										
+												<!-- 좋아요 버튼 GetMapping -->
+												<button type="button" class="like-btn btn btn-primary"
+														th:onclick="|location.href='@{/notice/like(postId=${notice.postId})}'|">
+													<span class="material-symbols-outlined">thumb_up</span> 
+													<span th:text="${like}"></span>
+												</button>
+											</div>
+										</div><br>
+										
+										<div class="row ">
+											<div class="col-sm-12 col-md-12 d-flex justify-content-end align-items-end">
+											 	<span th:if="${session.userId!=null}"> 
 												<span th:if="${session.userId.toString().equals(notice.memberId)}">
-												<a class="notice-edit-btn btn btn-outline-primary mr-2"
-												th:value="${notice.memberId}"
-												th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
-												<a class="btn btn-outline-danger mr-2" id="delBtn" 
-												style="color: red;"
-												th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a>
-												</span>
-										</span>
-										<div id="cmt">
-
-											<tr id="ct_id">
-												<td>댓글</td>
-												<br>
-											</tr>
-
-											<script defer src="../js/reply.js"></script>
-											<script defer src="../js/editComment.js"></script>
-											<table border="1"></table>
-											<tr th:each="comment : ${Comment}">
-											<div th:if="${comment.delCheck}" >
-													<td th:text="${comment.commentContents}">내용</td>&nbsp
-													</div>
-											<th:block th:if="${!comment.delCheck}">
-											<div th:if="${comment.delCheck}" >
-													<td th:text="${comment.commentContents}">내용</td>&nbsp
-													</div>
-												<div class="comments comment_"
-													th:attrappend="class=${comment.commentId}"
-													th:value="${comment.memberId}">
-													<td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-													<td th:text="${comment.memberId}">유저ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
-													<td th:text="${comment.commentId}">코멘트ID</td>&nbsp&nbsp&nbsp&nbsp&nbsp
-													<td th:text="${comment.commentContents}">내용</td>&nbsp
-													<button class="reply btn btn-outline-primary "
-														th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-														id="replyBtn">답글</button>
-													<span th:if="${session.userId!=null}"> <a
-														th:if="${session.userId.toString().equals(comment.memberId)}">
-															<button class="edit-comment btn btn-outline-primary "
-																th:attrappend="class=${comment.commentId}, id=${comment.commentId}"
-																id="edit-comment-btn">수정</button>
-													</a> &nbsp
-													</span> <a
-														th:if="${session.userId.toString().equals(comment.memberId)}"
-														class="del-comment" style="color: red;"
-														th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">x</a>
-											</th:if>
 												
-												</div>
-												</div>
+													
+													<!-- 글 수정 버튼 GetMapping -->
+													<a class="notice-edit-btn btn btn-primary mr-2" th:value="${notice.memberId}"
+													th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
+												
+													<!-- 글 삭제 버튼 GetMapping -->
+													<a class="btn btn-danger mr-2" id="delBtn" style="color: white;"
+														th:href="@{/notice/delete(postId=${notice.postId}, categoryId=${notice.categoryId})}">삭제</a> 
+												</span>
+												</span>
+											</div>
+										</div>
+										
+										<!-- #################### 답글  #################### -->
+										
+										<!-- article reply -->
 
+										<div class="article-reply">
+											    
+											<h1></h1>
+											<!-- 댓글 가져오기 반복 -->
+											<tr th:each="comment : ${Comment}">
+												<th:block th:if="${comment.delCheck}">
+													<td th:text="${comment.commentContents}">내용</td>
+												</th:block>
+												<th:block th:if="${!comment.delCheck}">
+												<div class="comments comment_" th:attrappend="class=${comment.commentId}" th:value="${comment.memberId}">
+												
+												<!-- 대댓글 위치 뒤로 밀기 -->
+												<!-- <td th:if="${comment.parentCommentId}!=null">&nbsp&nbsp&nbsp&nbsp&nbsp</td> -->	
+																					
+													<s_rp_container>
+													<ul class="reply-list">
+														<s_rp_rep>
+														<li id='[##_rp_rep_id_##]' th:class="${comment.parentCommentId} != null ? re-reply : reply-li">
+
+															<div class="thumb">
+																<img src="../images/undraw_profile.svg" width="48"
+																	height="48" class=reply_profile>
+															</div>
+															<div class="reply-content">
+																<ul class="info">
+																	<li class="nickname" th:text="${User.name}">유저 이름</li>&nbsp;&nbsp;
+																	
+																	<!-- 댓글 작성 시간 -->
+																	<li class="date" th:text="${comment.replyTime}">작성시간</li>
+																</ul>
+																<p class="text" th:text="${comment.commentContents}">댓글 내용</p>
+																<ul class="control">
+																		<!-- 댓글 버튼 -->	
+																		<button class="reply btn btn-outline-primary "
+																			th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="replyBtn">답글</button>
+																		
+																		<!-- 수정 버튼 -->
+																		<span th:if="${session.userId!=null}"> 
+																			<a th:if="${session.userId.toString().equals(comment.memberId)}">
+																				<button class="edit-comment btn btn-outline-primary "
+																					th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="edit-comment-btn">수정</button>
+																		</a> &nbsp;
+																		</span>
+																		<!-- 댓글 삭제 GetMapping -->
+																		<a th:if="${session.userId.toString().equals(comment.memberId)}"
+																			class="del-comment" style="color: red;"
+																			th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">삭제</a>
+																</ul>
+															</div>
+														</li>
+														</s_rp_rep>
+													</ul>
+													</s_rp_container>
+													</div>
+												</th:block>
 											</tr>
 
 											<div class="common_input_wrapper">
-												<script defer src="../js/comment.js"></script>
+											
+											<!-- ########## 대댓글 ########## -->
+
+							
+
+												<!-- 대댓글 댓글 추가 GetMapping -->
 												<form name="comment-input" action="../addComment"
 													method="post">
 													<input type="hidden" class="postId-input" name="postId"
 														id="postIdInput">
+
+													<!-- 댓글 입력란 -->
+													<br>
 													<div class="comment-wrap">
 														<textarea id="comment-resize" name="comment" rows="3"
-															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea>
+															cols="60" maxlength="500" placeholder="댓글을 입력해주세요."></textarea><br><br>
+														
+														<!-- 댓글 등록 버튼 -->
 														<button type="submit"
-															class="common_input_btn btn-outline-primary" tabindex="0"
+															class="reply btn btn-outline-primary" tabindex="0"
 															id="customButton">등록</button>
 													</div>
-													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
-												 -->
 												</form>
-											</div>
+											</div><!-- End -->
+
 										</div>
+
 									</div>
 								</div>
 								<!-- table -->
@@ -166,40 +253,22 @@
 									</div>
 								</div>
 								<!-- end table -->
-
-								<!-- pagenation -->
-								<div class="row">
-									<div class="col-sm-12 col-md-5">
-										<div class="dataTables_info" id="dataTable_info" role="status"
-											aria-live="polite">Showing 1 to 10 of 57 entries</div>
-									</div>
-								</div>
+								
 							</div>
 							<!-- dataTable_Wrapper -->
+							
 						</div>
 					</div>
-
+					<!-- /.container-fluid -->
+					
 				</div>
-				<!-- /.container-fluid -->
-
+				<!-- End of Main Content -->
+				
 			</div>
-			<!-- End of Main Content -->
-
-			<!-- Footer -->
-			<footer class="sticky-footer bg-white">
-				<div class="container my-auto">
-					<div class="copyright text-center my-auto">
-						<span>Copyright &copy; Your Website 2020</span>
-					</div>
-				</div>
-			</footer>
-			<!-- End of Footer -->
-
+			
 		</div>
 		<!-- End of Content Wrapper -->
 
-	</div>
-	<!-- End of Page Wrapper -->
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top"> <i
@@ -222,6 +291,13 @@
 	<!-- Page level plugins -->
 	<script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
 	<script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+	
+	<!-- 댓글 작성 js 주소 -->
+    <script defer src="../js/reply.js"></script>
+
+    <!-- 대댓글 작성/수정 js 주소 -->
+    <script defer src="../js/editComment.js"></script>
+    <script defer src="../js/comment.js"></script>
 
 </body>
 
