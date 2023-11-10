@@ -55,13 +55,6 @@
 
                         <div id="dataTable_Wrapper" class="dataTables_wrapper dt-bootstrap4">
 
-                            <div class="row mt-3">
-                                <div class="col-sm-12 col-md-12">
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-sm btn-outline-danger" type="button">삭제</button>
-                                    </div>
-                                </div>
-                            </div>
                             <!-- table -->
                             <div class="row">
                                 <div class="col-sm-12">
@@ -70,7 +63,6 @@
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
-                                                <th style="min-width: 15px"><input type="checkbox"></th>
                                                 <th style="min-width: 50px">No.</th>
                                                 <th style="min-width: 100px">제목</th>
                                                 <th style="min-width: 140px">내용</th>
@@ -81,7 +73,6 @@
                                             </tr>
                                             </thead>
                                             <tr th:each="notice : ${noticePageDto.noticeDtoList}" th:onclick="'location.href=\'./MyPostDetail?postId=\' + ' + ${notice.postId}">
-                                                <td><input type="checkbox" data-no="${notice.postId}"></td>
                                                 <td th:text="${notice.postId}">1</td>
                                                 
                                                 <!-- 내 게시글 GetMapping -->
