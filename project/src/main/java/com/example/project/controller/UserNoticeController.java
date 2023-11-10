@@ -41,7 +41,7 @@ public class UserNoticeController {
             				@RequestParam(defaultValue = "") String keyword,
             				@RequestParam(defaultValue = "title") String searchType,
             				@RequestParam(defaultValue = "1") int categoryId,
-            				@RequestParam(required = false) String write_date) {
+            				@RequestParam(required = false) String WriteTime) {
 		
 		String memberId = (String) session.getAttribute("userId");
 	    
@@ -51,17 +51,22 @@ public class UserNoticeController {
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
-		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId, write_date);
+		final NoticePageDto noticePageDto = noticeService.selectSearchNoticePage(displayUnit, curPage, keyword, searchType, categoryId, WriteTime);
 		model.addAttribute("noticePageDto", noticePageDto);
 		return "notice/noticeList";
 	}
 	
 	// 게시글쓰기
 	@GetMapping("/notice/write")
-	public String noticeWriteForm(final Model model, Principal principal, @RequestParam Long categoryId) {
+	public String noticeWriteForm(HttpSession session, final Model model, Principal principal, @RequestParam Long categoryId) {
 		if(principal == null) {
 			return "redirect:/login";
 		}
+		
+		String memberId = (String) session.getAttribute("userId");
+	    
+	    UserDTO userDTO = userService.getUserById(memberId);
+		model.addAttribute("User", userDTO);
 		model.addAttribute("categoryId", categoryId);
 		return "notice/noticeWrite";
 	}
