@@ -73,6 +73,8 @@ function updateSearchSchoolList(res, pIndex, pSize){
 
 // 학교 검색 모달을 출력하기 전 input 초기화
 function initSchoolSearch(){
+    console.log("test");
+
     document.querySelector("#SEARCH_ATPT_OFCDC_SC_CODE").options[0].selected = true;
     document.querySelector("#SEARCH_SCHUL_NM").value = "";
 
