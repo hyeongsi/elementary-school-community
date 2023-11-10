@@ -40,7 +40,7 @@ function updateMember(){
         if(result.isConfirmed){
             $.ajax({
                 url: "http://localhost:8088/app/mypage/memberUpdate",
-                type: "post",
+                type: "PATCH",
                 data: formData, // 직렬화한 폼 데이터를 전송
                 success: function (data) {
                     if (data.trim()==='YES') {
