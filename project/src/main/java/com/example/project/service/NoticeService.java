@@ -39,19 +39,20 @@ public class NoticeService {
     }
     */
     
-    public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype,int categoryId) {
+    public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype,int categoryId , String write_date) {
     	
     	final Map<String, String> map = new HashMap<>();
     	map.put("searchType", searchtype);
     	map.put("keyword", keyword);
     	map.put("categoryId", Integer.toString(categoryId));
+    	map.put("write_date", write_date); // 작성일 호출
+    	
     	final int totalCnt = noticeMapper.noticeTotalCnt(map);
     	final Page page = new Page(displayUnit, curPage, totalCnt);
 
-        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype, categoryId);
+        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype, categoryId, write_date);
      
         final List<NoticeDto> noticeDtoList = noticeMapper.selectSearchNoticePage(pageDto);
-  
 
         final NoticePageDto noticePageDto = new NoticePageDto(page, noticeDtoList);
         return noticePageDto;

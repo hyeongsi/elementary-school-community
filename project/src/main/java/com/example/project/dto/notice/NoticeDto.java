@@ -1,5 +1,7 @@
 package com.example.project.dto.notice;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
@@ -17,12 +19,10 @@ public class NoticeDto {
 	private Long viewCnt;
 	private String memberId;
 	private Long categoryId;
-	private Long commentCount;
-	private String writeTime;
-	private Long rm;
+	private Long comment_count;
+	private String write_time;
 	
-	
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long commentCount,String writeTime) {
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long comment_count,String write_time) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
@@ -30,11 +30,11 @@ public class NoticeDto {
 		this.viewCnt = viewCnt;
 		this.memberId = memberId;
 		this.categoryId = categoryId;
-		this.commentCount = commentCount;
-		this.writeTime = writeTime;
+		this.comment_count = comment_count;
+		this.write_time = write_time;
 	}
 	
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String writeTime) {
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String write_time) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
@@ -42,7 +42,7 @@ public class NoticeDto {
 		this.viewCnt = viewCnt;
 		this.memberId = memberId;
 		this.categoryId = categoryId;
-		this.writeTime = writeTime;
+		this.write_time = write_time;
 	}
 	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
@@ -54,28 +54,12 @@ public class NoticeDto {
 		this.memberId = memberId;
 		this.categoryId = categoryId;
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return "NoticeDto [postId=" + postId + ", title=" + title + ", content=" + content + ", good=" + good
-				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + ", writeTime="
-				+ writeTime + "]";
-	}
-
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId,
-			Long categoryId, Long commentCount, String writeTime, Long rm) {
-		this.postId = postId;
-		this.title = title;
-		this.content = content;
-		this.good = good;
-		this.viewCnt = viewCnt;
-		this.memberId = memberId;
-		this.categoryId = categoryId;
-		this.commentCount = commentCount;
-		this.writeTime = writeTime;
-		this.rm = rm;
+				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + ", write_date="
+				+ write_time + "]";
 	}
 
 	

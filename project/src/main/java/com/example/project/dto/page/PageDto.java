@@ -12,13 +12,16 @@ public class PageDto {
     private String keyword;
     private String searchType;
     private int categoryId;
+    private String write_Time;
 
-    public PageDto(int start, int end, String keyword, String searchType,int categoryId) {
+	public PageDto(int start, int end, String keyword, String searchType, int categoryId, String write_Time) {
+		super();
 		this.start = start;
 		this.end = end;
 		this.keyword = keyword;
 		this.searchType = searchType;
 		this.categoryId = categoryId;
+		this.write_Time = write_Time;
 	}
 
 	public PageDto(int start, int end) {

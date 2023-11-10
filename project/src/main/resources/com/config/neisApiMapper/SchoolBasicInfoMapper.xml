@@ -14,22 +14,30 @@
         INSERT INTO school (
         sd_schul_code,
         atpt_ofcdc_sc_code,
+        atpt_ofcdc_sc_nm,
         schul_nm,
         org_rdnma,
         org_telno,
         hmpg_adres,
         foas_memrd,
+        schul_knd_sc_nm,
+        lctn_sc_nm,
+        fond_sc_nm,
         write_date
         )
         <foreach collection="rowList" item="row" separator="UNION ALL">
             SELECT
             #{row.sdSchulCode, jdbcType=VARCHAR},
             #{row.atptOfcdcScCode, jdbcType=VARCHAR},
+            #{row.atptOfcdcScNm, jdbcType=VARCHAR},
             #{row.schulNm, jdbcType=VARCHAR},
             #{row.orgRdnma, jdbcType=VARCHAR},
             #{row.orgTelno, jdbcType=VARCHAR},
             #{row.hmpgAdres, jdbcType=VARCHAR},
             #{row.foasMemrd, jdbcType=VARCHAR},
+            #{row.schulKndScNm, jdbcType=VARCHAR},
+            #{row.lctnScNm, jdbcType=VARCHAR},
+            #{row.fondScNm, jdbcType=VARCHAR},
             sysdate
             FROM DUAL
         </foreach>
@@ -48,8 +56,8 @@
             FROM (SELECT *
                 FROM school
                 <where>
-                    <if test="searchSchoolDto.atptOfCdcScCode != null">
-                        AND (ATPT_OFCDC_SC_CODE LIKE '%' || #{searchSchoolDto.atptOfCdcScCode} || '%')
+                    <if test="searchSchoolDto.atptOfcdcScCode != null">
+                        AND (ATPT_OFCDC_SC_CODE LIKE '%' || #{searchSchoolDto.atptOfcdcScCode} || '%')
                     </if>
                     <if test="searchSchoolDto.sdSchulCode != null">
                         AND (SD_SCHUL_CODE LIKE '%' || #{searchSchoolDto.sdSchulCode} || '%')
@@ -79,8 +87,8 @@
             FROM (SELECT *
                 FROM school
                 <where>
-                    <if test="searchSchoolDto.atptOfCdcScCode != null">
-                        AND (ATPT_OFCDC_SC_CODE LIKE '%' || #{searchSchoolDto.atptOfCdcScCode} || '%')
+                    <if test="searchSchoolDto.atptOfcdcScCode != null">
+                        AND (ATPT_OFCDC_SC_CODE LIKE '%' || #{searchSchoolDto.atptOfcdcScCode} || '%')
                     </if>
                     <if test="searchSchoolDto.sdSchulCode != null">
                         AND (SD_SCHUL_CODE LIKE '%' || #{searchSchoolDto.sdSchulCode} || '%')
