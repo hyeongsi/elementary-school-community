@@ -75,7 +75,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%"
+                                        <table class="table table-bordered" id=" dataTable" width="100%"
                                                style="text-align: center">
                                             <thead style="text-align: center">
                                             <tr>
@@ -120,17 +120,17 @@
                                         <ul class="pagination">
                                             <li class="paginate_button page-item previous" id="dataTable_previous"
                                                 th:classappend="${noticePageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/templates/admin/notice(categoryId=${categoryId},displayUnit=${noticePageDto.page.displayUnit},curPage=${noticePageDto.page.curPage - 1})}" class="page-link">Previous</a>
+                                                <a href="#" th:href="@{/admin/notice(categoryId=${categoryId},displayUnit=${noticePageDto.page.displayUnit},curPage=${noticePageDto.page.curPage - 1})}" class="page-link">Previous</a>
                                             </li>
                                             <th:block th:each="num : ${#numbers.sequence(noticePageDto.page.startPage,
                                                                                         noticePageDto.page.endPage)}">
                                                 <li class="paginate_button page-item" th:classappend="${num == noticePageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/templates/admin/notice(categoryId=${categoryId},displayUnit=${noticePageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
+                                                    <a href="#" th:href="@{/admin/notice(categoryId=${categoryId},displayUnit=${noticePageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
                                                 </li>
                                             </th:block>
                                             <li class="paginate_button page-item next" id="dataTable_next"
                                                 th:classappend="${noticePageDto.page.curPage == noticePageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/templates/admin/notice(categoryId=${categoryId},displayUnit=${noticePageDto.page.displayUnit},curPage=${noticePageDto.page.curPage + 1})}" class="page-link">Next</a>
+                                                <a href="#" th:href="@{/admin/notice(categoryId=${categoryId},displayUnit=${noticePageDto.page.displayUnit},curPage=${noticePageDto.page.curPage + 1})}" class="page-link">Next</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -146,16 +146,6 @@
 
         </div>
         <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->

@@ -105,17 +105,17 @@
                                         <ul class="pagination">
                                             <li class="paginate_button page-item previous" id="dataTable_previous"
                                                 th:classappend="${categoryPageDto.page.curPage == 1} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/templates/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage - 1})}" class="page-link">Previous</a>
+                                                <a href="#" th:href="@{/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage - 1})}" class="page-link">Previous</a>
                                             </li>
                                             <th:block th:each="num : ${#numbers.sequence(categoryPageDto.page.startPage,
                                                                                         categoryPageDto.page.endPage)}">
                                                 <li class="paginate_button page-item" th:classappend="${num == categoryPageDto.page.curPage} ? 'active' : '' ">
-                                                    <a href="#" th:href="@{/templates/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
+                                                    <a href="#" th:href="@{/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${num})}" class="page-link" th:text="${num}"></a>
                                                 </li>
                                             </th:block>
                                             <li class="paginate_button page-item next" id="dataTable_next"
                                                 th:classappend="${categoryPageDto.page.curPage == categoryPageDto.page.endPage} ? 'disabled' : '' ">
-                                                <a href="#" th:href="@{/templates/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage + 1})}" class="page-link">Next</a>
+                                                <a href="#" th:href="@{/admin/category(boardId=${boardId},displayUnit=${categoryPageDto.page.displayUnit},curPage=${categoryPageDto.page.curPage + 1})}" class="page-link">Next</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -131,16 +131,6 @@
 
         </div>
         <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->
