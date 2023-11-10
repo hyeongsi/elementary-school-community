@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.mapper.HomePageMapper">
+
+    <select id="mainPageTop5" resultType="MainPageDto" parameterType="int">
+	SELECT * FROM (
+	SELECT
+	p.post_id,
+	p.title,
+	p.content,
+	p.view_cnt,
+	m.name AS member_name,
+	COUNT(l.post_id) AS like_count
+	FROM
+	post p
+	JOIN
+	member_data m ON p.member_id = m.id
+	LEFT JOIN
+	liketable l ON p.post_id = l.post_id AND l.good = 1
+	WHERE
+	p.category_id IN (
+	SELECT c.category_id
+	FROM category c
+	WHERE c.board_id = #{boardId}
+	)
+	GROUP BY
+	p.post_id, p.title, p.content, p.view_cnt, m.name
+	ORDER BY
+	like_count DESC, view_cnt DESC
+	)
+	WHERE ROWNUM &lt;= 5
+    </select>
+    
+    <select id="mainPagePublicTop5" resultType="MainPageDto">
+	SELECT *
+	FROM (
+	SELECT
+	p.post_id,
+	p.title,
+	p.content,
+	p.view_cnt,
+	m.name AS member_name,
+	c.category_name,
+	b.board_name,
+	COUNT(l.post_id) AS like_count
+	FROM
+	post p
+	JOIN member_data m ON p.member_id = m.id
+	LEFT JOIN liketable l ON p.post_id = l.post_id AND l.good = 1
+	JOIN category c ON p.category_id = c.category_id
+	JOIN board b ON c.board_id = b.board_id
+	WHERE
+	p.category_id IN (
+	SELECT c.category_id
+	FROM category c
+	WHERE c.board_id > 37
+	)
+	GROUP BY
+	p.post_id, p.title, p.content, p.view_cnt, m.name, c.category_name, b.board_name
+	ORDER BY
+	like_count DESC, view_cnt DESC
+	)
+	WHERE ROWNUM &lt;= 5
+    </select>
+    
+</mapper>
