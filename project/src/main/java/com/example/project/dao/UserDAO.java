@@ -60,6 +60,8 @@ public interface UserDAO {
 
     // ID값으로 role 검색
     public String getUserRoleById(String id);
-    
-    
+
+    // 전 학생 학년 증가
+    public int increaseGrade();
+  
 }

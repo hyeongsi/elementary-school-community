@@ -51,7 +51,7 @@ public class SchoolBasicInfoController {
     @Scheduled(cron = "0 0 3 15 * *")
 //    @GetMapping("/apiDeleteAll")
     public String apiDeleteAll() throws JsonProcessingException, SQLException {
-        schoolBasicInfoService.deleteAllNMonthAgo(2);
+        schoolBasicInfoService.deleteAllNMonthAgo(0);
         return "success";
     }
 

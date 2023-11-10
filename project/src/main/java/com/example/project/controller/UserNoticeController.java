@@ -225,7 +225,7 @@ public class UserNoticeController {
     public List<NoticeCategoryDto> getCategories(Principal principal) {
 		String userId = null;
 		String userEO = null;
-		if(principal == null) {
+		if(principal != null) {
 		userId = principal.getName();
 		userEO = userService.userInfo(userId).getOfficeOfEducationCode().toString();
 		}

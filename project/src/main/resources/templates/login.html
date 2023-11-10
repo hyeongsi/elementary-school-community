@@ -8,10 +8,6 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>초등 커뮤니티 - 로그인</title>
-<script defer src="./js/modal.js"></script>
-<script defer src="./js/schoolSearch.js"></script>
-<link rel="stylesheet" href="./css/modal.css">
-<link rel="stylesheet" href="./css/schSearch.css">
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
@@ -143,50 +139,14 @@
 								<option value="20">20반</option>
 							</select>
 						</div>
-						
-						<button id="modalBtn" class="btn">학교선택</button>
 
-
+						<a class="btn" data-target="#searchSchoolModal" data-toggle="modal" data-dismiss="modal" onclick="initSchoolSearch()">학교선택</a>
 
 						<button class="signup_btn" type="button" id="CrmsignUp">Sign Up</button>
 				
 
 					</form>
 				</div>
-				<div class="modal-box">
-					<dialog class="modal" id="schModal">
-					<body class="modal_body">
-						<button style="float: right;" id="closeModal"
-							class="btn close-button">x</button>
-						<h2>학교 찾기</h2>
-						<select id="ATPT_OFCDC_SC_CODE">
-							<option value="B10">서울특별시교육청</option>
-							<option value="C10">부산광역시교육청</option>
-							<option value="D10">대구광역시교육청</option>
-							<option value="E10">인천광역시교육청</option>
-							<option value="F10">광주광역시교육청</option>
-							<option value="G10">대전광역시교육청</option>
-							<option value="H10">울산광역시교육청</option>
-							<option value="I10">세종특별시교육청</option>
-							<option value="J10">경기도교육청</option>
-							<option value="K10">강원특별자치도교육청</option>
-							<option value="M10">충청북도교육청</option>
-							<option value="N10">충청남도교육청</option>
-							<option value="P10">전라북도교육청</option>
-							<option value="Q10">전라남도교육청</option>
-							<option value="R10">경상북도교육청</option>
-							<option value="S10">경상남도교육청</option>
-							<option value="T10">제주특별자치도교육청</option>
-						</select>
-						<input type="text" id="SCHUL_NM" size="20">
-						<button id="sheet-search-button" href="#" class="btn_A">검색</button>
-
-						<div class="SCH_NM" id="SCH_Name"></div>
-					</body>
-					</dialog>
-				</div>
-
-				<!-- 모달@ㅉㄴㅃ@@@@@@@@@@@@@@@@@ㅃ@ㅃ@ㅃㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃ@ㅃㅃ@@ㅃㅃ@@ㅃ@@@@ -->
 
 				<!-- 로그인 폼 -->
 
@@ -235,6 +195,9 @@
 		</div>
 
 	</div>
+
+	<!-- 학교찾기 모달 -->
+	<div th:replace="common/searchSchool :: searchSchool('#SCHUL_NM_SIGN', '#SD_SCHUL_CODE_SIGN', '#ATPT_OFCDC_SC_NM_SIGN', '#ATPT_OFCDC_SC_CODE_SIGN')"></div>
 
 	<!-- Bootstrap core JavaScript-->
 	<script src="vendor/jquery/jquery.min.js"></script>
@@ -400,7 +363,6 @@
   
     
     </script>
-    
 
 </body>
 

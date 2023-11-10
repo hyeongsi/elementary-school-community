@@ -72,7 +72,7 @@ public class SchoolBasicInfoService {
                         .queryParam("pIndex", pIndex)
                         .queryParam("pSize", pSize)
                         .queryParam("SCHUL_KND_SC_NM", "초등학교")
-                        .queryParam("ATPT_OFCDC_SC_CODE", searchSchoolDto.getAtptOfCdcScCode())
+                        .queryParam("ATPT_OFCDC_SC_CODE", searchSchoolDto.getAtptOfcdcScCode())
                         .queryParam("SD_SCHUL_CODE", searchSchoolDto.getSdSchulCode())
                         .queryParam("SCHUL_NM", searchSchoolDto.getSchulNm())
                         .queryParam("LCTN_SC_NM", searchSchoolDto.getLctnScNm())
@@ -143,6 +143,7 @@ public class SchoolBasicInfoService {
             }
 
             System.out.println("전체 " + listCount + "개의 데이터 중 "+ insertCnt + "개의 schoolInfo 저장 완료");
+            connection.commit();
         }catch (Exception e){
             e.printStackTrace();
             connection.rollback();
@@ -153,7 +154,6 @@ public class SchoolBasicInfoService {
             connection.close();
         }
 
-        connection.commit();
         return true;
     }
 
