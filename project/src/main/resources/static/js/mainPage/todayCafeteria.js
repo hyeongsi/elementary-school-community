@@ -18,7 +18,6 @@ function getMealSchedule(officeOfEducationCode, schoolCode){
     }
     const date = getToday();
     const cUrl = getCURL(officeOfEducationCode, schoolCode, date);
-    console.log(cUrl);
     fetch(cUrl)
         .then(response => response.json())
         .then(res => mealScheduleProcess(res))

@@ -19,8 +19,7 @@ function getSchedule(officeOfEducationCode, schoolCode){
     }
     const date = getToday();
     const url = getURL(officeOfEducationCode, schoolCode, date);
-    console.log(url);
-
+    
     fetch(url)
         .then(response => response.json())
         .then(res => scheduleProcess(res))
@@ -66,7 +65,6 @@ function updateCalendarWithSchedule(res){
         }
 
         const html = `<div>${row[0].EVENT_NM}</div>`;
-        console.log(html);
         eventDateBoardElement.insertAdjacentHTML("beforeend", html);
     
 }
