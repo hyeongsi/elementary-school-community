@@ -20,10 +20,10 @@ public class MemberApiController {
     private final UserService userService;
  
     @GetMapping("/member/schoolInfo")
-    public SchoolInfo schoolInfoDetails(Principal principal) throws IllegalAccessException {
+    public SchoolInfo schoolInfoDetails(Principal principal) {
 
         if(principal == null)
-            throw new IllegalAccessException();
+            return null;
 
         SchoolInfo schoolInfo = userService.userInfo(principal.getName());
         return schoolInfo;
