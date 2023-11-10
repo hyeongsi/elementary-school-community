@@ -139,7 +139,8 @@
     <select id="selectByPostId" resultType="NoticeDto" parameterType="long">
 	SELECT post_Id, title, content , good, view_cnt, p.member_id ,
 	category_id, TO_CHAR(write_time, 'YYYY-MM-DD HH24:MI:SS') write_time,
-	(select name from member_data where id = p.member_id) name
+	(select name from member_data where id = p.member_id) name, 
+	(select category_name from category where category_id = p.category_id) category_name
 	FROM post p
 	WHERE post_Id = #{postId}
     </select>

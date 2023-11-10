@@ -85,13 +85,14 @@
 														<tbody>
 															<tr>
 																<th scope="row">글 유형</th>
-																<td>Ex) 서울 교육청 게시판</td>
+																<td th:text="${notice.categoryName}">Ex) 서울 교육청 게시판</td>
 
 																<th scope="row">등록일</th>
 																<td th:text="${notice.WriteTime}"></td>
 															</tr>
 															<tr>
 																<th scope="row">이름</th>
+																<td th:text="${notice.name}"></td>
 																<!-- 
 																<td th:text="${User.name}"></td>
 																 -->

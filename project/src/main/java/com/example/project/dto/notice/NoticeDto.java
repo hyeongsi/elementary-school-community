@@ -24,6 +24,7 @@ public class NoticeDto {
 	private Long commentCount;
 	private String writeTime;
 	private String name;
+	private String categoryName;
 	
 	
 	
