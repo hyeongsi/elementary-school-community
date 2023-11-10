@@ -20,7 +20,7 @@ public class NoticeDto {
 	private String memberId;
 	private Long categoryId;
 	private Long comment_count;
-	private String write_time;
+	private String writeTime;
 	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, Long comment_count,String write_time) {
 		this.postId = postId;
@@ -31,10 +31,10 @@ public class NoticeDto {
 		this.memberId = memberId;
 		this.categoryId = categoryId;
 		this.comment_count = comment_count;
-		this.write_time = write_time;
+		this.writeTime = writeTime;
 	}
 	
-	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String write_time) {
+	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId, String writeTime) {
 		this.postId = postId;
 		this.title = title;
 		this.content = content;
@@ -42,7 +42,7 @@ public class NoticeDto {
 		this.viewCnt = viewCnt;
 		this.memberId = memberId;
 		this.categoryId = categoryId;
-		this.write_time = write_time;
+		this.writeTime = writeTime;
 	}
 	
 	public NoticeDto(Long postId, String title, String content, Long good, Long viewCnt, String memberId, Long categoryId) {
@@ -58,8 +58,8 @@ public class NoticeDto {
 	@Override
 	public String toString() {
 		return "NoticeDto [postId=" + postId + ", title=" + title + ", content=" + content + ", good=" + good
-				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + ", write_date="
-				+ write_time + "]";
+				+ ", viewCnt=" + viewCnt + ", memberId=" + memberId + ", categoryId=" + categoryId + ", writeTime="
+				+ writeTime + "]";
 	}
 
 	

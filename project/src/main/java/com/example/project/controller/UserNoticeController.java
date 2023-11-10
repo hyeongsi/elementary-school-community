@@ -142,7 +142,7 @@ public class UserNoticeController {
 
 			// 게시글 정보, 댓글 목록, 좋아요 수를 모델에 추가
 			NoticeDto noticeDto = noticeService.selectByPostId(postId);
-			UserDTO userDTO = userService.getUserById(id);
+			//UserDTO userDTO = userService.getUserById(id);
 			
 			model.addAttribute("notice", noticeDto);
 			
@@ -150,7 +150,7 @@ public class UserNoticeController {
 			model.addAttribute("Comment", noticeService.selectCommentList(postId));
 			
 			model.addAttribute("like", noticeService.likeCnt(postId));
-			model.addAttribute("User", userDTO);
+			//model.addAttribute("User", userDTO);
 			
 			return "notice/detail"; // 내가쓴 게시글 자세히 보기 페이지로 이동
 		}
