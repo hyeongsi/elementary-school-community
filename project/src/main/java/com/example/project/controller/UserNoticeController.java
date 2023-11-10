@@ -45,9 +45,6 @@ public class UserNoticeController {
 		
 		String memberId = (String) session.getAttribute("userId");
 	    
-	    UserDTO userDTO = userService.getUserById(memberId);
-		model.addAttribute("User", userDTO);
-		
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);

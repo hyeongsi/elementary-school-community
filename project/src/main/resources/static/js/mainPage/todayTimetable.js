@@ -44,6 +44,7 @@ function getTimeResultCode(res){
 function timeScheduleProcess(res){
     const success = timeFilter(res);
     if(success){
+    	clearTimeScheduleInfo();
         updateTimeSchedule(res);
     }else{
         //displayScheduleException();
@@ -116,4 +117,9 @@ function displayScheduleException(){
     const dataInfoWrap = document.querySelector(`.dataInfoWrap`);
     const html = `<div class="infoText">해당하는 데이터가 없습니다.</div>`;
     dataInfoWrap.innerHTML = html;
+}
+
+function clearTimeScheduleInfo(){
+    const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
+    dataInfoWrap.innerHTML = "";
 }

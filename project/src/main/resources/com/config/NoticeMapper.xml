@@ -8,11 +8,11 @@
     <select id="selectSearchNoticePage"
             resultType="NoticeDto" parameterType="PageDTO">
         SELECT p.post_Id, p.title, p.content, (SELECT COUNT(*) FROM liketable WHERE post_id = p.post_Id AND good = 1) AS
-        good_count, p.view_cnt, p.member_id, p.category_id,
-        NVL(comment_count, 0) AS comment_count
+        good, p.view_cnt, p.member_id, p.category_id, (select name from member_data where id = p.member_id) name,
+        NVL(comment_count, 0) AS comment_count, TO_CHAR(p.write_time, 'YYYY-MM-DD HH24:MI:SS') AS write_time
         FROM (
-        SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id
-        FROM post
+        SELECT rownum rm, post_Id, title, content, good, view_cnt, member_id, category_id, write_time
+        FROM post p
 
         <!-- WHERE절을 include 태그로 삽입 -->
         <include refid="search"></include>
