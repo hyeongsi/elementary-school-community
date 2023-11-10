@@ -260,7 +260,7 @@
     
     <select id="selectSearchLikePostById" resultType="NoticeDto"
             parameterType="MemberPageDto">
-        SELECT post.post_Id, post.title, post.content, post.good, post.view_cnt, post.member_id, post.category_id
+        SELECT post.post_Id, post.title, post.content, post.good, post.view_cnt, post.member_id, post.category_id, TO_CHAR(write_time, 'YYYY-MM-DD HH24:MI:SS') AS write_time
 		FROM POST
 		INNER JOIN liketable l ON post.post_Id = l.post_Id
 		WHERE l.member_id = #{memberId}
