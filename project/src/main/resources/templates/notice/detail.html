@@ -39,6 +39,7 @@
 
 <body id="page-top">
 
+
 	<!-- Page Wrapper -->
 	<div id="wrapper">
 
@@ -177,26 +178,23 @@
 															</div>
 															<div class="reply-content">
 																<ul class="info">
-																<!-- 
-																	<li class="nickname" th:text="${User.name}">유저 이름</li>&nbsp;&nbsp;
-																 -->
-																	
+																<li class="nickname" th:text="${comment.name}">유저 이름</li>&nbsp;&nbsp;
 																	<!-- 댓글 작성 시간 -->
 																	<li class="date" th:text="${comment.replyTime}">작성시간</li>
 																</ul>
 																<p class="text" th:text="${comment.commentContents}">댓글 내용</p>
 																<ul class="control">
 																		<!-- 댓글 버튼 -->	
-																		<button class="reply btn btn-outline-primary "
-																			th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="replyBtn">답글</button>
-																		
 																		<!-- 수정 버튼 -->
 																		<span th:if="${session.userId!=null}"> 
 																			<a th:if="${session.userId.toString().equals(comment.memberId)}">
 																				<button class="edit-comment btn btn-outline-primary "
 																					th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="edit-comment-btn">수정</button>
-																		</a> &nbsp;
+																		</a>
 																		</span>
+																		<button class="reply btn btn-outline-primary "
+																			th:attrappend="class=${comment.commentId}, id=${comment.commentId}" id="replyBtn">답글</button>
+																		
 																		<!-- 댓글 삭제 GetMapping -->
 																		<a th:if="${session.userId.toString().equals(comment.memberId)}"
 																			class="del-comment" style="color: red;"

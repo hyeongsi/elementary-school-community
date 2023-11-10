@@ -209,8 +209,10 @@
 
 	<!-- 댓글 정보 가져옴 -->
     <select id="selectCommentList" parameterType="long" resultType="CommentDto">
-        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id, del_check, TO_CHAR(reply_time, 'YYYY-MM-DD HH24:MI:SS') reply_time
-        FROM comments
+        SELECT member_id, comment_contents, post_id , parent_comment_id, comment_id, del_check,
+        (SELECT name FROM member_data WHERE id = c.member_id) name,
+        TO_CHAR(reply_time, 'YYYY-MM-DD HH24:MI:SS') reply_time
+        FROM comments c
         WHERE post_id = #{postId}
         START WITH parent_comment_id IS NULL
         CONNECT BY PRIOR comment_id = parent_comment_id

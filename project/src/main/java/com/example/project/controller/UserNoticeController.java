@@ -211,6 +211,9 @@ public class UserNoticeController {
 	public String likeBtn(Principal principal,
 						  @RequestParam(required = false) String memberId,
 					      @RequestParam(required = false) Long postId) {
+		if(principal==null) {
+			return "redirect:/login";
+		}
 		memberId = principal.getName();
 		LikeDto likeDto = new LikeDto(memberId, postId, null);
 		if(noticeService.likeCheck(likeDto)==null||noticeService.likeCheck(likeDto).getGood()==false) {
