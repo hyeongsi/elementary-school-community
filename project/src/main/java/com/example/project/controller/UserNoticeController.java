@@ -58,10 +58,15 @@ public class UserNoticeController {
 	
 	// 게시글쓰기
 	@GetMapping("/notice/write")
-	public String noticeWriteForm(final Model model, Principal principal, @RequestParam Long categoryId) {
+	public String noticeWriteForm(HttpSession session, final Model model, Principal principal, @RequestParam Long categoryId) {
 		if(principal == null) {
 			return "redirect:/login";
 		}
+		
+		String memberId = (String) session.getAttribute("userId");
+	    
+	    UserDTO userDTO = userService.getUserById(memberId);
+		model.addAttribute("User", userDTO);
 		model.addAttribute("categoryId", categoryId);
 		return "notice/noticeWrite";
 	}

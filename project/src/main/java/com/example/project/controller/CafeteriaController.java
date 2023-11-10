@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CafeteriaController {
 
+	// 급식표
 	@GetMapping("/cafeteria")
 	public String cafeteri() {
 		
