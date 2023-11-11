@@ -1,5 +1,6 @@
 package com.example.project.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -7,10 +8,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity  // 스프링 시큐리티 필터가 스프링 필터체인에 등록됨
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final AuthenticationFailureHandler customFailureHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -30,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")            // 로그인 페이지 경로 지정
                     .loginProcessingUrl("/login")   // login 주소가 호출되면 시큐리티가 낚아채서 대신 로그인을 진행해준다.
                     .defaultSuccessUrl("/loginSuccess")         // 로그인 완료 시 해당 url로 이동
-                    .failureUrl("/login") // 로그인 실패 후 이동 페이지
+                    .failureHandler(customFailureHandler)   // 로그인 실패 핸들러
                     .usernameParameter("id")        // 사용자 아이디(기본: username) 값을 id로 변경 -> UserDetails ServiceloadUserByUsername(parameter)의 파라미터 이름 변경 가능
                     .passwordParameter("pwd")
                     .and()

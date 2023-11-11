@@ -53,7 +53,7 @@
 					<!-- <form th:action="@{./signup}" method="post" modelAttribute="userDTO"> -->
 					<form id="frm" modelAttribute="userDTO">
 
-						<h1>Create Account</h1>
+						<h1>회원 가입</h1>
 						<!-- 
       <div class="social-container">
         <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -62,13 +62,13 @@
       </div>
        -->
 
-						<span>or use your email for registration</span>
+						<span>이메일을 통해 회원가입을 해보세요</span>
 
 						<div class="idbtn">
 							<input class="inptid" type="text" id="accountid" name="id" th:value="${userDTO.id}" placeholder="아이디"  />
 							<button class="idchkbutton" type="button" id="idcheckBtn">중복확인</button>
 						</div>
-						<span id="idcheck"></span> 
+						<span id="idcheck" style="color: red"></span>
 						<span id="CheckValue" type="hidden"></span> 
 						
 						<span th:text="${valid_id}"></span>
@@ -142,7 +142,7 @@
 
 						<a class="btn" data-target="#searchSchoolModal" data-toggle="modal" data-dismiss="modal" onclick="initSchoolSearch()">학교선택</a>
 
-						<button class="signup_btn" type="button" id="CrmsignUp">Sign Up</button>
+						<button class="signup_btn" type="button" id="CrmsignUp">가입하기</button>
 				
 
 					</form>
@@ -152,26 +152,20 @@
 
 				<div class="form-container sign-in-container" id="app">
 
-					<form action="./login" method="post">
+					<form action="/app/login" method="post">
 
 							<!--  #################### 로그인 ############################ -->
 
-						<h1>Sign in</h1>
-						<div class="social-container">
-							<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-							<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-							<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-						</div>
+						<h1>로그인</h1>
 
-
-						<span>use your account</span> 
+						<span></span>
 						<input type="text" id="id" name="id" placeholder="아이디입력" /> 
 						<input type="password" id="pwd" name="pwd" placeholder="비밀번호 입력" /> 
-						<span th:value="${loginFail}"></span> 
+						<span th:text="${param.exception}" style="color: red;"></span>
 						
-						<a href="findPassword">Forgot your password?</a>
+						<a href="findPassword">비밀번호 찾기</a>
 
-						<button class="signin_btn" type="submit" id="login">Sign In</button>
+						<button class="signin_btn" type="submit" id="login">접속하기</button>
 						
 					</form>
 					
@@ -179,15 +173,12 @@
 				<div class="overlay-container">
 					<div class="overlay">
 						<div class="overlay-panel overlay-left">
-							<h1>Welcome Back!</h1>
-							<p>To keep connected with us please login with your personal
-								info</p>
-							<button class="ghost" id="signIn">Sign In</button>
+							<h1 class="mb-4">로그인을 해보세요</h1>
+							<button class="ghost" id="signIn">로그인</button>
 						</div>
 						<div class="overlay-panel overlay-right">
-							<h1>Hello, Friend!</h1>
-							<p>Enter your personal details and start journey with us</p>
-							<button class="ghost" id="signUp">Sign Up</button>
+							<h1 class="mb-4">계정이 없으신가요?</h1>
+							<button class="ghost" id="signUp">회원가입</button>
 						</div>
 					</div>
 				</div>
