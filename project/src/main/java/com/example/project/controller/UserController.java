@@ -24,13 +24,13 @@ public class UserController {
 
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/login")
     public String dispSignup(UserDTO userDTO) {
         return "login";
     }
-	
-	
+
+
 	// 로그인 성공
 	@GetMapping("/loginSuccess")
 	public String loginSuccess(Principal principal, HttpSession session, Model model) { // 로그인
@@ -47,14 +47,22 @@ public class UserController {
 		session.setAttribute("user", userDTO);
 
 		session.setAttribute("userEO", userService.userInfo(principal.getName()).getEducation());
-		
 
-		
 		model.addAttribute("userName", userDTO.getName());
 		System.out.println("로그인 성공");
 
 		return "redirect:/";
 
+	}
+
+	// 로그인 성공
+	@GetMapping("/loginFail")
+	public String loginFail(Model model) { // 로그인
+
+		model.addAttribute("loginFail", "아이디 혹은 비밀번호를 확인해주세요");
+		System.out.println("로그인 실패");
+
+		return "forawrd:/app/login";
 	}
 	
 	// ################## SignUp ##################
