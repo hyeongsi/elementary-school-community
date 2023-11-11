@@ -1,11 +1,8 @@
 package com.example.project.controller;
 
-import java.security.Principal;
-import java.util.Map;
-
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
+import com.example.project.dto.UserDTO;
+import com.example.project.service.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,10 +13,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.example.project.dto.UserDTO;
-import com.example.project.service.UserService;
-
-import lombok.RequiredArgsConstructor;
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.security.Principal;
 
 @Slf4j
 @Controller
@@ -40,27 +36,27 @@ public class MypageController {
 		if (id != null) {
 			UserDTO userDTO = userService.getUserById(id);
 			model.addAttribute("user", userDTO);
-			return "mypage/memberProfile";
+			return "/mypage/memberProfile";
 		}
-		return "redirect:./login";
+		return "redirect:/app/login";
 	}
 
 	// ################## MemberUpdate ##################
 
 	// 회원정보 수정 화면단
 	@GetMapping("/mypage/memberUpdate") // //mypage/member
-	public String toUpdatePage(HttpSession session, Model model) { // 회원정보 수정 페이지
+	public String toUpdatePage(Principal principal, Model model) { // 회원정보 수정 페이지
 		System.out.println("회원정보 수정 페이지");
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		UserDTO userDTO = userService.getUserById(id);
 		model.addAttribute("user", userDTO);
-		return "mypage/memberUpdate";
+		return "/mypage/memberUpdate";
 	}
 
 	// 회원정보 수정
 	@PostMapping("/mypage/memberUpdate")
 	@ResponseBody
-	public String modifyInfo(@Valid UserDTO userDTO, Errors errors, HttpSession session) { // 회원정보 수정
+	public String modifyInfo(@Valid UserDTO userDTO, Errors errors, Principal principal) { // 회원정보 수정
 
 		if (errors.hasErrors()) {   
             System.out.println("NO");
@@ -68,11 +64,11 @@ public class MypageController {
             return "NO"; // 유효성 검사 오류가 발생하면 다시 회원가입 폼으로 이동
 		}
 
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		userDTO.setId(id);
 		
 		System.out.println("업데이트" + userDTO);
-		
+
 		userService.modifyInfo(userDTO);
 		
 		System.out.println("컨트롤러");
@@ -102,24 +98,24 @@ public class MypageController {
 
 	// 회원 정탈퇴 페이지 화면단
 	@GetMapping("/mypage/memberDelete")
-	public String toDeletePage(HttpSession session, Model model) { // 회원정보 수정 페이지
+	public String toDeletePage(Principal principal, Model model) { // 회원정보 수정 페이지
 
 		System.out.println("회원정보 수정 페이지");
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		UserDTO userDTO = userService.getUserById(id);
 		model.addAttribute("user", userDTO);
 		System.out.println(model.getAttribute("user"));
-		return "mypage/memberDelete";
+		return "/mypage/memberDelete";
 
 	}
 
 	// 회원탈퇴
 	@PostMapping("/delete")
 	@ResponseBody
-	public String withdraw(HttpSession session, UserDTO userDTO) { // 탈퇴
+	public String withdraw(HttpSession session, UserDTO userDTO, Principal principal) { // 탈퇴
 
 		System.out.println("탈퇴할 계정 세션을 가져옴");
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		System.out.println(id);
 		if (id != null) {
 			userService.withdraw(id);
@@ -135,32 +131,32 @@ public class MypageController {
 
 	// 회원수정시 비밀번호 체크 화면단
 	@GetMapping("/mypage/memberUpdateCheck")
-	public String memberUpdateCheck(HttpSession session, Model model) {
+	public String memberUpdateCheck(Principal principal, Model model) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		if (id != null) {
-			return "mypage/memberUpdateCheck";
+			return "/mypage/memberUpdateCheck";
 		}
-		return "redirect:./login";
+		return "redirect:/app/login";
 	}
 
 	// 회원 탈퇴시 비밀번호 체크 화면단
 	@GetMapping("/mypage/memberDeleteCheck")
-	public String memberDeleteCheck(HttpSession session, Model model) {
+	public String memberDeleteCheck(Principal principal, Model model) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		if (id != null) {
-			return "mypage/memberDeleteCheck";
+			return "/app/mypage/memberDeleteCheck";
 		}
-		return "redirect:./login";
+		return "redirect:/app/login";
 	}
 	
 	// 회원 수정/탈퇴시 비밀번호 중복 체크
 		@ResponseBody
 		@PostMapping("/pwdChk")
-		public String getpwd(String pwd, HttpSession session) {
+		public String getpwd(String pwd, Principal principal) {
 			
-			String id = (String) session.getAttribute("userId");
+			String id = principal.getName();
 			String EncordPwd = userService.getEncordpwd(id);
 			
 			boolean pwdCheck = passwordEncoder.matches(pwd, EncordPwd);
@@ -176,25 +172,25 @@ public class MypageController {
 
 	// 비밀번호 변경 화면단
 	@GetMapping("/mypage/memberPasswordUpdate")
-	public String memberUpdateDisplay(HttpSession session, Model model) {
+	public String memberUpdateDisplay(Principal principal, Model model) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = principal.getName();
 		if (id != null) {
-			return "mypage/memberPasswordUpdate";
+			return "/mypage/memberPasswordUpdate";
 		}
-		return "redirect:./login";
+		return "redirect:/app/login";
 	}
 	
 	// 비밀번호 변경 화면단
 		@PostMapping("/mypage/memberPasswordUpdate")
 		@ResponseBody
-		public String memberPasswordUpdate(String pwd, String changepwd, String rechangepwd, HttpSession session, Model model) {
+		public String memberPasswordUpdate(String pwd, String changepwd, String rechangepwd, Principal principal, Model model) {
 
 			System.out.println("pwd: "+pwd);
 			System.out.println("changepwd: "+changepwd);
 			System.out.println("rechangepwd: "+rechangepwd);
 
-			String id = (String) session.getAttribute("userId");
+			String id = principal.getName();
 			String EncordPwd = userService.getEncordpwd(id);
 			boolean pwdCheck = passwordEncoder.matches(pwd, EncordPwd);
 			System.out.println("pwdCheck: "+pwdCheck);
