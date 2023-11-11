@@ -85,6 +85,8 @@ public class UserNoticeController {
 		return "redirect:/notice/list?categoryId="+categoryId;
 	}
 	
+	
+	
 	// 게시글 수정 폼 페이지로 이동
 		@GetMapping("/notice/edit")
 		public String noticeEditForm(HttpSession session, Principal principal, final Model model, @RequestParam("postId") Long postId) {
@@ -103,30 +105,37 @@ public class UserNoticeController {
 		    model.addAttribute("notice", noticeService.selectByPostId(postId));
 		    return "notice/edit"; // 게시글 수정 폼 페이지로 이동
 		}
+		
+		
 
 		// 게시글 수정 처리
+		@ResponseBody
 		@PostMapping("/notice/edit")
 		public String noticeUpdate(Principal principal, @RequestParam(value = "postId", required = false) Long postId, @RequestParam String title, @RequestParam String content) {
 		    if (principal == null) {
 		        // 사용자가 로그인하지 않은 경우, 로그인 페이지로 리다이렉트
 		        return "redirect:/login";
 		    }
+		    
+		    System.out.println("엄준식");
 
 		    // 입력된 게시글 정보를 이용하여 게시글을 수정
 		    NoticeDto noticeDto = new NoticeDto(postId, title, content, null, null, null, null);
 		    noticeService.updateNotice(noticeDto);
 		    
 		    // 수정된 게시글의 상세 페이지로 리다이렉트
-		return "redirect:/notice/detail?postId="+noticeDto.getPostId();
+		return "YES";
 	}
 	
 	// 게시글 삭제
 	@GetMapping("/notice/delete")
+	@ResponseBody
 	public String noticeDelete(Long postId,
 								@RequestParam(defaultValue = "1") int categoryId) {
 		noticeService.deleteNotice(postId);
-		return "redirect:/notice/list?categoryId="+categoryId;
+		return "YES";
 	}
+	
 	
 	// 내가쓴 게시글 자세히 보기 페이지로 이동
 		@GetMapping("/notice/detail")

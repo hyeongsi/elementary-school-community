@@ -12,6 +12,17 @@
     <link
             href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
             rel="stylesheet">
+            
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<link
+         href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+         rel="stylesheet"
+         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+         crossorigin="anonymous" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
     <!-- Custom styles for this template -->
     <link th:href="@{/css/sb-admin-2.min.css}" rel="stylesheet">
@@ -71,7 +82,7 @@
 															<col style="width: 23%;" />
 														</colgroup>
 														<tbody>
-															<form name="edit-form" action="./edit" autocomplete="off" method="post">
+															<form id="frm">
 															<tr>
 																<th scope="row">글 번호</th>
 																	<td th:text="${notice.postId}"></td>
@@ -98,7 +109,7 @@
 																<td colspan="4">
 																	<textarea class="form-control" style="height: 30em; width: 100%;" maxlength='1000'
 																		id="content" name="content" th:text="${notice.content}"></textarea> 
-																	<input type="submit" id="submiBtn" class="btn btn-outline-primary mr-2" value="수정">
+																	<input type="button" id="submiBtn" class="btn btn-outline-primary mr-2" value="수정">
 																</td>
 															</tr>
 															</form>
@@ -152,6 +163,10 @@
 <!-- Page level plugins -->
 <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
 <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
+
+<!-- swal -->
+<script defer src="../js/sweetalert.js"></script>
+
 
 </body>
 
