@@ -211,7 +211,9 @@
 																		</a> &nbsp;
 																		</span>
 																		<!-- 댓글 삭제 GetMapping -->
-																		<button type="button" id="postDelete" th:if="${session.userId.toString().equals(comment.memberId)}" class="del-comment" style="color: red;">삭제</button>
+																		<a th:if="${session.userId.toString().equals(comment.memberId)}"
+																			class="del-comment" style="color: red;"
+																			th:href="@{/delComment(postId=${comment.postId},commentId=${comment.commentId},memberId=${comment.memberId})}">삭제</a>
 																</ul>
 															</div>
 														</li>
