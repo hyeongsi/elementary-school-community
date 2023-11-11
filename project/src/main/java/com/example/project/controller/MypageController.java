@@ -146,7 +146,7 @@ public class MypageController {
 
 		String id = principal.getName();
 		if (id != null) {
-			return "/app/mypage/memberDeleteCheck";
+			return "/mypage/memberDeleteCheck";
 		}
 		return "redirect:/app/login";
 	}
