@@ -22,14 +22,9 @@ function getMealSchedule(officeOfEducationCode, schoolCode){
         .then(response => response.json())
         .then(res => mealScheduleProcess(res))
         .catch(error => {
-        	const dataInfoWrap = document.querySelector(`.dataInfoWrap-meal`);
-    	    const html = `<div class="infoText">일정 없음</div>`;
-    	    dataInfoWrap.innerHTML = html;
-            displayScheduleException();
         });
     setTimeout(() => {
     	  console.error("Fetch 요청이 시간 초과되었습니다");
-    	  displayScheduleException();
     	}, 10000);
 }
 
@@ -39,7 +34,7 @@ function getCURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, date){
 }
 
 function getMealResultCode(res){
-	 return res.mealServiceDietInfo[0].head[1].RESULT.CODE;
+	 return res.RESULT.CODE;
 }
 // 급식표 처리
 function mealScheduleProcess(res){
@@ -48,7 +43,7 @@ function mealScheduleProcess(res){
     	clearMealScheduleInfo();
     	updateMealScheduleTable(res);
     }else{
-        displayScheduleException();
+        displayMealScheduleException();
     }
 }
 
@@ -79,15 +74,10 @@ function mealFilter(res){
 function updateMealScheduleTable(res){
     const row = res.mealServiceDietInfo[1].row;
     
-    
-        const eventDateBoardElement = document.querySelector(`.today-cafeteria`);
+        const eventDateBoardElement2 = document.querySelector(`.dataInfoWrap-meal`);
        
-        const redColor = "#e31b20";
-        if(row[0].SBTR_DD_SC_NM != "해당없음"){
-            eventDateBoardElement.style.color = redColor;
-        }
-
-        row[0].DDISH_NM=solution(row[0].DDISH_NM)
+        console.log(row[0].DDISH_NM);
+        row[0].DDISH_NM=solution(row[0].DDISH_NM);
         shortMeal = row[0].DDISH_NM.replace(/\<br\/>/g, '');
         const html = `<style>
       .meal-table{
@@ -98,7 +88,7 @@ function updateMealScheduleTable(res){
     </style>`+
     
         `<div class="meal-table">${row[0].DDISH_NM}</div>`;
-        eventDateBoardElement.insertAdjacentHTML("beforeend", html);
+        eventDateBoardElement.innerHTML = html;
     
 }
 
@@ -108,12 +98,7 @@ function clearMealScheduleInfo(){
     dataInfoWrap.innerHTML = "";
 }
 
-// display exception info
-function displayScheduleException(){
-    const dataInfoWrap = document.querySelector(`.dataInfoWrap`);
-    const html = `<div class="infoText">해당하는 데이터가 없습니다.</div>`;
-    dataInfoWrap.innerHTML = html;
-}
+
 
 
 // 스택이용 괄호문자 제거 함수
@@ -144,3 +129,9 @@ function solution(s) {
 	  answer = str.reverse().join('')
 	  return answer
 	}
+
+function displayMealScheduleException(){
+    const dataInfoWrap = document.querySelector(`.dataInfoWrap-meal`);
+    const html = `<div class="infoText">일정없음</div>`;
+    dataInfoWrap.innerHTML = html;
+}

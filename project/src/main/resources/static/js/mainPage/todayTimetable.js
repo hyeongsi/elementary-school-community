@@ -33,12 +33,6 @@ function getTURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE,ALL_TI_YMD,GRADE,CLASS_NM){
 }
 
 function getTimeResultCode(res){
-	
-	if(res.RESULT.CODE != "INFO-000"){
-		const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
-	    const html = `<div class="infoText">일정 없음</div>`;
-	     dataInfoWrap.innerHTML = html;
-	}
     return res.elsTimetable[0].head[1].RESULT.CODE;
 }
 
@@ -47,7 +41,6 @@ function getTimeResultCode(res){
 function timeScheduleProcess(res){
     const success = timeFilter(res);
     if(success){
-    	clearTimeScheduleInfo();
         updateTimeSchedule(res);
     }else{
         //displayScheduleException();
@@ -90,7 +83,7 @@ function updateTimeSchedule(res){
     }
     let str = "";
     let html = `<table class="CNTNT">`;
-    let tTable = document.querySelector(`.today-time-table`);
+    let tTable = document.querySelector(`.dataInfoWrap-class`);
     for (let i = 0; i < row.length; i++) {
            html += `<tr><td>${i+1}교시</td><td>${row[i].ITRT_CNTNT}</td></tr>`;
             	str += row[i].ITRT_CNTNT + "</br>";
@@ -121,16 +114,4 @@ function updateTimeSchedule(res){
             //tTable.insertAdjacentHTML("beforeend", `<div>${row[i].ITRT_CNTNT}</div>`);
         }
     
-}
-
-//display exception info
-function displayScheduleException(){
-    const dataInfoWrap = document.querySelector(`.dataInfoWrap`);
-    const html = `<div class="infoText">해당하는 데이터가 없습니다.</div>`;
-    dataInfoWrap.innerHTML = html;
-}
-
-function clearTimeScheduleInfo(){
-    const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
-    dataInfoWrap.innerHTML = "";
 }
