@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
@@ -67,7 +68,9 @@
                                             <tr>
                                                 <th style="min-width: 50px">No.</th>
                                                 <th style="min-width: 100px">제목</th>
+                                                <!-- 
                                                 <th style="min-width: 140px">내용</th>
+                                                 -->
                                                 <th style="min-width: 140px">글쓴이</th>
                                                 <th style="min-width: 140px">작성일</th>
                                                 <th style="min-width: 140px">조회수</th>
@@ -79,11 +82,13 @@
 
                                                 <!-- 내 게시글 GetMapping -->
                                                 <td th:text="${notice.title}"></td>
+                                                <!-- 
                                                 <td>
                                                 	<span class="d-inline-block text-truncate" style="max-width: 300px;" th:text="${notice.content}"></span>
                                                 </td>
-                                                <td th:text="${User.name}">0</td>
-                                                <td th:text="${notice.WriteTime}">0</td>
+                                                 -->
+                                                <td th:text="${notice.name}">0</td>
+                                                <td th:text="${notice.writeTime}">0</td>
                                                 <td th:text="${notice.viewCnt}">0</td>
                                                 <td th:text="${notice.good}">0</td>
                                             </tr>

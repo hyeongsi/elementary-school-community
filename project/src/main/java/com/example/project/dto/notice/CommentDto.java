@@ -4,7 +4,9 @@ import org.apache.ibatis.type.Alias;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Alias("CommentDto")
@@ -17,8 +19,7 @@ public class CommentDto {
 	private Long commentId;
 	private boolean delCheck;
 	private String replyTime;
-
-	public CommentDto(){}
+	private String name;
 
 	public CommentDto(String memberId, String commentContents, Long postId) {
 		this.memberId = memberId;

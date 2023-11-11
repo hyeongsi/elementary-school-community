@@ -45,9 +45,6 @@ public class UserNoticeController {
 		
 		String memberId = (String) session.getAttribute("userId");
 	    
-	    UserDTO userDTO = userService.getUserById(memberId);
-		model.addAttribute("User", userDTO);
-		
 		model.addAttribute("categoryId", categoryId);
 		model.addAttribute("searchType", searchType);
 		model.addAttribute("keyword", keyword);
@@ -144,14 +141,13 @@ public class UserNoticeController {
 			// 사용자의 세션 정보에서 userId를 가져와서 출력
 			System.out.println(session.getAttribute("userId"));
 
-			String id = (String) session.getAttribute("userId");
 			
 			// 게시글 조회수 증가
 			noticeService.updateViewCnt(postId);
 
 			// 게시글 정보, 댓글 목록, 좋아요 수를 모델에 추가
 			NoticeDto noticeDto = noticeService.selectByPostId(postId);
-			UserDTO userDTO = userService.getUserById(id);
+			//UserDTO userDTO = userService.getUserById(id);
 			
 			model.addAttribute("notice", noticeDto);
 			
@@ -159,7 +155,7 @@ public class UserNoticeController {
 			model.addAttribute("Comment", noticeService.selectCommentList(postId));
 			
 			model.addAttribute("like", noticeService.likeCnt(postId));
-			model.addAttribute("User", userDTO);
+			//model.addAttribute("User", userDTO);
 			
 			return "notice/detail"; // 내가쓴 게시글 자세히 보기 페이지로 이동
 		}
@@ -168,7 +164,7 @@ public class UserNoticeController {
 	@PostMapping("/addComment")
 	public String addComment(Principal principal,
 							 @RequestParam Long postId,
-							 @RequestParam String comment,
+							 @RequestParam(defaultValue = " ") String comment,
 							 @RequestParam(required = false) Long parentCommentId) {
 		if(principal==null) {
 			return "redirect:/login";
@@ -206,7 +202,7 @@ public class UserNoticeController {
 	public String editComment(Principal principal,
 							  @RequestParam Long postId,
 							  @RequestParam Long commentId,
-							  @RequestParam String comment,
+							  @RequestParam(defaultValue = " ") String comment,
 							  @RequestParam String memberId) {
 		
 		if(principal == null) {
@@ -224,6 +220,9 @@ public class UserNoticeController {
 	public String likeBtn(Principal principal,
 						  @RequestParam(required = false) String memberId,
 					      @RequestParam(required = false) Long postId) {
+		if(principal==null) {
+			return "redirect:/login";
+		}
 		memberId = principal.getName();
 		LikeDto likeDto = new LikeDto(memberId, postId, null);
 		if(noticeService.likeCheck(likeDto)==null||noticeService.likeCheck(likeDto).getGood()==false) {

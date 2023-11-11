@@ -54,7 +54,7 @@
 											<div
 												class="text-xs font-weight-bold text-primary text-uppercase mb-1">
 												시간표</div>
-												<div class="dataInfoWrap-class"></div>
+												<div class="dataInfoWrap-class">로그인이 필요한 기능입니다</div>
 											<div
 												class="today-time-table h5 mb-0 font-weight-bold text-gray-800"></div>
 										</div>
@@ -78,7 +78,7 @@
 												오늘의 급식</div>
 											<div
 												class="today-cafeteria h5 mb-0 font-weight-bold text-gray-800"></div>
-										<div class="dataInfoWrap-meal"></div>
+										<div class="dataInfoWrap-meal">로그인이 필요한 기능입니다</div>
 										</div>
 										<div class="col-auto">
 											<i class="fa fa-beer fa-2x text-gray-300"></i>
@@ -102,7 +102,7 @@
 
 													<script defer src="/app/js/mainPage/todaySchedule.js"></script>
 
-													<div class="dataInfoWrap"></div>
+													<div class="dataInfoWrap">로그인이 필요한 기능입니다</div>
 													<div
 														class="today-schedule h5 mb-0 font-weight-bold text-gray-800"></div>
 												</div>
@@ -133,8 +133,10 @@
 									<table class="table table-striped text-center table-hover">
 										<thead>
 											<tr>
-												<th class="col-md-2">제목</th>
+												<th class="col-md-5">제목</th>
+												<!-- 
 												<th class="col-md-7">내용</th>
+												 -->
 												<th class="col-md-1">좋아요</th>
 												<th class="col-md-1">조회수</th>
 												<th class="col-md-1">글쓴이</th>
@@ -143,8 +145,10 @@
 										<thead>
 										<span th:if="${loginCheck}==1">
 											<tr style="cursor: pointer;" th:each="item : ${top5}" th:onclick="|location.href='@{/notice/detail(postId=${item.postId})}'|">
-										<td class="title col-md-2" th:text="${item.title}"></td>
+										<td class="title col-md-5" th:text="${item.title}"></td>
+										<!-- 
        									<td class="content col-md-7" th:text="${item.content}"></td>
+										 -->
         								<td class="likeCount col-md-1" th:text="${item.likeCount}"></td>
         								<td class="viewCount col-md-1" th:text="${item.viewCnt}"></td>
         								<td class="memberName col-md-1" th:text="${item.memberName}"></td>

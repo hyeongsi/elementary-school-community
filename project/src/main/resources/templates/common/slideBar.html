@@ -22,14 +22,13 @@
     <div class="sidebar-heading mt-3">
         Menu
     </div>
-    <li class="nav-item">
+    <li sec:authorize="isAuthenticated()" class="nav-item">
         <script defer src="/app/js/getCategory.js"></script>
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
            aria-expanded="true" aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
-            <span th:if="${session.userId!=null}" th:text="${session.userEO}">서울특별시교육청</span>
-            <span th:if="${session.userId==null}" th:text="서울특별시교육청"></span>
-        </a>
+            <span th:text="${session.userEO}">서울특별시교육청</span>
+          </a>
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded" id="categoryList">
             </div>

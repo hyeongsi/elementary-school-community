@@ -115,7 +115,7 @@ function filter(res){
 function scheduleProcess(res, num){
     const success = filter(res);
     if(success){
-//        clearScheduleInfo();
+        clearScheduleInfo();
         updateSchedule(res, num);
     }else{
         displayScheduleException();

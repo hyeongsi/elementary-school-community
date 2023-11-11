@@ -18,7 +18,6 @@ function getMealSchedule(officeOfEducationCode, schoolCode){
     }
     const date = getToday();
     const cUrl = getCURL(officeOfEducationCode, schoolCode, date);
-    console.log(cUrl);
     fetch(cUrl)
         .then(response => response.json())
         .then(res => mealScheduleProcess(res))
@@ -46,7 +45,7 @@ function getMealResultCode(res){
 function mealScheduleProcess(res){
     const success = mealFilter(res);
     if(success){
-    	//clearMealScheduleInfo();
+    	clearMealScheduleInfo();
     	updateMealScheduleTable(res);
     }else{
         displayScheduleException();
@@ -105,7 +104,7 @@ function updateMealScheduleTable(res){
 
 // delete info
 function clearMealScheduleInfo(){
-    const dataInfoWrap = document.querySelector(`.meal-dataInfoWrap`);
+    const dataInfoWrap = document.querySelector(`.dataInfoWrap-meal`);
     dataInfoWrap.innerHTML = "";
 }
 
