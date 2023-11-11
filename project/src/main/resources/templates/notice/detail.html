@@ -160,8 +160,8 @@
 													th:href="@{/notice/edit(postId=${notice.postId})}">글 수정</a>
 												
 													<!-- 글 삭제 버튼 GetMapping -->
-													<span id = "postId" th:value="${notice.postId}"></span>
-													<span id = "categoryId" th:value="${notice.categoryId}"></span>
+													<input id="deletePostId" th:value="${notice.postId}" type="hidden"></input>
+													<input id="deleteCategoryId" th:value="${notice.categoryId}" type="hidden"></input>
 													<button class="btn btn-danger mr-2" id="postDelete" style="color: white;" type="button" >삭제</button>
 												</span>
 												</span>
@@ -325,59 +325,6 @@
     
     <!-- swal -->
     <script defer src="../js/sweetalert.js"></script>
-    
-    <script type="text/javascript">
-    
-    $("#postDelete").on("click", function () {
-        Swal.fire({
-            title: '정말로 삭제하시겠습니까?',
-            text: '삭제 후에는 복구할 수 없습니다.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: '삭제',
-            cancelButtonText: '취소',
-            reverseButtons: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                var postId = $("#postId").val(); // 게시글 ID 가져오기
-                var categoryId = $("#categoryId").val(); // 카테고리 ID 가져오기
-
-                $.ajax({
-                    url: "http://localhost:8088/app/notice/delete",
-                    type: "get",
-                    data: { postId: postId, categoryId: categoryId }, // postId 및 categoryId 전달
-                    success: function (data) {
-                        if (data.trim() === 'YES') {
-                            Swal.fire(
-                                '삭제 완료',
-                                '게시글이 삭제되었습니다.',
-                                'success'
-                            ).then(function () {
-                                location.href = "./list?categoryId=" + categoryId;
-                            });
-                        } else {
-                            Swal.fire(
-                                '오류',
-                                '게시글 삭제에 실패하였습니다.',
-                                'error'
-                            );
-                        }
-                    },
-                    error: function () {
-                        Swal.fire(
-                            '에러',
-                            '서버와의 통신 중 오류가 발생하였습니다.',
-                            'error'
-                        );
-                    }
-                });
-            }
-        });
-    });
-    
-</script>
     
 
 </body>
