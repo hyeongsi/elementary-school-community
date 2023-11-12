@@ -2,8 +2,6 @@ $(document).ready(function () {
 	$(".edit-comment").on('click',function () {
        	$('.reply-input').remove();
        	$('.edit-input').remove();
-       	console.log($(this).attr('id').substr(16));
-       	console.log(document.querySelector(".content-311").innerHTML);
        	const idTag = $('.comment_'+$(this).attr('id').substr(16)).attr("value");
        	const HTML = `<form class="edit-input" action="./MyPostEditCmt" method="post">
 													<input type="hidden" name="postId" id="postIdInput" value="`+document.querySelector(".postId-input").value+ `">

@@ -22,9 +22,6 @@ function getTimeTable(officeOfEducationCode, schoolCode, usergrade, userclass){
         .then(response => response.json())
         .then(res => timeScheduleProcess(res))
         .catch(error => {
-        	const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
-    	    const html = `<div class="infoText">일정 없음</div>`;
-    	    dataInfoWrap.innerHTML = html;
             displayScheduleException();
         });
 }
@@ -36,6 +33,12 @@ function getTURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE,ALL_TI_YMD,GRADE,CLASS_NM){
 }
 
 function getTimeResultCode(res){
+	
+	if(res.RESULT.CODE != "INFO-000"){
+		const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
+	    const html = `<div class="infoText">일정 없음</div>`;
+	     dataInfoWrap.innerHTML = html;
+	}
     return res.elsTimetable[0].head[1].RESULT.CODE;
 }
 
@@ -77,6 +80,14 @@ function timeFilter(res){
 // 달력 업데이트
 function updateTimeSchedule(res){
     const row = res.elsTimetable[1].row;
+    console.log(row[0].ITRT_CNTNT+"시간표");
+   if(row[0].ITRT_CNTNT==null){
+	    console.log(row[0].ITRT_CNTNT);
+    	const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
+	    const html = `<div class="infoText">일정 없음</div>`;
+	    dataInfoWrap.innerHTML = html;
+	    return false;
+    }
     let str = "";
     let html = `<table class="CNTNT">`;
     let tTable = document.querySelector(`.today-time-table`);

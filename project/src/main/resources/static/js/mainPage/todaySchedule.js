@@ -19,7 +19,6 @@ function getSchedule(officeOfEducationCode, schoolCode){
     }
     const date = getToday();
     const url = getURL(officeOfEducationCode, schoolCode, date);
-    
     fetch(url)
         .then(response => response.json())
         .then(res => scheduleProcess(res))
@@ -35,7 +34,7 @@ function getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, date){
 }
 
 function getResultCode(res){
-	if(res.SchoolSchedule[0].head[1].RESULT.CODE == "INFO-200"){
+	if(res.SchoolSchedule[0].head[1].RESULT.CODE != "INFO-000"){
 		const dataInfoWrap = document.querySelector(`.dataInfoWrap`);
 	    const html = `<div class="infoText">일정 없음</div>`;
 	     dataInfoWrap.innerHTML = html;

@@ -11,7 +11,7 @@ $(document).ready(function () {
 													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
 												 -->
 												</form>`;
-       	document.querySelector("#replyBtn"+$(this).attr('id').substring(8)).insertAdjacentHTML("afterend", HTML);
+       	document.querySelector("#comment-input-box"+$(this).attr('id').substring(8)).insertAdjacentHTML("afterend", HTML);
        	
        	
     });

@@ -155,7 +155,7 @@ public class UserNoticeController {
 	@PostMapping("/addComment")
 	public String addComment(Principal principal,
 							 @RequestParam Long postId,
-							 @RequestParam String comment,
+							 @RequestParam(defaultValue = " ") String comment,
 							 @RequestParam(required = false) Long parentCommentId) {
 		if(principal==null) {
 			return "redirect:/login";
@@ -193,7 +193,7 @@ public class UserNoticeController {
 	public String editComment(Principal principal,
 							  @RequestParam Long postId,
 							  @RequestParam Long commentId,
-							  @RequestParam String comment,
+							  @RequestParam(defaultValue = " ") String comment,
 							  @RequestParam String memberId) {
 		
 		if(principal == null) {
