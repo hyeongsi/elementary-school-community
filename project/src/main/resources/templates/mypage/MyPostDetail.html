@@ -155,7 +155,7 @@
 											<!-- 댓글 가져오기 반복 -->
 											<tr th:each="comment : ${Comment}">
 												<th:block th:if="${comment.delCheck}">
-													<td th:text="${comment.commentContents}">내용</td>
+													<td th:text="${comment.commentContents}" style="white-space:pre;">내용</td>
 												</th:block>
 												<th:block th:if="${!comment.delCheck}">
 												<div class="comments comment_" th:attrappend="class=${comment.commentId}" th:value="${comment.memberId}">
