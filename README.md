@@ -65,6 +65,8 @@
   * 회원가입 정보 수정, 조회, 탈퇴
   * 좋아요 누른 게시글, 작성한 글 리스트 확인
 
+<br>
+
 ## 🛠 기술 스택 및 개발 환경
 <table align="center">
   <tr><th colspan="3">front</th></tr>
