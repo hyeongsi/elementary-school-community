@@ -34,6 +34,11 @@ function getCURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, date){
 }
 
 function getMealResultCode(res){
+	try{
+		return res.mealServiceDietInfo[0].head[1].RESULT.CODE;
+	}catch (e) {
+		return res.RESULT.CODE;
+	}
 	 return res.RESULT.CODE;
 }
 // 급식표 처리
@@ -43,7 +48,7 @@ function mealScheduleProcess(res){
     	clearMealScheduleInfo();
     	updateMealScheduleTable(res);
     }else{
-        displayMealScheduleException();
+    	displayMealScheduleException();
     }
 }
 
@@ -65,7 +70,6 @@ function mealFilter(res){
 	case "ERROR-500":   // 서버 오류입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
 	case "ERROR-600":   // 데이터베이스 연결 오류입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
 	case "ERROR-601":   // SQL 문장 오류 입니다. 지속적으로 발생시 홈페이지로 문의(Q&A) 바랍니다.
-		console.log(result);
 		return false;
 	}
 }
@@ -74,9 +78,8 @@ function mealFilter(res){
 function updateMealScheduleTable(res){
     const row = res.mealServiceDietInfo[1].row;
     
-        const eventDateBoardElement2 = document.querySelector(`.dataInfoWrap-meal`);
+        const eventDateBoardElement = document.querySelector(`.dataInfoWrap-meal`);
        
-        console.log(row[0].DDISH_NM);
         row[0].DDISH_NM=solution(row[0].DDISH_NM);
         shortMeal = row[0].DDISH_NM.replace(/\<br\/>/g, '');
         const html = `<style>

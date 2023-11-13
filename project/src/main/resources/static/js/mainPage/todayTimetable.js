@@ -18,7 +18,7 @@ function getTimeTable(officeOfEducationCode, schoolCode, usergrade, userclass){
     const date = getToday();
     const tUrl = getTURL(officeOfEducationCode, schoolCode, date , usergrade, userclass);
 
-    fetch(tUrl)
+     fetch(tUrl)
         .then(response => response.json())
         .then(res => timeScheduleProcess(res))
         .catch(error => {
@@ -33,7 +33,11 @@ function getTURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE,ALL_TI_YMD,GRADE,CLASS_NM){
 }
 
 function getTimeResultCode(res){
-    return res.elsTimetable[0].head[1].RESULT.CODE;
+	try{
+		return res.elsTimetable[0].head[1].RESULT.CODE;
+	}catch (e) {
+		return res.RESULT.CODE;
+	}
 }
 
 
@@ -42,14 +46,13 @@ function timeScheduleProcess(res){
     const success = timeFilter(res);
     if(success){
         updateTimeSchedule(res);
-    }else{
-        //displayScheduleException();
+ }else{
+	 	displayTimeScheduleException();
     }
 }
 
 function timeFilter(res){
-    const result = getTimeResultCode(res);
-
+const result = getTimeResultCode(res);
     switch (result){
         case "INFO-000":    // 정상 처리되었습니다.
         case "INFO-100":     // (해당 자료는 단순 참고용으로만 활용하시기 바랍니다.)
@@ -73,9 +76,7 @@ function timeFilter(res){
 // 달력 업데이트
 function updateTimeSchedule(res){
     const row = res.elsTimetable[1].row;
-    console.log(row[0].ITRT_CNTNT+"시간표");
    if(row[0].ITRT_CNTNT==null){
-	    console.log(row[0].ITRT_CNTNT);
     	const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
 	    const html = `<div class="infoText">일정 없음</div>`;
 	    dataInfoWrap.innerHTML = html;
@@ -114,4 +115,10 @@ function updateTimeSchedule(res){
             //tTable.insertAdjacentHTML("beforeend", `<div>${row[i].ITRT_CNTNT}</div>`);
         }
     
+}
+
+function displayTimeScheduleException(){
+    const dataInfoWrap = document.querySelector(`.dataInfoWrap-class`);
+    const html = `<div class="infoText">일정없음</div>`;
+    dataInfoWrap.innerHTML = html;
 }
