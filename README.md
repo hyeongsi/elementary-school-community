@@ -95,4 +95,70 @@
 
 ## 🎞 프로젝트 내용 
 
+<table align="center">
+  <tr align="center">
+    <td><b>메인페이지 - 미로그인</b></td>
+    <td><b>메인페이지 - 로그인</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387165-81eb5b6b-f475-45bb-bbcc-8a424e4489c4.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387179-ced2b119-83db-4813-9fcc-ec2e2f4904cf.png" width="600" height="300" /></td>
+  </tr>
+  <tr align="center">
+    <td><b>로그인 페이지</b></td>
+    <td><b>회원가입 페이지</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387187-13e3484b-2e1a-418c-b3c6-78d35330c77d.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387195-a3f74454-f91b-485b-8309-1eb8311ddc31.png" width="600" height="300" /></td>
+  </tr>
+    <tr align="center">
+    <td><b>게시글 페이지</b></td>
+    <td><b>게시글 상세</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387210-abc16ffa-5036-4966-ae6e-263dbaf8d72b.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387225-5848515f-a95e-41e2-baf6-49028ac828d4.png" width="600" height="300" /></td>
+  </tr>
+  <tr align="center">
+    <td><b>시간표 페이지</b></td>
+    <td><b>학사 일정 페이지</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387238-53ce8c6f-18db-4092-ae93-b0c0917a10bf.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387249-b55e77bf-82a1-44cd-a31b-f5353e9fe443.png" width="600" height="300" /></td>
+  </tr>
+  <tr align="center">
+    <td><b>급식표 페이지</b></td>
+    <td><b>마이 페이지</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387259-019d31cc-c607-4649-a193-63a4d63489ad.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387281-9bf7f8ea-05bf-430d-81c3-c42ef0a2f62a.png" width="600" height="300" /></td>
+  </tr>
+    <tr align="center">
+    <td><b>어드민 페이지 - 회원 관리</b></td>
+    <td><b>어드민 페이지 - 게시판 관리</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282387290-c54ca293-7a06-479d-b105-f402e15f1370.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282389016-7006840b-9a87-437c-ae3c-a9b1e3e14ac6.png" width="600" height="300" /></td>
+  </tr>
+      <tr align="center">
+    <td><b>어드민 페이지 - 카테고리 관리</b></td>
+    <td><b>어드민 페이지 - 게시글 관리</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282389036-0abf0793-d7d4-4778-90f4-57700e30ff07.png" width="600" height="300" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282389047-6aa39641-bfb0-4107-9ead-6b97bd5c888b.png" width="600" height="300" /></td>
+  </tr>
+   <tr align="center">
+    <td><b>어드민 페이지 - 댓글 관리</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282389061-8bd4f3ea-c404-4066-b6b3-c556364b36c7.png" width="600" height="300" /></td>
+  </tr>
+</table>
+
+
 
