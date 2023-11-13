@@ -31,7 +31,7 @@ public class MyLikePostService {
         map.put("write_date", write_date); // 사용자 ID를 검색 조건에 추가
         
         // 조회수
-        final int totalCnt = noticeMapper.noticeTotalCnt(map);
+        final int totalCnt = noticeMapper.mypageLikeCnt(map);
         
         // 페이징
         final Page page = new Page(displayUnit, curPage, totalCnt);
