@@ -77,7 +77,7 @@
   </tr>
 </table>
 <table align="center">
-  <tr><th colspan="3">back</th></tr>
+  <tr><th colspan="4">back</th></tr>
   <tr>
     <td><img src="https://user-images.githubusercontent.com/71202869/282378442-69966c76-49f3-4bb2-8697-3f8420a501fc.png" width="150" height="100" /></td>
     <td><img src="https://user-images.githubusercontent.com/71202869/282380084-b8305585-a5d7-4bb2-b4c6-b558df20349c.png" width="150" height="100" /></td>
