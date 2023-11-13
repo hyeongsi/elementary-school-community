@@ -1,8 +1,5 @@
 package com.example.project.service.admin;
 
-import com.example.project.dto.category.CategoryDto;
-import com.example.project.dto.category.CategoryPageDto;
-import com.example.project.dto.category.FindCategoryByBoardIdPageDto;
 import com.example.project.dto.notice.*;
 import com.example.project.dto.page.Page;
 import com.example.project.dto.page.PageDto;

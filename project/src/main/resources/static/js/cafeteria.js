@@ -27,13 +27,16 @@ function getSchedule(date, officeOfEducationCode, schoolCode){
     const month = date.getMonth()+1;
     const url = getURL(officeOfEducationCode, schoolCode, year, month);
 
-    console.log(url);
     fetch(url)
         .then(response => response.json())
         .then(res => scheduleProcess(res))
         .catch(error => {
             displayScheduleException();
         });
+    setTimeout(() => {
+    	  console.error("Fetch 요청이 시간 초과되었습니다");
+    	  displayScheduleException();
+    	}, 10000);
 
     // https://open.neis.go.kr/hub/SchoolSchedule?
     // Key=d3348e90712e42a0a67f03cad20d4336
@@ -81,7 +84,7 @@ function filter(res){
     }
 }
 
-// 학사일정 처리
+// 급식표 처리
 function scheduleProcess(res){
     const success = filter(res);
     if(success){
@@ -96,7 +99,6 @@ function scheduleProcess(res){
 function updateCalendarWithSchedule(res){
     const row = res.mealServiceDietInfo[1].row;
 
-    console.log("디버그");
     //console.log("필터링전"+row[0].MLSV_YMD);
    // console.log("필터링후"+solution(row[0].MLSV_YMD));
     
@@ -108,7 +110,7 @@ function updateCalendarWithSchedule(res){
             eventDateBoardElement.style.color = redColor;
         }
 
-        console.log(solution(row[i].DDISH_NM + "식단"));
+        // console.log(solution(row[i].DDISH_NM + "식단"));
         row[i].DDISH_NM=solution(row[i].DDISH_NM)
         const html = `<div>${row[i].DDISH_NM}</div>`;
         eventDateBoardElement.insertAdjacentHTML("beforeend", html);

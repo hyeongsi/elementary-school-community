@@ -7,12 +7,12 @@ $(document).ready(function () {
 													<input type="hidden" name="postId" id="postIdInput" value="`+document.querySelector(".postId-input").value+ `">
        												<input type="hidden" name="commentId" id="commentId" value="`+ $(this).attr('id').substr(16) +`">
 													<input type="hidden" name="memberId" id="memberId" value="`+idTag+ `">
-													<textarea name="comment" rows="3" cols="100%" >`+ document.querySelector("#cmt-"+$(this).attr('id').substr(16)).value +`</textarea>
-													<button type="submit" class="common_input_btn btn-outline-primary" tabindex="0" id="customButton">등록</button>
+													<textarea name="comment" rows="3" cols="100%" placeholder="댓글을 입력해주세요."></textarea>
+													<button type="submit" class="common_input_btn btn btn btn-outline-primary" tabindex="0" id="customButton">등록</button>
 													<!-- <a href="javascript:void(0);" class="common_input_btn" tabindex="0" id="customButton">등록</a>
 												 -->
 												</form>`;
-       	document.querySelector("#replyBtn"+$(this).attr('id').substring(16)).insertAdjacentHTML("afterend", HTML);
+      	document.querySelector("#comment-input-box"+$(this).attr('id').substr(16)).insertAdjacentHTML("afterend", HTML);
        	
        	
     });

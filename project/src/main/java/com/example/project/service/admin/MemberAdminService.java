@@ -33,4 +33,8 @@ public class MemberAdminService {
     public int deleteMemberList(List<UserDTO> userDTOList) {
         return userDAO.deleteMemberList(userDTOList);
     }
+
+    public int increaseGrade() {
+        return userDAO.increaseGrade();
+    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,6 +19,12 @@
 
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
+    
+    	<!-- Post Style -->
+	<link rel="stylesheet" th:href="@{/Post/css/default.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/common.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/content.css}" />
+    <link rel="stylesheet" th:href="@{/Post/css/button.css}" />
 
 </head>
 
@@ -37,7 +43,7 @@
         <div id="content">
 
             <!-- Topbar -->
-            <nav th:replace="admin/common/admin_topBar::topBar"></nav>
+            <nav th:replace="common/topBar::topBar"></nav>
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
@@ -45,88 +51,62 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">게시판 목록</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">게시글 작성</h6>
                     </div>
                     <div class="card-body">
 
                         <div id="dataTable_Wrapper" class="dataTables_wrapper dt-bootstrap4">
 
-								<div>
-									<form name="write-form" action="./write"
-										autocomplete="off" method="post">
-										<div>
-										
-											<input th:type="hidden" id="categoryId" name="categoryId" th:value="${categoryId}">
-											<input class="mt-4" type="text" id="title" maxlength='30'
-												name="title" placeholder="제목을 입력하세요"> 최대 30자 <br />
-											<div id="content_div">
-												<textarea class="form-control"
-													style="height: 100%; width: 100%;" maxlength='1000'
-													id="content" name="content"></textarea>
-											</div>
-											<br /> <input type="submit" id="submiBtn"
-												class="btn btn-outline-primary mr-2" value="작성">
-										</div>
-									</form>
-								</div>
+								
 								<!-- table -->
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%"
-                                               style="text-align: center">
-                                            <thead style="text-align: center">
-                                            
-                                            </thead>
-                                            <tbody>
-                                            
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                	<div style="padding-top: 10px; padding-bottom: 10px;">
+											<div class="content">
+												<section>
+													<table class="tb tb_row">
+														<colgroup>
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+															<col style="width: 10%;" />
+															<col style="width: 23%;" />
+														</colgroup>
+														<tbody>
+															<form name="write-form" action="./write" autocomplete="off" method="post">
+															<tr>
+																<th scope="row">케테고리</th>
+																	<td th:text="${categoryId}"></td>
+																	<input th:type="hidden" id="categoryId" name="categoryId" th:value="${categoryId}">
+																<th scope="row">이름</th>
+																<td th:text="${User.name}"></td>
+															</tr>
+															<tr>
+																<th scope="row">제목</th>
+																<td colspan="3">
+																	<input type="text" class="form-control" id="title" maxlength='30' name="title"
+																		 placeholder="제목을 입력하세요"> &nbsp;최대 30자
+																</td>
+															</tr>
+															<tr>
+																<!-- 내용 -->
+																<td colspan="4">
+																	<textarea class="form-control" style="height: 30em; width: 100%;" maxlength='1000'
+																		id="content" name="content" ></textarea> 
+																	<input type="submit" id="submiBtn" class="btn btn-outline-primary mr-2" value="작성">
+																</td>
+															</tr>
+															</form>
+														</tbody>
+													</table>
+												</section>
+											</div>
+											
+										</div>
+
                                 </div>
                             </div>
                             <!-- end table -->
 
-                            <!-- pagenation -->
-                            <div class="row">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite">
-                                        Showing 1 to 10 of 57 entries
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-7">
-                                    <div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
-                                        <ul class="pagination">
-                                            <li class="paginate_button page-item previous disabled"
-                                                id="dataTable_previous"><a href="#" aria-controls="dataTable"
-                                                                           data-dt-idx="0" tabindex="0"
-                                                                           class="page-link">Previous</a></li>
-                                            <li class="paginate_button page-item active"><a href="#"
-                                                                                            aria-controls="dataTable"
-                                                                                            data-dt-idx="1" tabindex="0"
-                                                                                            class="page-link">1</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="2" tabindex="0"
-                                                                                      class="page-link">2</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="3" tabindex="0"
-                                                                                      class="page-link">3</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="4" tabindex="0"
-                                                                                      class="page-link">4</a></li>
-                                            <li class="paginate_button page-item "><a href="#" aria-controls="dataTable"
-                                                                                      data-dt-idx="5" tabindex="0"
-                                                                                      class="page-link">5</a></li>
-                                            <li class="paginate_button page-item next" id="dataTable_next"><a href="#"
-                                                                                                              aria-controls="dataTable"
-                                                                                                              data-dt-idx="7"
-                                                                                                              tabindex="0"
-                                                                                                              class="page-link">Next</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <!-- dataTable_Wrapper -->
                     </div>
@@ -138,15 +118,6 @@
         </div>
         <!-- End of Main Content -->
 
-        <!-- Footer -->
-        <footer class="sticky-footer bg-white">
-            <div class="container my-auto">
-                <div class="copyright text-center my-auto">
-                    <span>Copyright &copy; Your Website 2020</span>
-                </div>
-            </div>
-        </footer>
-        <!-- End of Footer -->
 
     </div>
     <!-- End of Content Wrapper -->

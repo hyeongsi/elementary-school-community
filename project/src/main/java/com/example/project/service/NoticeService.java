@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.dto.NoticeCategoryDto;
+import com.example.project.dto.board.BoardDto;
 import com.example.project.dto.notice.CommentDto;
 import com.example.project.dto.notice.LikeDto;
 import com.example.project.dto.notice.NoticeDto;
@@ -38,19 +39,20 @@ public class NoticeService {
     }
     */
     
-    public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype,int categoryId) {
+    public NoticePageDto selectSearchNoticePage(final int displayUnit, final int curPage, String keyword, String searchtype,int categoryId , String write_date) {
     	
     	final Map<String, String> map = new HashMap<>();
     	map.put("searchType", searchtype);
     	map.put("keyword", keyword);
     	map.put("categoryId", Integer.toString(categoryId));
+    	map.put("write_date", write_date); // 작성일 호출
+    	
     	final int totalCnt = noticeMapper.noticeTotalCnt(map);
     	final Page page = new Page(displayUnit, curPage, totalCnt);
 
-        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype, categoryId);
+        final PageDto pageDto = new PageDto(page.getStartNum(), page.getEndNum(), keyword, searchtype, categoryId, write_date);
      
         final List<NoticeDto> noticeDtoList = noticeMapper.selectSearchNoticePage(pageDto);
-  
 
         final NoticePageDto noticePageDto = new NoticePageDto(page, noticeDtoList);
         return noticePageDto;
@@ -73,13 +75,12 @@ public class NoticeService {
     public int deleteNotice(Long postId) {
     	return noticeMapper.deleteNotice(postId);
     }
-    public int deleteNoticeList(List<NoticeDto> noticeDtoList) {
-        return noticeMapper.deleteNoticeList(noticeDtoList);
-    }
     
+    // 아이디값으로 게시글 정보 가져옴
     public NoticeDto selectByPostId(Long postId) {
     	return noticeMapper.selectByPostId(postId);
     }
+    
     public int updateNotice(final NoticeDto noticeDto) {
     	return noticeMapper.updateNotice(noticeDto);
     }
@@ -95,11 +96,21 @@ public class NoticeService {
     public void addComment(CommentDto commnetDto) {
     	noticeMapper.addComment(commnetDto);
     }
+    
+    // 댓글 정보 가져옴
     public List<CommentDto> selectCommentList(Long postId){
     	return noticeMapper.selectCommentList(postId);
     }
+    
     public void deleteComment(Long commentId) {
     	noticeMapper.deleteComment(commentId);
+    }
+    public int deleteCheck(Long commentId) {
+    	return noticeMapper.deleteCheck(commentId);
+    }
+    
+    public void completeDelComment(Long commentId) {
+    	noticeMapper.completeDelComment(commentId);
     }
     
     public void editComment(CommentDto commentDto) {
@@ -117,12 +128,19 @@ public class NoticeService {
     public void cancelLike(LikeDto likeDto) {
     	noticeMapper.cancelLike(likeDto);
     }
+    
+    public void deleteLike(LikeDto likeDto) {
+    	noticeMapper.deleteLike(likeDto);
+    }
     public void reLike(LikeDto likeDto) {
     	noticeMapper.reLike(likeDto);
     }
     
     public Long likeCnt(Long postId) {
     	return noticeMapper.likeCnt(postId);
-    }
+    } 
     
+    public List<BoardDto> selectBoardList() {
+    	return noticeMapper.selectBoardList();
+    }
 }

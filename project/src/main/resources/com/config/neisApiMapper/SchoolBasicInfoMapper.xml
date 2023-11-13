@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.project.neisApi.schoolBasicInfo.SchoolBasicInfoMapper">
+
+    <select id="getSeqCurrval" resultType="int">
+        SELECT school_seq.currval
+        FROM DUAL
+    </select>
+
+    <!-- 모든 데이터 삽입 -->
+    <insert id="insertRowList" parameterType="List">
+        INSERT INTO school (
+        sd_schul_code,
+        atpt_ofcdc_sc_code,
+        atpt_ofcdc_sc_nm,
+        schul_nm,
+        org_rdnma,
+        org_telno,
+        hmpg_adres,
+        foas_memrd,
+        schul_knd_sc_nm,
+        lctn_sc_nm,
+        fond_sc_nm,
+        write_date
+        )
+        <foreach collection="rowList" item="row" separator="UNION ALL">
+            SELECT
+            #{row.sdSchulCode, jdbcType=VARCHAR},
+            #{row.atptOfcdcScCode, jdbcType=VARCHAR},
+            #{row.atptOfcdcScNm, jdbcType=VARCHAR},
+            #{row.schulNm, jdbcType=VARCHAR},
+            #{row.orgRdnma, jdbcType=VARCHAR},
+            #{row.orgTelno, jdbcType=VARCHAR},
+            #{row.hmpgAdres, jdbcType=VARCHAR},
+            #{row.foasMemrd, jdbcType=VARCHAR},
+            #{row.schulKndScNm, jdbcType=VARCHAR},
+            #{row.lctnScNm, jdbcType=VARCHAR},
+            #{row.fondScNm, jdbcType=VARCHAR},
+            sysdate
+            FROM DUAL
+        </foreach>
+    </insert>
+
+    <!-- n개월 전 데이터 삭제 -->
+    <delete id="deleteAllNMonthAgo" parameterType="int">
+        DELETE FROM school
+        WHERE MONTHS_BETWEEN(SYSDATE, write_date) >= #{month}
+    </delete>
+
+    <!-- 학교 검색 -->
+    <select id="selectSchool" parameterType="SearchSchoolPageDto" resultType="SchoolInfoRow">
+        SELECT schul.*
+        FROM (SELECT ROWNUM AS rm, filtSchul.*
+            FROM (SELECT *
+                FROM school
+                <where>
+                    <if test="searchSchoolDto.atptOfcdcScCode != null">
+                        AND (ATPT_OFCDC_SC_CODE LIKE '%' || #{searchSchoolDto.atptOfcdcScCode} || '%')
+                    </if>
+                    <if test="searchSchoolDto.sdSchulCode != null">
+                        AND (SD_SCHUL_CODE LIKE '%' || #{searchSchoolDto.sdSchulCode} || '%')
+                    </if>
+                    <if test="searchSchoolDto.schulNm != null">
+                        AND (SCHUL_NM LIKE '%' || #{searchSchoolDto.schulNm} || '%')
+                    </if>
+                    <if test="searchSchoolDto.schulKndScNm != null">
+                        AND (SCHUL_KND_SC_NM LIKE '%' || #{searchSchoolDto.schulKndScNm} || '%')
+                    </if>
+                    <if test="searchSchoolDto.lctnScNm != null">
+                        AND (LCTN_SC_NM LIKE '%' || #{searchSchoolDto.lctnScNm} || '%')
+                    </if>
+                    <if test="searchSchoolDto.fondScNm != null">
+                        AND (FOND_SC_NM LIKE '%' || #{searchSchoolDto.fondScNm} || '%')
+                    </if>
+                </where>
+                ORDER BY SCHUL_NM) filtSchul
+            <![CDATA[WHERE ROWNUM <= #{end}) schul]]>
+        WHERE schul.rm >= #{start}
+    </select>
+
+    <!-- 검색 크기 조회 -->
+    <select id="selectSchoolTotalCnt" parameterType="SearchSchoolPageDto" resultType="int">
+        SELECT count(*)
+        FROM (SELECT ROWNUM AS rm, filtSchul.*
+            FROM (SELECT *
+                FROM school
+                <where>
+                    <if test="searchSchoolDto.atptOfcdcScCode != null">
+                        AND (ATPT_OFCDC_SC_CODE LIKE '%' || #{searchSchoolDto.atptOfcdcScCode} || '%')
+                    </if>
+                    <if test="searchSchoolDto.sdSchulCode != null">
+                        AND (SD_SCHUL_CODE LIKE '%' || #{searchSchoolDto.sdSchulCode} || '%')
+                    </if>
+                    <if test="searchSchoolDto.schulNm != null">
+                        AND (SCHUL_NM LIKE '%' || #{searchSchoolDto.schulNm} || '%')
+                    </if>
+                    <if test="searchSchoolDto.schulKndScNm != null">
+                        AND (SCHUL_KND_SC_NM LIKE '%' || #{searchSchoolDto.schulKndScNm} || '%')
+                    </if>
+                    <if test="searchSchoolDto.lctnScNm != null">
+                        AND (LCTN_SC_NM LIKE '%' || #{searchSchoolDto.lctnScNm} || '%')
+                    </if>
+                    <if test="searchSchoolDto.fondScNm != null">
+                        AND (FOND_SC_NM LIKE '%' || #{searchSchoolDto.fondScNm} || '%')
+                    </if>
+                </where>
+                ORDER BY SCHUL_NM) filtSchul
+            ) schul
+    </select>
+
+</mapper>

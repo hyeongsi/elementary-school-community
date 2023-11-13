@@ -3,6 +3,7 @@ package com.example.project.controller;
 import com.example.project.dto.UserDTO;
 import com.example.project.service.UserService;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
 import java.security.Principal;
 import java.util.Map;
 
@@ -22,13 +24,13 @@ public class UserController {
 
 	private final UserService userService;
 	private final PasswordEncoder passwordEncoder;
-	
+
 	@GetMapping("/login")
     public String dispSignup(UserDTO userDTO) {
         return "login";
     }
-	
-	
+
+
 	// 로그인 성공
 	@GetMapping("/loginSuccess")
 	public String loginSuccess(Principal principal, HttpSession session, Model model) { // 로그인
@@ -36,6 +38,7 @@ public class UserController {
 		UserDTO userDTO = userService.getUserById(principal.getName());
 		if (userDTO == null) { // 로그인 실패
 			model.addAttribute("loginFail", "아이디 혹은 비밀번호를 확인해주세요");
+			System.out.println("로그인 실패");
 			return "/login";
 		}
 
@@ -44,13 +47,22 @@ public class UserController {
 		session.setAttribute("user", userDTO);
 
 		session.setAttribute("userEO", userService.userInfo(principal.getName()).getEducation());
-		
 
-		
 		model.addAttribute("userName", userDTO.getName());
+		System.out.println("로그인 성공");
 
 		return "redirect:/";
 
+	}
+
+	// 로그인 성공
+	@GetMapping("/loginFail")
+	public String loginFail(Model model) { // 로그인
+
+		model.addAttribute("loginFail", "아이디 혹은 비밀번호를 확인해주세요");
+		System.out.println("로그인 실패");
+
+		return "forawrd:/app/login";
 	}
 	
 	// ################## SignUp ##################

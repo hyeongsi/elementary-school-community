@@ -1,12 +1,14 @@
 package com.example.project.dto.notice;
 
-import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
 @Alias("CommentDto")
 public class CommentDto {
 
@@ -15,12 +17,15 @@ public class CommentDto {
 	private Long postId;
 	private Long parentCommentId;
 	private Long commentId;
-	
+	private boolean delCheck;
+	private String replyTime;
+	private String name;
 
 	public CommentDto(String memberId, String commentContents, Long postId) {
 		this.memberId = memberId;
 		this.commentContents = commentContents;
 		this.postId = postId;
+		
 	}
 
 
@@ -40,12 +45,28 @@ public class CommentDto {
 		this.parentCommentId = parentCommentId;
 		this.commentId = commentId;
 	}
-
+	
+	public CommentDto(String memberId, String commentContents, Long postId, Long parentCommentId, Long commentId, String reply_time) {
+		this.memberId = memberId;
+		this.commentContents = commentContents;
+		this.postId = postId;
+		this.parentCommentId = parentCommentId;
+		this.commentId = commentId;
+		this.replyTime = replyTime;
+	}
+	
+	
+	
 
 	@Override
 	public String toString() {
 		return "CommentDto [memberId=" + memberId + ", commentContents=" + commentContents + ", postId=" + postId
-				+ ", parentCommentId=" + parentCommentId + ", commentId=" + commentId + "]";
+				+ ", parentCommentId=" + parentCommentId + ", commentId=" + commentId + ", delCheck=" + delCheck
+				+ ", replyTime=" + replyTime + "]";
 	}
+
+	
+	
+
 	
 }

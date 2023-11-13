@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -18,6 +19,7 @@ import org.springframework.validation.FieldError;
 public class UserService {
 	
 	UserDAO userDAO;
+	PasswordEncoder passwordEncoder;
 
 	// 로그인
 	public String login(String id, String pwd) {
@@ -40,6 +42,14 @@ public class UserService {
 		System.out.println(n);
 		return n>0 ? true : false;
 	}
+	
+	// 이메일 중복체크
+		public boolean getEmail(String email) {
+			int n = userDAO.getEmail(email);
+			System.out.println(n);
+			return n>0 ? true : false;
+		}
+		
 		
 	// 암호화된 비밀번호 가져옴
 	public String getEncordpwd(String id) {
@@ -83,6 +93,15 @@ public class UserService {
 		return userDAO.updateUser(userDTO);
 	}
 	
+	// 비밀번호 수정
+	public int updatePwd(String id, String changepwd) {
+		System.out.println("비밀번호 변경 서비스");
+		
+		String EncordPwd = passwordEncoder.encode(changepwd);
+		
+		return userDAO.updatePwd(id, EncordPwd);
+	}
+
 	// 회원탈퇴
 	public void withdraw(String id) {
 		userDAO.deleteUser(id);
@@ -92,6 +111,7 @@ public class UserService {
 	public SchoolInfo userInfo(String id) {
 		return userDAO.userInfo(id);
 	}
+	
 	
 	
 	
