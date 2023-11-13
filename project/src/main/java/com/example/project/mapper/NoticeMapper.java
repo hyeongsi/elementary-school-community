@@ -85,6 +85,10 @@ public interface NoticeMapper {
     public void reLike(LikeDto likeDto);
 
     public Long likeCnt(Long postId);
+    
+    public int mypageCnt(Map<String, String> map);
+    
+    public int mypageLikeCnt(Map<String, String> map);
 
     public List<BoardDto> selectBoardList();
 }

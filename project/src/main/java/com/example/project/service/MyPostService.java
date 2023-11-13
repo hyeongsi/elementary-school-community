@@ -33,7 +33,7 @@ public class MyPostService {
         System.out.println("map:"+map.get("keyword"));
         
         // 조회수
-        final int totalCnt = noticeMapper.noticeTotalCnt(map);
+        final int totalCnt = noticeMapper.mypageCnt(map);
         
         // 페이징
         final Page page = new Page(displayUnit, curPage, totalCnt);

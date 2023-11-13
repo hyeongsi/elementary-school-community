@@ -101,6 +101,20 @@
         <!-- WHERE절을 include 태그로 삽입 -->
         <include refid="search"></include>
     </select>
+    
+    <select id="mypageCnt" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM post
+    WHERE member_id = #{memberId}
+    AND
+    <include refid="mypageSearch"></include>
+    </select>
+    <select id="mypageLikeCnt" parameterType="map" resultType="int">
+    SELECT COUNT(*) FROM post
+    INNER JOIN liketable l ON post.post_Id = l.post_Id
+	WHERE l.member_id = #{memberId}
+	AND
+	<include refid="mypageSearch"></include>
+    </select>
 
 
     <update id="updateViewCnt" parameterType="long">
