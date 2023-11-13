@@ -33,14 +33,18 @@ function getURL(ATPT_OFCDC_SC_CODE, SD_SCHUL_CODE, date){
 }
 
 function getResultCode(res){
-    return res.SchoolSchedule[0].head[1].RESULT.CODE;
+	try{
+		return res.SchoolSchedule[0].head[1].RESULT.CODE;
+	}catch (e) {
+		return res.RESULT.CODE;
+	}
+    return res.RESULT.CODE;
 }
 
 // 학사일정 처리
 function todayScheduleProcess(res){
     const success = filter(res);
     if(success){
-        clearScheduleInfo();
         updateTodayCalendarWithSchedule(res);
     }else{
         displayScheduleException();
@@ -62,8 +66,8 @@ function updateTodayCalendarWithSchedule(res){
         
 }
 
-
-function clearScheduleInfo(){
+function displayScheduleException(){
     const dataInfoWrap = document.querySelector(`.dataInfoWrap-schedule`);
-    dataInfoWrap.innerHTML = "";
+    const html = `<div class="infoText">일정없음</div>`;
+    dataInfoWrap.innerHTML = html;
 }
