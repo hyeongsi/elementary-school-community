@@ -11,6 +11,21 @@
 
 <br>
 
+## 👨‍👨‍👧‍👧 팀원
+<table align="center">
+  <tr>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282374171-e8b68bbd-7461-42bf-8988-b79cee5222c4.png" width="150" height="150" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282374397-4ef55467-7c15-4d46-80cf-7c0fdd714946.png" width="150" height="150" /></td>
+    <td><img src="https://user-images.githubusercontent.com/71202869/282374544-d514b15e-6ec5-43a2-8a54-eef05e420241.png" width="150" height="150" /></td>
+  </tr>
+  <tr align="center">
+    <td><a href="https://github.com/hyeongsi">박시형</a></td>
+    <td><a href="https://github.com/trial3149">신규진</a></td>
+    <td><a href="https://github.com/YouJongDocumenT">장유종</a></td>
+  </tr>
+</table>
+<br>
+
 ## 🛠 기술 스택 및 개발 환경
 <table align="center">
   <tr><th colspan="3">front</th></tr>
